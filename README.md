@@ -3,7 +3,7 @@ A repository for our SEG2105 project: on-demand home repair services app.
 
 Group members:
 
-Janie Amyot
+Janie Amyot -- 7807073
 
 Alex Moldovan
 
