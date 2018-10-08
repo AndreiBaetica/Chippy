@@ -5,7 +5,7 @@ Group members:
 
 Janie Amyot -- 7807073
 
-Alex Moldovan
+Alex Moldovan -- 7463817
 
 Andrei Baetica -- 8755885
 
