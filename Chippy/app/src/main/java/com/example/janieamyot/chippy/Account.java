@@ -1,9 +1,16 @@
+package com.example.janieamyot.chippy;
+
 public class Account {
   private String name;
   private String email;
   private String userName;
   private String password;
   private String lastName;
+
+  public Account(){
+
+  }
+
   public Account(String name, String lastName, String userName, String password, String email){
     this.name = name;
     this.lastName = lastName;
@@ -17,7 +24,7 @@ public class Account {
   public String getEmail(){
     return this.email;
   }
-  public String getuserName(){
+  public String getUserName(){
     return this.userName;
   }
   public String getLastName(){
@@ -38,4 +45,5 @@ public class Account {
   public void setPassword(String password){
     this.password = password;
   }
+  public void setUserName(String userName){this.userName = userName; }
 }
