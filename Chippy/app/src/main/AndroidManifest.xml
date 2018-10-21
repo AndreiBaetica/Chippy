@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Login" />
-        <activity android:name=".CreateNewAcccount" />
+        <activity android:name=".CreateNewAccount" />
         <activity android:name=".AdminWelcomePage"></activity>
     </application>
 
