@@ -107,6 +107,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:background="@android:color/holo_blue_dark"
+            android:onClick="OnLoginClick"
             android:text="Login"
             android:textSize="24sp"
             android:textStyle="bold" />
