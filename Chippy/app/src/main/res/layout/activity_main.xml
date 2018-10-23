@@ -55,6 +55,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@android:color/holo_blue_dark"
+            android:onClick="OnLoginClick"
             android:text="Login"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -71,6 +72,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:background="@android:color/holo_blue_dark"
+            android:onClick="OnCreateAccountClick"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:text="Create an Account"
