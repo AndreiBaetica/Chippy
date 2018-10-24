@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".AdminWelcomePage">
+    tools:context=".HomeOwnerWelcomePage">
 
     <LinearLayout
         android:id="@+id/line1"
@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Logged in as Admin" />
+            android:text="Logged in as Home Owner" />
 
         <View
             android:layout_width="0dp"
@@ -41,14 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/line1"
         android:layout_marginLeft="5dp"
-        android:text="Welcome Admin"
+        android:text="Welcome [USERNAME]"
         android:textSize="18sp" />
-
-    <LinearLayout
-        android:id="@+id/listUsers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    </LinearLayout>
 
 </RelativeLayout>
