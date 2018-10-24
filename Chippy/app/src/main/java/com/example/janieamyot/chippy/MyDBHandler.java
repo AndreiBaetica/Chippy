@@ -68,11 +68,11 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         if(cursor.moveToFirst()){
             String type = cursor.getString(0);
-            if(type == "Admin"){
+            if(type.equals("Admin")){
                 account = new Admin();
-            }else if(type == "ServiceProvider"){
+            }else if(type.equals("ServiceProvider")){
                 account = new ServiceProvider();
-            }else if(type == "HomeOwner"){
+            }else if(type.equals("HomeOwner")){
                 account = new HomeOwner();
             }else{
                 account = null;

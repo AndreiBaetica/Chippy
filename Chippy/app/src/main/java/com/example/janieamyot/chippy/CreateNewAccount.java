@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.RadioButton;
 import android.widget.Toast;
 import android.widget.EditText;
 
@@ -36,11 +35,11 @@ public class CreateNewAccount extends AppCompatActivity {
     }
 
     public void selectService(View view) {
-        accountType = AccountType.ADMIN;
+        accountType = AccountType.SERVICE;
     }
 
     public void selectUser(View view) {
-        accountType = AccountType.ADMIN;
+        accountType = AccountType.USER;
     }
 
     private boolean isInvalid(String input, FieldType type){
@@ -118,7 +117,6 @@ public class CreateNewAccount extends AppCompatActivity {
 
         //account creation
         if (validInputs) {
-            Log.d("Invalid inputs","What the heck");
             MyDBHandler dbHandler = new MyDBHandler(this);
             switch(accountType) {
                 case ADMIN:
