@@ -28,8 +28,26 @@ public class Login extends AppCompatActivity {
             Toast.makeText(this, "Username not found in database", Toast.LENGTH_LONG).show();
         }
         else if(account.getPassword().equals(pass)) {
-            Intent intent = new Intent(getApplicationContext(), AdminWelcomePage.class);
-            startActivity(intent);
+            Bundle bundle = new Bundle;
+            if(account instanceof Admin){
+                Intent intent = new Intent(getApplicationContext(), AdminWelcomePage.class);
+                bundle.putSerializable("Account", account);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+            if(account instanceof HomeOwner){
+                Intent intent = new Intent(getApplicationContext(), HomeOwnerWelcomePage.class);
+                bundle.putSerializable("Account", account);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+            if(account instanceof ServiceProvider){
+                Intent intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
+                bundle.putSerializable("Account", account);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+
         }
         else{
             userName.setText("");
