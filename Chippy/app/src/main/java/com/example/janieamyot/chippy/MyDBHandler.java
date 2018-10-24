@@ -94,7 +94,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return account;
     }
 
-    public boolean findAdminAccount(){
+    public boolean adminExists(){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String accountType = "Admin";
