@@ -112,6 +112,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/colorButton"
             android:textColor="@android:color/white"
+            android:onClick="OnLoginClick"
             android:text="Login"
             android:textSize="24sp"
             android:textStyle="bold" />

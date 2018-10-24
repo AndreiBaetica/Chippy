@@ -1,6 +1,8 @@
 package com.example.janieamyot.chippy;
 
-public class Account {
+import java.io.Serializable;
+
+public class Account implements Serializable {
   private String name;
   private String email;
   private String userName;

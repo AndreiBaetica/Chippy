@@ -180,6 +180,7 @@
                 android:textSize="18sp" />
 
             <RadioGroup
+                android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -191,6 +192,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="selectAdmin"
                     android:text="Admin" />
 
                 <RadioButton
@@ -198,6 +200,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="selectUser"
                     android:text="Home Owner" />
 
                 <RadioButton
@@ -205,6 +208,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="selectService"
                     android:text="Service Provider" />
             </RadioGroup>
 
@@ -222,8 +226,9 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:backgroundTint="@color/colorButton"
-            android:textColor="@android:color/white"
+            android:onClick="onClickNext"
             android:text="Next"
+            android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
 

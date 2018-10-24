@@ -55,8 +55,9 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:backgroundTint="@color/colorButton"
-            android:textColor="@android:color/white"
+            android:onClick="OnLoginClick"
             android:text="Login"
+            android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -72,10 +73,11 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:backgroundTint="@color/colorButton"
-            android:textColor="@android:color/white"
+            android:onClick="OnCreateAccountClick"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="Create an Account"
+            android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
 
