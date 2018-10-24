@@ -6,11 +6,13 @@ import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import java.util.ArrayList;
+
 public class MyDBHandler extends SQLiteOpenHelper{
+
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "accountDB.db";
     public static final String TABLE_ACCOUNT = "accounts";
-    //public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_LASTNAME = "lastname";
     public static final String COLUMN_EMAIL = "email";
@@ -92,7 +94,67 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return account;
     }
 
-    public boolean deleteAccount(String accountUserName){
+    public boolean adminExists(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String accountType = "Admin";
+        boolean flag;
+
+        String query = "Select * FROM "+ TABLE_ACCOUNT +" WHERE "+COLUMN_ACCOUNT_TYPE+" = \""+accountType+"\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        //Account account;
+
+        if(cursor.moveToFirst()){
+            flag = true;
+            cursor.close();
+        } else{
+            flag = false;
+        }
+        db.close();
+        return flag;
+    }
+
+    public ArrayList<Account> findAllAccounts(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "Select * FROM "+ TABLE_ACCOUNT;
+        Cursor cursor = db.rawQuery(query, null);
+
+        Account account;
+        ArrayList<Account> accounts = new ArrayList<>();
+
+        if(cursor.moveToFirst()){
+            do{
+                String type = cursor.getString(0);
+                if(type == "Admin"){
+                    account = new Admin();
+                }else if(type == "ServiceProvider"){
+                    account = new ServiceProvider();
+                }else if(type == "HomeOwner"){
+                    account = new HomeOwner();
+                }else{
+                    account = null;
+                }
+                if(account != null){
+                    account.setUserName(cursor.getString(1));
+                    account.setName(cursor.getString(2));
+                    account.setLastName(cursor.getString(3));
+                    account.setEmail(cursor.getString(4));
+                    account.setPassword(cursor.getString(5));
+                    accounts.add(account);
+                }
+
+            }while (cursor.moveToNext());
+            cursor.close();
+        } else{
+            accounts = null;
+        }
+        db.close();
+        return accounts;
+    }
+
+    public boolean deleteAccountByUserName(String accountUserName){
         boolean result = false;
 
         SQLiteDatabase db = this.getWritableDatabase();
