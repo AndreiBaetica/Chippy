@@ -28,7 +28,7 @@ public class Login extends AppCompatActivity {
             Toast.makeText(this, "Username not found in database", Toast.LENGTH_LONG).show();
         }
         else if(account.getPassword().equals(pass)) {
-            Bundle bundle = new Bundle;
+            Bundle bundle = new Bundle();
             if(account instanceof Admin){
                 Intent intent = new Intent(getApplicationContext(), AdminWelcomePage.class);
                 bundle.putSerializable("Account", account);
