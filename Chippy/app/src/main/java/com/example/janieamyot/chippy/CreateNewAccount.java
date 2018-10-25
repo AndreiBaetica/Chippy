@@ -14,6 +14,7 @@ import javax.mail.internet.InternetAddress;
 import static com.example.janieamyot.chippy.R.id.emailField;
 import static com.example.janieamyot.chippy.R.id.firstNameField;
 import static com.example.janieamyot.chippy.R.id.lastNameField;
+import static com.example.janieamyot.chippy.R.id.start;
 import static com.example.janieamyot.chippy.R.id.userNameField;
 import static com.example.janieamyot.chippy.R.id.passwordField;
 
@@ -114,9 +115,10 @@ public class CreateNewAccount extends AppCompatActivity {
             validInputs = false;
         }
         MyDBHandler dbHandler = new MyDBHandler(this);
-        if (dbHandler.adminExists()) {
+        if (dbHandler.adminExists() && accountType == AccountType.ADMIN) {
             Toast.makeText(getApplicationContext(), "Admin account already exist, no permission to make multiple.", Toast.LENGTH_LONG).show();
             validInputs = false;
+            accountType = null;
         }
 
         //account creation
@@ -153,7 +155,7 @@ public class CreateNewAccount extends AppCompatActivity {
 
             }
         }
-        //TODO: check for field uniqueness, check admin uniqueness,
+        //TODO: check for field uniqueness
 
 
     }

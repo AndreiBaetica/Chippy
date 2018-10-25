@@ -3,6 +3,7 @@ package com.example.janieamyot.chippy;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,6 +22,11 @@ public class AdminWelcomePage extends AppCompatActivity {
         TextView welcome = findViewById(R.id.welcomeMessage);
         String welcomeMessage = "Welcome " + extractAccount();
         welcome.setText(welcomeMessage);
+
+        TextView accountList = findViewById(R.id.accountList);
+        accountList.setMovementMethod(new ScrollingMovementMethod());
+        String accounts = displayAccounts();
+        accountList.setText(accounts);
     }
 
     private String displayAccounts(){
@@ -30,9 +36,18 @@ public class AdminWelcomePage extends AppCompatActivity {
         MyDBHandler dbHandler = new MyDBHandler(this);
         ArrayList<Account> accountList = dbHandler.findAllAccounts();
         for(Account account : accountList) {
-            accounts.concat(counter.toString() + " " + account.toString() + "\n");
+            accounts = accounts.concat(counter.toString() + " " + account.toString());
+            if (account instanceof Admin) {
+                accounts = accounts.concat(" Type: Admin");
+            } if (account instanceof ServiceProvider) {
+                accounts = accounts.concat(" Type: Service provider");
+            } if (account instanceof HomeOwner) {
+                accounts = accounts.concat(" Type: Homeowner");
+            }
+            accounts = accounts.concat("\n");
             counter ++;
         }
+
         dbHandler.close();
         return accounts;
     }

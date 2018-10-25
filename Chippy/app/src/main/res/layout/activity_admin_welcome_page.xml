@@ -52,4 +52,14 @@
         android:orientation="vertical">
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/accountList"
+        android:layout_width="364dp"
+        android:layout_height="455dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="92dp"
+        android:scrollbars="vertical"
+        android:text="TextView" />
+
 </RelativeLayout>
