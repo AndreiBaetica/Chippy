@@ -16,8 +16,8 @@ public class Login extends AppCompatActivity {
 
     }
     public void OnLoginClick(View view){
-        EditText userName = (EditText) findViewById(R.id.userNameField);
-        EditText password = (EditText) findViewById(R.id.passwordField);
+        EditText userName = findViewById(R.id.userNameField);
+        EditText password = findViewById(R.id.passwordField);
         String user = userName.getText().toString();
         String pass = password.getText().toString();
         MyDBHandler dbHandler = new MyDBHandler(this);
