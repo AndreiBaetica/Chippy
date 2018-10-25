@@ -120,6 +120,10 @@ public class CreateNewAccount extends AppCompatActivity {
             validInputs = false;
             accountType = null;
         }
+        if (dbHandler.findAccountByUserName(username) != null){
+            Toast.makeText(getApplicationContext(), "Username already in use.", Toast.LENGTH_LONG).show();
+            validInputs = false;
+        }
 
         //account creation
         if (validInputs) {
@@ -134,6 +138,7 @@ public class CreateNewAccount extends AppCompatActivity {
                     bundle.putSerializable("Account", admin);
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    break;
 
                 case SERVICE:
                     ServiceProvider serviceProvider = new ServiceProvider(firstName, lastName, username, password, email);
@@ -142,7 +147,7 @@ public class CreateNewAccount extends AppCompatActivity {
                     bundle.putSerializable("Account", serviceProvider);
                     intent.putExtras(bundle);
                     startActivity(intent);
-
+                    break;
 
                 case USER:
                     HomeOwner homeOwner = new HomeOwner(firstName, lastName, username, password, email);
@@ -152,6 +157,7 @@ public class CreateNewAccount extends AppCompatActivity {
                     bundle.putSerializable("Account", homeOwner);
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    break;
 
             }
         }

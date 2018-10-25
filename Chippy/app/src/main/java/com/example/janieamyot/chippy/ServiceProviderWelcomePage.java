@@ -15,7 +15,7 @@ public class ServiceProviderWelcomePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_owner_welcome_page);
+        setContentView(R.layout.activity_service_provider_welcome_page);
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         TextView welcome = findViewById(R.id.welcomeMessage);
