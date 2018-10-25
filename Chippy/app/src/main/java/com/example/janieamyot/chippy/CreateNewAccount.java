@@ -3,7 +3,6 @@ package com.example.janieamyot.chippy;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.EditText;
@@ -114,25 +113,44 @@ public class CreateNewAccount extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Account type not selected", Toast.LENGTH_LONG).show();
             validInputs = false;
         }
+        MyDBHandler dbHandler = new MyDBHandler(this);
+        if (dbHandler.adminExists()) {
+            Toast.makeText(getApplicationContext(), "Admin account already exist, no permission to make multiple.", Toast.LENGTH_LONG).show();
+            validInputs = false;
+        }
 
         //account creation
         if (validInputs) {
-            MyDBHandler dbHandler = new MyDBHandler(this);
+            Intent intent;
+            Bundle bundle = new Bundle();
             switch(accountType) {
                 case ADMIN:
                     Admin admin = new Admin(firstName, lastName, username, password, email);
                     dbHandler.addAccount(admin);
                     dbHandler.close();
-                    Intent intent = new Intent(getApplicationContext(), AdminWelcomePage.class);
+                    intent = new Intent(getApplicationContext(), AdminWelcomePage.class);
+                    bundle.putSerializable("Account", admin);
+                    intent.putExtras(bundle);
                     startActivity(intent);
+
                 case SERVICE:
                     ServiceProvider serviceProvider = new ServiceProvider(firstName, lastName, username, password, email);
                     dbHandler.addAccount(serviceProvider);
-                    dbHandler.close();
+                    intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
+                    bundle.putSerializable("Account", serviceProvider);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
+
                 case USER:
                     HomeOwner homeOwner = new HomeOwner(firstName, lastName, username, password, email);
                     dbHandler.addAccount(homeOwner);
                     dbHandler.close();
+                    intent = new Intent(getApplicationContext(), HomeOwnerWelcomePage.class);
+                    bundle.putSerializable("Account", homeOwner);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
             }
         }
         //TODO: check for field uniqueness, check admin uniqueness,
