@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class AdminWelcomePage extends AppCompatActivity {
 
     Bundle bundle;
@@ -21,6 +23,19 @@ public class AdminWelcomePage extends AppCompatActivity {
         welcome.setText(welcomeMessage);
     }
 
+    private String displayAccounts(){
+        String accounts = "";
+
+        Integer counter = 1;
+        MyDBHandler dbHandler = new MyDBHandler(this);
+        ArrayList<Account> accountList = dbHandler.findAllAccounts();
+        for(Account account : accountList) {
+            accounts.concat(counter.toString() + " " + account.toString() + "\n");
+            counter ++;
+        }
+        dbHandler.close();
+        return accounts;
+    }
 
     private String extractAccount(){
         Admin admin = (Admin) bundle.get("Account");

@@ -1,5 +1,7 @@
 package com.example.janieamyot.chippy;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Account implements Serializable {
@@ -48,4 +50,10 @@ public class Account implements Serializable {
     this.password = password;
   }
   public void setUserName(String userName){this.userName = userName; }
+
+  @NonNull
+  @Override
+  public String toString() {
+    return "Name: " + name + " " + lastName + " Email: " + email + " Username: " + userName;
+  }
 }
