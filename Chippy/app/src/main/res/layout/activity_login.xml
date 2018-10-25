@@ -86,7 +86,7 @@
                 android:layout_weight="1"
                 android:gravity="bottom|center_horizontal"
                 android:hint="(Please enter your password)"
-                android:inputType="textPersonName" />
+                android:inputType="textPassword" />
 
             <TextView
                 android:id="@+id/passwordTextField"
