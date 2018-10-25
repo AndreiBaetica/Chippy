@@ -110,7 +110,8 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:gravity="bottom|center_horizontal"
+                android:inputType="textEmailAddress" />
         </LinearLayout>
 
         <LinearLayout
@@ -135,6 +136,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:ems="10"
+                android:gravity="bottom|center_horizontal"
                 android:inputType="textPersonName" />
 
         </LinearLayout>
@@ -161,7 +163,8 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:gravity="bottom|center_horizontal"
+                android:inputType="textPassword" />
         </LinearLayout>
 
         <LinearLayout
