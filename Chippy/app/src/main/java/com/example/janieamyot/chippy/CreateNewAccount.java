@@ -54,6 +54,9 @@ public class CreateNewAccount extends AppCompatActivity {
                 } catch (AddressException e){
                     ret = false;
                 }
+                if(!(input.substring(input.indexOf('@')+1).contains(".") && input.substring(input.indexOf('.')+1).length()>=2)){
+                    ret = false;
+                }
                 return !ret;
             case PASSWORD:
                 char[] inputChars = input.toCharArray();
