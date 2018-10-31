@@ -11,14 +11,20 @@ import java.util.ArrayList;
 public class MyDBHandler extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "accountDB.db";
+    private static final String DATABASE_NAME = "ChippyDB.db";
     public static final String TABLE_ACCOUNT = "accounts";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_LASTNAME = "lastname";
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_PASSWORD = "password";
-    public static final String COLUMN_ACCOUNT_TYPE = "accounttype";
+    public static final String COLUMN_ACCOUNT_TYPE = "accountType";
+
+    public static final String TABLE_SERVICE = "services";
+    public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_SERVICE_NAME = "name";
+    public static final String COLUMN_HOURLY_RATE = "hourlyRate";
+    public static final String COLUMN_CATEGORY = "category";
 
     public MyDBHandler(Context context){
         super(context, DATABASE_NAME, null,DATABASE_VERSION);
@@ -26,13 +32,19 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db){
+        //Creates the accounts table
         String CREATE_ACCOUNTS_TABLE = "CREATE TABLE "+TABLE_ACCOUNT+"("+COLUMN_ACCOUNT_TYPE+" TEXT,"+COLUMN_USERNAME+" TEXT PRIMARY KEY,"+COLUMN_NAME+" TEXT,"+COLUMN_LASTNAME+" TEXT,"+COLUMN_EMAIL+" TEXT,"+COLUMN_PASSWORD+" TEXT"+")";
         db.execSQL(CREATE_ACCOUNTS_TABLE);
+
+        //Creates the services table
+        String CREATE_SERVICES_TABLE = "CREATE TABLE "+TABLE_SERVICE+"("+COLUMN_ID+" INTEGER PRIMARY KEY,"+COLUMN_SERVICE_NAME+" TEXT,"+COLUMN_HOURLY_RATE+" TEXT,"+COLUMN_CATEGORY+" TEXT"+")";
+        db.execSQL(CREATE_SERVICES_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACCOUNT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERVICE);
         onCreate(db);
     }
 
@@ -171,6 +183,90 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         db.close();
         return result;
+    }
+
+    public void addService(Service service){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_SERVICE_NAME, service.getName());
+        values.put(COLUMN_HOURLY_RATE, service.getHourlyRate());
+        values.put(COLUMN_CATEGORY, service.getServiceCategory().getLabel());
+
+        db.insert(TABLE_SERVICE, null, values);
+
+        db.close();
+    }
+
+    public boolean deleteService(String serviceName){
+        boolean result = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "Select * FROM " + TABLE_SERVICE + " WHERE " + COLUMN_SERVICE_NAME + " = \"" + serviceName + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            String idStr = cursor.getString(0);
+            db.delete(TABLE_SERVICE, COLUMN_ID + " = " + idStr, null);
+            cursor.close();
+            result = true;
+        }
+
+        db.close();
+        return result;
+    }
+
+    public ArrayList<Service> findAllServices(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "Select * FROM "+ TABLE_SERVICE;
+        Cursor cursor = db.rawQuery(query, null);
+
+        ArrayList<Service> services = new ArrayList<Service>();
+
+        if(cursor.moveToFirst()){
+            do{
+                services.add(new Service(cursor.getString(1), cursor.getString(2), new ServiceCategory(cursor.getString(3))));
+            }while (cursor.moveToNext());
+            cursor.close();
+        } else{
+            services = null;
+        }
+        db.close();
+        return services;
+    }
+
+    public ArrayList<Service> findServicesByCategory(ServiceCategory category){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "Select * FROM "+ TABLE_SERVICE+" WHERE "+COLUMN_CATEGORY+" = \""+category.getLabel()+"\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        ArrayList<Service> services = new ArrayList<Service>();
+
+        if(cursor.moveToFirst()){
+            do{
+                services.add(new Service(cursor.getString(1), cursor.getString(2), new ServiceCategory(cursor.getString(3))));
+            }while (cursor.moveToNext());
+            cursor.close();
+        } else{
+            services = null;
+        }
+        db.close();
+        return services;
+    }
+
+    public void editServiceHourlyRate(String name, double hourlyRate){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_HOURLY_RATE, hourlyRate);
+
+        db.update(TABLE_SERVICE, values, COLUMN_SERVICE_NAME + "= " + name, null);
+
+        db.close();
     }
 
 }
