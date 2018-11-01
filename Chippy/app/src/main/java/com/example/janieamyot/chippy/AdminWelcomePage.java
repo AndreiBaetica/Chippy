@@ -3,8 +3,9 @@ package com.example.janieamyot.chippy;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,20 +24,22 @@ public class AdminWelcomePage extends AppCompatActivity {
         String welcomeMessage = "Welcome " + extractAccount();
         welcome.setText(welcomeMessage);
 
-        TextView accountList = findViewById(R.id.accountList);
-        accountList.setMovementMethod(new ScrollingMovementMethod());
-        String accounts = displayAccounts();
-        accountList.setText(accounts);
+        ListView accountList = findViewById(R.id.accountList);
+        final ArrayList<String> list = displayAccounts();
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, list);
+        accountList.setAdapter(adapter);
     }
 
-    private String displayAccounts(){
+    private ArrayList<String> displayAccounts(){
         String accounts = "";
 
         Integer counter = 1;
         MyDBHandler dbHandler = new MyDBHandler(this);
         ArrayList<Account> accountList = dbHandler.findAllAccounts();
+        ArrayList<String> listAccounts = new ArrayList<String>();
+
         for(Account account : accountList) {
-            accounts = accounts.concat(counter.toString() + " " + account.toString());
+            accounts = (counter.toString() + " " + account.toString());
             if (account instanceof Admin) {
                 accounts = accounts.concat(" Type: Admin");
             } if (account instanceof ServiceProvider) {
@@ -44,12 +47,12 @@ public class AdminWelcomePage extends AppCompatActivity {
             } if (account instanceof HomeOwner) {
                 accounts = accounts.concat(" Type: Homeowner");
             }
-            accounts = accounts.concat("\n");
+            listAccounts.add(accounts);
             counter ++;
         }
 
         dbHandler.close();
-        return accounts;
+        return listAccounts;
     }
 
     private String extractAccount(){

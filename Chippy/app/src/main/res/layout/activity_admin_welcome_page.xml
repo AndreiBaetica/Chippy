@@ -45,21 +45,12 @@
         android:text="Welcome Admin"
         android:textSize="18sp" />
 
-    <LinearLayout
-        android:id="@+id/listUsers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    </LinearLayout>
-
-    <TextView
+    <ListView
         android:id="@+id/accountList"
         android:layout_width="364dp"
         android:layout_height="455dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="92dp"
-        android:scrollbars="vertical"
-        android:text="TextView" />
+        android:layout_marginTop="92dp" />
 
 </RelativeLayout>
