@@ -14,50 +14,79 @@
         android:background="@color/colorBackground"
         tools:context=".AdminWelcomePage">
 
-        <LinearLayout
-            android:id="@+id/line1"
+        <ViewSwitcher
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:id="@+id/viewSwitcher">
 
-            <TextView
-                android:id="@+id/loggedInAs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="Logged in as Admin" />
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/admin_accounts_view">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                <TextView
+                    android:id="@+id/welcomeMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="Welcome Admin"
+                    android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/logoutButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorButton"
-                android:onClick="OnClickLogOut"
-                android:text="Log out"
-                android:textColor="@android:color/white" />
+                <ListView
+                    android:id="@+id/accountList"
+                    android:layout_width="match_parent"
+                    android:layout_height="455dp"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp" />
 
-        </LinearLayout>
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/welcomeMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/line1"
-            android:layout_marginLeft="5dp"
-            android:text="Welcome Admin"
-            android:textSize="18sp" />
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/admin_services_view">
 
-        <ListView
-            android:id="@+id/accountList"
-            android:layout_width="match_parent"
-            android:layout_height="455dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="92dp" />
+                <TextView
+                    android:id="@+id/welcomeMessage2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="Services"
+                    android:textSize="18sp" />
+
+                <ListView
+                    android:id="@+id/serviceList"
+                    android:layout_width="match_parent"
+                    android:layout_height="455dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp" />
+
+                <Button
+                    android:id="@+id/addServiceButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colorButton"
+                    android:textColor="@android:color/white"
+                    android:text="Add New Service" />
+
+            </LinearLayout>
+
+        </ViewSwitcher>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"

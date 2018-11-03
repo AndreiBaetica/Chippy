@@ -11,9 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
+import android.widget.ViewSwitcher;
 
 import java.util.ArrayList;
 
@@ -23,16 +25,26 @@ public class AdminWelcomePage extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_page);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        setupNavigationMenu();
 
+        Intent intent = this.getIntent();
+        bundle = intent.getExtras();
+        TextView welcome = findViewById(R.id.welcomeMessage);
+        String welcomeMessage = "Welcome " + extractAccount() + ", logged as Admin";
+        welcome.setText(welcomeMessage);
+
+        ListView accountList = findViewById(R.id.accountList);
+        final ArrayList<String> list = displayAccounts();
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, list);
+        accountList.setAdapter(adapter);
+    }
+
+    public void setupNavigationMenu(){
+        setupToolbar();
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -43,21 +55,26 @@ public class AdminWelcomePage extends AppCompatActivity {
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
 
+                        ViewSwitcher viewSwitcher = findViewById(R.id.viewSwitcher);
+                        LinearLayout accountsView = findViewById(R.id.admin_accounts_view);
+                        LinearLayout servicesView = findViewById(R.id.admin_services_view);
+
+                        if (menuItem.getItemId() == R.id.nav_accounts && viewSwitcher.getCurrentView() != accountsView){
+                            viewSwitcher.showNext();
+                            return true;
+                        }
+                        else if (menuItem.getItemId() == R.id.nav_services && viewSwitcher.getCurrentView() != servicesView){
+                            viewSwitcher.showPrevious();
+                            return true;
+                        }
+                        else if (menuItem.getItemId() == R.id.nav_logout){
+                            OnClickLogOut(findViewById(R.id.drawer_layout));
+                            return true;
+                        }
                         return true;
                     }
                 }
         );
-
-        Intent intent = this.getIntent();
-        bundle = intent.getExtras();
-        TextView welcome = findViewById(R.id.welcomeMessage);
-        String welcomeMessage = "Welcome " + extractAccount();
-        welcome.setText(welcomeMessage);
-
-        ListView accountList = findViewById(R.id.accountList);
-        final ArrayList<String> list = displayAccounts();
-        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, list);
-        accountList.setAdapter(adapter);
     }
 
     @Override
@@ -68,6 +85,14 @@ public class AdminWelcomePage extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setupToolbar(){
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
     }
 
     private ArrayList<String> displayAccounts(){
@@ -101,10 +126,8 @@ public class AdminWelcomePage extends AppCompatActivity {
     }
 
     public void OnClickLogOut(View view){
-
         Intent intent = new Intent(getApplication(), MainActivity.class);
         startActivity(intent);
-
     }
 
 }
