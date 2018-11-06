@@ -12,16 +12,13 @@ public class Category {
     }
 
 
-    public boolean addService(Service service){
-        boolean result;
-        try {
-            this.services.put(service.getName(), service);
-            result= true;
-        }catch(NullPointerException e){
-            result =false;
+    public void addService(Service service){
+
+        this.services.put(service.getName(), service);
+
         }
-        return result;
-    }
+
+
 
 
     public Map<String, Service> getAllServices(){

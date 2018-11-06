@@ -10,6 +10,9 @@ public class Service {
         this.hourlyRate = hourlyRate;
         this.name = name;
         this.category = category;
+
+        category.addService(this);
+
     }
 
     public double getHourlyRate(){
