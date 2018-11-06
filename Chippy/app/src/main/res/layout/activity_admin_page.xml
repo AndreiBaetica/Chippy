@@ -41,7 +41,7 @@
                     android:id="@+id/accountList"
                     android:layout_width="match_parent"
                     android:layout_height="455dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="20dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp" />
 
@@ -56,7 +56,7 @@
                 android:id="@+id/admin_services_view">
 
                 <TextView
-                    android:id="@+id/welcomeMessage2"
+                    android:id="@+id/servicePageTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="60dp"
@@ -92,8 +92,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     </FrameLayout>
 

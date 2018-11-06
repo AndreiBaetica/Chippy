@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -33,18 +34,82 @@ public class AdminWelcomePage extends AppCompatActivity {
 
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
+
+        //Account List Screen
         TextView welcome = findViewById(R.id.welcomeMessage);
         String welcomeMessage = "Welcome " + extractAccount() + ", logged as Admin";
         welcome.setText(welcomeMessage);
 
         ListView accountList = findViewById(R.id.accountList);
-        final ArrayList<String> list = displayAccounts();
-        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, list);
-        accountList.setAdapter(adapter);
+        final ArrayList<String> listAccounts = displayAccounts();
+        ArrayAdapter adapter1 = new ArrayAdapter(this,android.R.layout.simple_list_item_1, listAccounts);
+        accountList.setAdapter(adapter1);
+
+        //Service List Screen
+        ListView serviceList = findViewById(R.id.serviceList);
+        final ArrayList<String> listServices = displayServices();
+        ArrayAdapter adapter2 = new ArrayAdapter(this,android.R.layout.simple_list_item_1, listServices);
+        serviceList.setAdapter(adapter2);
+
+        serviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent editorLaunchInterest = new Intent(getApplicationContext(), AdminServiceEditor.class);
+                editorLaunchInterest.putExtra("position", position);
+                editorLaunchInterest.putExtra("name", listServices.get(position));
+                startActivityForResult(editorLaunchInterest, 0);
+            }
+        });
+    }
+
+    private ArrayList<String> displayAccounts(){
+        String accounts = "";
+
+        Integer counter = 1;
+        MyDBHandler dbHandler = new MyDBHandler(this);
+        ArrayList<Account> accountList = dbHandler.findAllAccounts();
+        ArrayList<String> listAccounts = new ArrayList<String>();
+
+        for(Account account : accountList) {
+            accounts = (counter.toString() + " " + account.toString());
+            if (account instanceof Admin) {
+                accounts = accounts.concat(" Type: Admin");
+            } if (account instanceof ServiceProvider) {
+                accounts = accounts.concat(" Type: Service provider");
+            } if (account instanceof HomeOwner) {
+                accounts = accounts.concat(" Type: Homeowner");
+            }
+            listAccounts.add(accounts);
+            counter ++;
+        }
+
+        dbHandler.close();
+        return listAccounts;
+    }
+
+    private ArrayList<String> displayServices(){
+        ArrayList<String> listServices = new ArrayList<String>();
+        return listServices;
+    }
+
+    private String extractAccount(){
+        Admin admin = (Admin) bundle.get("Account");
+        return admin.getUserName();
+    }
+
+    public void OnClickLogOut(View view){
+        Intent intent = new Intent(getApplication(), MainActivity.class);
+        startActivity(intent);
     }
 
     public void setupNavigationMenu(){
-        setupToolbar();
+        //Setup toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -87,47 +152,5 @@ public class AdminWelcomePage extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setupToolbar(){
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-    }
-
-    private ArrayList<String> displayAccounts(){
-        String accounts = "";
-
-        Integer counter = 1;
-        MyDBHandler dbHandler = new MyDBHandler(this);
-        ArrayList<Account> accountList = dbHandler.findAllAccounts();
-        ArrayList<String> listAccounts = new ArrayList<String>();
-
-        for(Account account : accountList) {
-            accounts = (counter.toString() + " " + account.toString());
-            if (account instanceof Admin) {
-                accounts = accounts.concat(" Type: Admin");
-            } if (account instanceof ServiceProvider) {
-                accounts = accounts.concat(" Type: Service provider");
-            } if (account instanceof HomeOwner) {
-                accounts = accounts.concat(" Type: Homeowner");
-            }
-            listAccounts.add(accounts);
-            counter ++;
-        }
-
-        dbHandler.close();
-        return listAccounts;
-    }
-
-    private String extractAccount(){
-        Admin admin = (Admin) bundle.get("Account");
-        return admin.getUserName();
-    }
-
-    public void OnClickLogOut(View view){
-        Intent intent = new Intent(getApplication(), MainActivity.class);
-        startActivity(intent);
-    }
 
 }

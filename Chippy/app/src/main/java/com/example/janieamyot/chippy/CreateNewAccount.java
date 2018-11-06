@@ -3,6 +3,7 @@ package com.example.janieamyot.chippy;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ public class CreateNewAccount extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_account);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
     }
     //TODO: Refinement: Refactor select methods into one switch statement
     public void selectAdmin(View view) {
