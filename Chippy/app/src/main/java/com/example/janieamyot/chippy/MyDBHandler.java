@@ -191,7 +191,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         ContentValues values = new ContentValues();
         values.put(COLUMN_SERVICE_NAME, service.getName());
         values.put(COLUMN_HOURLY_RATE, service.getHourlyRate());
-        values.put(COLUMN_CATEGORY, service.getServiceCategory().getLabel());
+        values.put(COLUMN_CATEGORY, service.getCategory().getLabel());
 
         db.insert(TABLE_SERVICE, null, values);
 
@@ -227,7 +227,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         if(cursor.moveToFirst()){
             do{
-                services.add(new Service(cursor.getString(1), cursor.getString(2), new ServiceCategory(cursor.getString(3))));
+                services.add(new Service(cursor.getString(1), cursor.getString(2), new Category(cursor.getString(3))));
             }while (cursor.moveToNext());
             cursor.close();
         } else{
@@ -237,7 +237,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return services;
     }
 
-    public ArrayList<Service> findServicesByCategory(ServiceCategory category){
+    public ArrayList<Service> findServicesByCategory(Category category){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "Select * FROM "+ TABLE_SERVICE+" WHERE "+COLUMN_CATEGORY+" = \""+category.getLabel()+"\"";
@@ -247,7 +247,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         if(cursor.moveToFirst()){
             do{
-                services.add(new Service(cursor.getString(1), cursor.getString(2), new ServiceCategory(cursor.getString(3))));
+                services.add(new Service(cursor.getString(1), cursor.getString(2), new Category(cursor.getString(3))));
             }while (cursor.moveToNext());
             cursor.close();
         } else{
