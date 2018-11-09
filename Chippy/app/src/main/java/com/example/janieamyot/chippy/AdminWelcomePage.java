@@ -98,15 +98,14 @@ public class AdminWelcomePage extends AppCompatActivity {
     }
 
     public void OnClickLogOut(View view){
-        Intent intent = new Intent(getApplication(), MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
 
-    public void onClickAddNewService(View view){
+    public void onClickAddNewService(View view) {
         Intent intent = new Intent(getApplicationContext(), AdminServiceEditor.class);
         startActivity(intent);
     }
-
     public void setupNavigationMenu(){
         //Setup toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);

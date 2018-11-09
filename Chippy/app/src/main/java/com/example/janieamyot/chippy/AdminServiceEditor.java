@@ -3,6 +3,9 @@ package com.example.janieamyot.chippy;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class AdminServiceEditor extends AppCompatActivity {
 
@@ -18,22 +21,35 @@ public class AdminServiceEditor extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
     }
 
-    public void createService(String name, double rate, Category category){
+    public void onClickCreate(View view){
+        EditText field = findViewById(R.id.name);
+        String name = field.getText().toString();
+        field = findViewById(R.id.rate);
+        double rate = Double.valueOf(field.getText().toString());
+        //TODO: Replace category with dropdown implementation
+        field = findViewById(R.id.category);
+        String category = field.getText().toString();
+        createService(name, rate, category);
+    }
+
+    private void createService(String name, double rate, String categoryName){
         MyDBHandler dbHandler = new MyDBHandler(this);
 
-        //ToDo; replace temporary category check with dropdown menu
-        boolean categoryExists = false;
+        //TODO; replace temporary category check with dropdown menu
+        Category category = null;
         for (Category cat : catList) {
-            if (cat.equals(category)) {
-                categoryExists = true;
+            if (cat.getLabel().equals(categoryName)) {
+                category = cat;
+
             }
         }
-        if (!categoryExists) {
+        if (category == null) {
+            Toast.makeText(getApplicationContext(), "ERROR ERROR ERROR ERROR", Toast.LENGTH_LONG).show();
             return;
         }
         //end of temporary code
 
-        Service service = new Service(name, rate, category);
+        Service service = new Service(rate, name, category);
         dbHandler.addService(service);
         dbHandler.close();
     }

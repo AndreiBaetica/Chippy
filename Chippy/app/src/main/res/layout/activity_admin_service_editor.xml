@@ -20,19 +20,19 @@
             android:theme="@style/ActionBarTheme" />
 
         <EditText
-            android:id="@+id/textView5"
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name" />
 
         <EditText
-            android:id="@+id/textView6"
+            android:id="@+id/rate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Rate" />
 
         <EditText
-            android:id="@+id/textView7"
+            android:id="@+id/category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Category" />
@@ -50,8 +50,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/colorButton"
-            android:textColor="@android:color/white"
-            android:text="Save" />
+            android:onClick="onClickCreate"
+            android:text="Save"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/button2"
