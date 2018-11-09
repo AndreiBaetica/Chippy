@@ -21,7 +21,8 @@ public class AdminServiceEditor extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
     }
 
-    public void onClickCreate(View view){
+    public void onClickCreate(View view) {
+        //TODO: Validate fields
         EditText field = findViewById(R.id.name);
         String name = field.getText().toString();
         field = findViewById(R.id.rate);
@@ -32,7 +33,7 @@ public class AdminServiceEditor extends AppCompatActivity {
         createService(name, rate, category);
     }
 
-    private void createService(String name, double rate, String categoryName){
+    private void createService(String name, double rate, String categoryName) {
         MyDBHandler dbHandler = new MyDBHandler(this);
 
         //TODO; replace temporary category check with dropdown menu
@@ -44,7 +45,6 @@ public class AdminServiceEditor extends AppCompatActivity {
             }
         }
         if (category == null) {
-            Toast.makeText(getApplicationContext(), "ERROR ERROR ERROR ERROR", Toast.LENGTH_LONG).show();
             return;
         }
         //end of temporary code
@@ -54,4 +54,28 @@ public class AdminServiceEditor extends AppCompatActivity {
         dbHandler.close();
     }
 
+    public void onClickDelete() {
+        //TODO: Need to find a way to intuitively select a service.
+        //deleteService(service);
+    }
+
+    private void deleteService(Service service) {
+        MyDBHandler dbHandler = new MyDBHandler(this);
+        dbHandler.deleteService(service.getName());
+        dbHandler.close();
+    }
+
+    public void onClickEdit(){
+        //TODO: Get new name, rate, category. EditText defaults should be current values.
+        //TODO: Need to find a way to intuitively select a service.
+        //editService(service);
+    }
+
+    private void editService(Service oldService, String newName, double newRate, Category newCategory) {
+        MyDBHandler dbHandler = new MyDBHandler(this);
+        dbHandler.deleteService(oldService.getName());
+        Service newService = new Service(newRate, newName, newCategory);
+        dbHandler.addService(newService);
+        dbHandler.close();
+    }
 }
