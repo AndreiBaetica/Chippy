@@ -6,7 +6,7 @@ public class Service {
     private String name;
     private Category category;
 
-    public Service(double hourlyRate, String name, Category category) {
+    public Service(String name, double hourlyRate, Category category) {
         this.hourlyRate = hourlyRate;
         this.name = name;
         this.category = category;

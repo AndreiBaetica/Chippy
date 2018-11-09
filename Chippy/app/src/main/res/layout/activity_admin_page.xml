@@ -78,11 +78,12 @@
                     android:id="@+id/addServiceButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/colorButton"
-                    android:textColor="@android:color/white"
-                    android:text="Add New Service" />
+                    android:onClick="onClickAddNewService"
+                    android:text="Add New Service"
+                    android:textColor="@android:color/white" />
 
             </LinearLayout>
 
