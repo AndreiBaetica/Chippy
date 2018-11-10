@@ -6,10 +6,11 @@ public class Service {
     private String name;
     private Category category;
 
-    public Service(double hourlyRate, String name, Category category) {
+    public Service(double hourlyRate, String name, String categorySpin) {
         this.hourlyRate = hourlyRate;
         this.name = name;
-        this.category = category;
+        //this.category = category;
+        this.category = new Category(categorySpin);
 
         category.addService(this);
 
