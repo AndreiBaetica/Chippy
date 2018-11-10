@@ -1,17 +1,21 @@
 package com.example.janieamyot.chippy;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.Spinner;
 
-public class AdminServiceEditor extends AppCompatActivity {
+public class AdminServiceEditor extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    public String categorySel;
 
     Category[] catList = {new Category("Plumbing"), new Category("Auto"),
-            new Category("Electrical"), new Category("Yardwork"), new Category("Renovations"),
-            new Category("Heating"), new Category("Housekeeping"), new Category("Caretaking"),
+            new Category("Electrical"), new Category("Yard-work"), new Category("Renovations"),
+            new Category("Heating"), new Category("Housekeeping"), new Category("Care-taking"),
             new Category("Miscellaneous")};
 
     @Override
@@ -19,6 +23,13 @@ public class AdminServiceEditor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_service_editor);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
+        //Create Spinner
+        Spinner spinnerCat = findViewById(R.id.category_drop);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.CategoryArr, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCat.setAdapter(adapter);
+        spinnerCat.setOnItemSelectedListener(this);
     }
 
     public void onClickCreate(View view) {
@@ -27,29 +38,16 @@ public class AdminServiceEditor extends AppCompatActivity {
         String name = field.getText().toString();
         field = findViewById(R.id.rate);
         double rate = Double.valueOf(field.getText().toString());
-        //TODO: Replace category with dropdown implementation
-        field = findViewById(R.id.category);
-        String category = field.getText().toString();
-        createService(name, rate, category);
+
+
+        createService(name, rate);
     }
 
-    private void createService(String name, double rate, String categoryName) {
+    private void createService(String name, double rate) {
         MyDBHandler dbHandler = new MyDBHandler(this);
 
-        //TODO; replace temporary category check with dropdown menu
-        Category category = null;
-        for (Category cat : catList) {
-            if (cat.getLabel().equals(categoryName)) {
-                category = cat;
 
-            }
-        }
-        if (category == null) {
-            return;
-        }
-        //end of temporary code
-
-        Service service = new Service(rate, name, category);
+        Service service = new Service(rate, name, categorySel);
         dbHandler.addService(service);
         dbHandler.close();
     }
@@ -74,8 +72,19 @@ public class AdminServiceEditor extends AppCompatActivity {
     private void editService(Service oldService, String newName, double newRate, Category newCategory) {
         MyDBHandler dbHandler = new MyDBHandler(this);
         dbHandler.deleteService(oldService.getName());
-        Service newService = new Service(newRate, newName, newCategory);
+        Service newService = new Service(newRate, newName, categorySel);
         dbHandler.addService(newService);
         dbHandler.close();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String catSelected = parent.getItemAtPosition(position).toString();
+        categorySel = catSelected;
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

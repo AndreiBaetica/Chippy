@@ -2,4 +2,21 @@
     <string name="app_name">Chippy</string>
     <string name="title_activity_home_owner_welcome_page">HomeOwnerWelcomePage</string>
     <string name="title_activity_service_provider_welcome_page">ServiceProviderWelcomePage</string>
+
+
+
+    <sting-array name="CategoryArr">
+        <item> Auto </item>
+        <item> Care-taking </item>
+        <item> Electrical </item>
+        <item> Heating </item>
+        <item> Housekeeping </item>
+        <item> Plumbing </item>
+        <item> Renovations </item>
+        <item> Yard-work </item>
+        <item> Miscellaneous </item>
+    </sting-array>
+
+    <string-array name="CategoryArr" />
 </resources>
+
