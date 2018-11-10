@@ -1,5 +1,6 @@
 package com.example.janieamyot.chippy;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Category {
@@ -8,6 +9,7 @@ public class Category {
 
     public Category(String label){
         this.label = label;
+        this.services = new HashMap<String, Service>();
 
     }
 

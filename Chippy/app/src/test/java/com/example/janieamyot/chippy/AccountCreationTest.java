@@ -64,5 +64,4 @@ public class AccountCreationTest {
         ServiceProvider aServiceProvider = new ServiceProvider("Mahatma", "Gandhi", "gandhi254", "$non573violence", "gandhi@gmail.com");
         assertEquals("Check the email of the service provider account", "gandhi@gmail.com", aServiceProvider.getEmail());
     }
-
 }
