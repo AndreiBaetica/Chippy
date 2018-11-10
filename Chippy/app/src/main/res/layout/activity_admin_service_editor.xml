@@ -71,7 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/colorButton"
-            android:textColor="@android:color/white"
-            android:text="Cancel" />
+            android:onClick="onClickCancel"
+            android:text="Cancel"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 </RelativeLayout>

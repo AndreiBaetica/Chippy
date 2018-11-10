@@ -1,5 +1,6 @@
 package com.example.janieamyot.chippy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -41,6 +42,9 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
 
 
         createService(name, rate);
+
+        Intent intent = new Intent(getApplicationContext(), AdminWelcomePage.class);
+        startActivity(intent);
     }
 
     private void createService(String name, double rate) {
@@ -50,6 +54,11 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
         Service service = new Service(rate, name, categorySel);
         dbHandler.addService(service);
         dbHandler.close();
+    }
+
+    public void onClickCancel(){
+        Intent intent = new Intent(getApplicationContext(), AdminWelcomePage.class);
+        startActivity(intent);
     }
 
     public void onClickDelete() {
