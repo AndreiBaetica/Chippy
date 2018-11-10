@@ -9,8 +9,7 @@ public class Service {
     public Service(double hourlyRate, String name, String categorySpin) {
         this.hourlyRate = hourlyRate;
         this.name = name;
-        //this.category = category;
-        this.category = new Category(categorySpin);
+        this.category = AdminServiceEditor.catMap.get(categorySpin);
 
         category.addService(this);
 

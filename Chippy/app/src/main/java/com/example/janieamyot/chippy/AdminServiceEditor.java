@@ -10,14 +10,31 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 public class AdminServiceEditor extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     public String categorySel;
 
-    Category[] catList = {new Category("Plumbing"), new Category("Auto"),
-            new Category("Electrical"), new Category("Yard-work"), new Category("Renovations"),
-            new Category("Heating"), new Category("Housekeeping"), new Category("Care-taking"),
-            new Category("Miscellaneous")};
+
+    protected static final Map<String, Category> catMap;
+    static {
+        Map<String, Category> tmp = new HashMap<>();
+        tmp.put("Plumbing", new Category("Plumbing"));
+        tmp.put("Auto", new Category("Auto"));
+        tmp.put("Electrical", new Category("Electrical"));
+        tmp.put("Yard-work", new Category("Yard-work"));
+        tmp.put("Renovations", new Category("Renovations"));
+        tmp.put("Heating", new Category("Heating"));
+        tmp.put("Housekeeping", new Category("Housekeeping"));
+        tmp.put("CareTaking", new Category("Care-taking"));
+        tmp.put("Miscellaneous", new Category("Miscellaneous"));
+        catMap = Collections.unmodifiableMap(tmp);
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
