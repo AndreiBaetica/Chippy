@@ -6,6 +6,7 @@
 
 
     <string-array name="CategoryArr">
+        <item>  </item>
         <item> Auto </item>
         <item> Care-taking </item>
         <item> Electrical </item>
