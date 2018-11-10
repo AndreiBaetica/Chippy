@@ -227,7 +227,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         if(cursor.moveToFirst()){
             do{
-                services.add(new Service(Double.parseDouble(cursor.getString(2)), cursor.getString(1), new Category(cursor.getString(3))));
+                services.add(new Service(Double.parseDouble(cursor.getString(2)), cursor.getString(1), cursor.getString(3)));
             }while (cursor.moveToNext());
             cursor.close();
         } else{
@@ -247,7 +247,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         if(cursor.moveToFirst()){
             do{
-                services.add(new Service(Double.parseDouble(cursor.getString(2)), cursor.getString(1), new Category(cursor.getString(3))));
+                services.add(new Service(Double.parseDouble(cursor.getString(2)), cursor.getString(1), cursor.getString(3)));
             }while (cursor.moveToNext());
             cursor.close();
         } else{
@@ -278,7 +278,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         Service service;
 
         if(cursor.moveToFirst()){
-            service = new Service(Double.parseDouble(cursor.getString(2)), cursor.getString(1), new Category(cursor.getString(3)));
+            service = new Service(Double.parseDouble(cursor.getString(2)), cursor.getString(1), cursor.getString(3));
             cursor.close();
         } else{
             service = null;
