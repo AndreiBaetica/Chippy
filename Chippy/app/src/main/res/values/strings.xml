@@ -5,7 +5,7 @@
 
 
 
-    <sting-array name="CategoryArr">
+    <string-array name="CategoryArr">
         <item> Auto </item>
         <item> Care-taking </item>
         <item> Electrical </item>
@@ -15,8 +15,7 @@
         <item> Renovations </item>
         <item> Yard-work </item>
         <item> Miscellaneous </item>
-    </sting-array>
+    </string-array>
 
-    <string-array name="CategoryArr" />
 </resources>
 
