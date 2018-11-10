@@ -166,8 +166,5 @@ public class CreateNewAccount extends AppCompatActivity {
 
             }
         }
-        //TODO: check for field uniqueness
-
-
     }
 }

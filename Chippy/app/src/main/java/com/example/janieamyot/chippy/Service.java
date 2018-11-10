@@ -11,8 +11,6 @@ public class Service {
         this.name = name;
         this.category = AdminServiceEditor.catMap.get(categorySpin);
 
-        category.addService(this);
-
     }
 
     public double getHourlyRate(){

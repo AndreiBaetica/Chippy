@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
     public String categorySel;
 
 
-    protected static final Map<String, Category> catMap;
+    public static final Map<String, Category> catMap;
     static {
         Map<String, Category> tmp = new HashMap<>();
         tmp.put("Plumbing", new Category("Plumbing"));
@@ -29,7 +30,7 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
         tmp.put("Renovations", new Category("Renovations"));
         tmp.put("Heating", new Category("Heating"));
         tmp.put("Housekeeping", new Category("Housekeeping"));
-        tmp.put("CareTaking", new Category("Care-taking"));
+        tmp.put("Care-taking", new Category("Care-taking"));
         tmp.put("Miscellaneous", new Category("Miscellaneous"));
         catMap = Collections.unmodifiableMap(tmp);
     }
@@ -51,17 +52,50 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
     }
 
     public void onClickCreate(View view) {
-        //TODO: Validate fields
+
+        MyDBHandler dbHandler = new MyDBHandler(this);
+        boolean validInputs = true;
+
         EditText field = findViewById(R.id.name);
         String name = field.getText().toString();
+        name = name.trim();
+        if (dbHandler.findAccountByUserName(name) != null) {
+            field.getText().clear();
+            Toast.makeText(getApplicationContext(), "Service already exists.", Toast.LENGTH_LONG).show();
+            validInputs = false;
+        }
+        if (name.equals("")) {
+            field.getText().clear();
+            Toast.makeText(getApplicationContext(), "Service name cannot be empty.", Toast.LENGTH_LONG).show();
+            validInputs = false;
+        }
+
         field = findViewById(R.id.rate);
-        double rate = Double.valueOf(field.getText().toString());
+        Double rate = null;
+        try {
+            rate = Double.valueOf(field.getText().toString());
+        } catch (NumberFormatException e) {
+            field.getText().clear();
+            Toast.makeText(getApplicationContext(), "Invalid rate.", Toast.LENGTH_LONG).show();
+            validInputs = false;
+        }
+        dbHandler.close();
 
+        if (catMap.get(categorySel) == null) {
+            Toast.makeText(getApplicationContext(), "Please select a service category.", Toast.LENGTH_LONG).show();
+            validInputs = false;
+        }
 
-        createService(name, rate);
+        if (validInputs) {
+            createService(name, rate);
+            Account admin = dbHandler.findAccountByUserName("admin");
+            Bundle bundle = new Bundle();
+            Intent intent = new Intent(getApplicationContext(), AdminWelcomePage.class);
+            bundle.putSerializable("Account", admin);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
 
-        Intent intent = new Intent(getApplicationContext(), AdminWelcomePage.class);
-        startActivity(intent);
     }
 
     private void createService(String name, double rate) {
@@ -113,4 +147,5 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
 }
