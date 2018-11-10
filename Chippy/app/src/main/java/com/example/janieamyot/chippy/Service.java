@@ -38,4 +38,8 @@ public class Service {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    public String toString() {
+        return "Name: " + name + " " + " Rate ($/h) " + hourlyRate + " " + " Category: " + category.getLabel();
+    }
 }

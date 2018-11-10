@@ -88,7 +88,28 @@ public class AdminWelcomePage extends AppCompatActivity {
     }
 
     private ArrayList<String> displayServices(){
+        String services = "";
+
+        Integer counter2 = 1;
+        MyDBHandler dbHandler = new MyDBHandler(this);
+        ArrayList<Service> serviceList = dbHandler.findAllServices();
         ArrayList<String> listServices = new ArrayList<String>();
+
+        if (serviceList==null){
+            return listServices;
+        }
+
+        for(Service service : serviceList) {
+            services = (counter2.toString() + " " + service.toString());
+
+                services=services.concat(" ");
+
+            listServices.add(services);
+            counter2 ++;
+        }
+
+
+        dbHandler.close();
         return listServices;
     }
 
