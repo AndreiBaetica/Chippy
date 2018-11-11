@@ -66,22 +66,26 @@ public class AdminWelcomePage extends AppCompatActivity {
         });
     }
 
-    private void onClickEdit() {
+    public void onClickEdit(View view) {
         if (service == null) {
             return;
         }
         Intent intent = new Intent(getApplicationContext(), AdminServiceEditor.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("Service", service);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
-    private void onClickDelete() {
+    public void onClickDelete(View view) {
         if (service == null) {
             return;
         }
         MyDBHandler dbHandler = new MyDBHandler(this);
         dbHandler.deleteService(service.getName());
+
+        finish();
+        startActivity(getIntent());
     }
 
     private ArrayList<String> displayAccounts(){

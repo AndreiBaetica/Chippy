@@ -81,15 +81,17 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_alignParentBottom="true">
+
                     <Button
                         android:id="@+id/editServiceButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_gravity="center"
+                        android:layout_weight="1"
                         android:backgroundTint="@color/colorButton"
-                        android:textColor="@android:color/white"
-                        android:text="Edit Service" />
+                        android:onClick="onClickEdit"
+                        android:text="Edit Service"
+                        android:textColor="@android:color/white" />
 
                     <Button
                         android:id="@+id/addServiceButton"
@@ -101,15 +103,17 @@
                         android:onClick="onClickAddNewService"
                         android:text="Add New Service"
                         android:textColor="@android:color/white" />
+
                     <Button
                         android:id="@+id/deleteServiceButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_gravity="center"
+                        android:layout_weight="1"
                         android:backgroundTint="@color/colorButton"
-                        android:textColor="@android:color/white"
-                        android:text="Delete Service" />
+                        android:onClick="onClickDelete"
+                        android:text="Delete Service"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
 
             </LinearLayout>

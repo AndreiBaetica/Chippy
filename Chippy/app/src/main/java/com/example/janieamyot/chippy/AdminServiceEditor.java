@@ -56,9 +56,11 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
     }
     public void onClickSave(View view) {
         boolean edit;
-        Service service = (Service) bundle.get("Service");
-        if (service == null) {
+
+        Service service = null;
+        if (bundle != null) {
             edit = true;
+            service = (Service) bundle.get("Service");
         } else {
             edit = false;
         }
@@ -67,14 +69,12 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
         MyDBHandler dbHandler = new MyDBHandler(this);
         boolean validInputs = true;
 
-        if (edit) {
-            dbHandler.deleteService(service.getName());
-        }
+
 
         field = findViewById(R.id.name);
         String name = field.getText().toString();
         name = name.trim();
-        if (dbHandler.findAccountByUserName(name) != null) {
+        if (dbHandler.findAccountByUserName(name) != null && !edit) {
             field.getText().clear();
             Toast.makeText(getApplicationContext(), "Service already exists.", Toast.LENGTH_LONG).show();
             validInputs = false;
@@ -104,12 +104,15 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
         dbHandler.close();
 
         if (validInputs) {
+            if (edit) {
+                dbHandler.deleteService(service.getName());
+            }
             createService(name, rate);
-
             Account admin = dbHandler.findAccountByUserName("admin");
             Bundle bundle = new Bundle();
             Intent intent = new Intent(getApplicationContext(), AdminWelcomePage.class);
             bundle.putSerializable("Account", admin);
+            dbHandler.close();
             intent.putExtras(bundle);
             startActivity(intent);
         }
@@ -125,8 +128,14 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
         dbHandler.close();
     }
 
-    public void onClickCancel(){
+    public void onClickCancel(View view){
+        MyDBHandler dbHandler = new MyDBHandler(this);
+        Account admin = dbHandler.findAccountByUserName("admin");
+        Bundle bundle = new Bundle();
         Intent intent = new Intent(getApplicationContext(), AdminWelcomePage.class);
+        bundle.putSerializable("Account", admin);
+        dbHandler.close();
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

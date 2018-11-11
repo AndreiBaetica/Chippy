@@ -1,6 +1,8 @@
 package com.example.janieamyot.chippy;
 
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Service implements Serializable {

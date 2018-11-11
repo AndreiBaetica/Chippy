@@ -72,7 +72,7 @@
             android:layout_weight="1"
             android:background="#443f3f"
             android:backgroundTint="@color/colorButton"
-            android:onClick="onClickCreate"
+            android:onClick="onClickSave"
             android:text="Save"
             android:textColor="@android:color/white" />
 
