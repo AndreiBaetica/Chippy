@@ -96,12 +96,16 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
         Double rate = null;
         try {
             rate = Double.valueOf(field.getText().toString());
+            if (rate < 0){
+                field.getText().clear();
+                Toast.makeText(getApplicationContext(), "Invalid rate.", Toast.LENGTH_LONG).show();
+                validInputs = false;
+            }
         } catch (NumberFormatException e) {
             field.getText().clear();
             Toast.makeText(getApplicationContext(), "Invalid rate.", Toast.LENGTH_LONG).show();
             validInputs = false;
         }
-
 
         if (catMap.get(categorySel) == null) {
             Toast.makeText(getApplicationContext(), "Please select a service category.", Toast.LENGTH_LONG).show();
