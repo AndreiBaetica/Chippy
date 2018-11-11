@@ -60,6 +60,12 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCat.setAdapter(adapter);
         spinnerCat.setOnItemSelectedListener(this);
+
+        if (bundle != null){
+            Service service = (Service) bundle.get("Service");
+            int spinnerPosition = adapter.getPosition(service.getCategory().getLabel());
+            spinnerCat.setSelection(spinnerPosition);
+        }
     }
     public void onClickSave(View view) {
         boolean edit;
