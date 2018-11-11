@@ -91,6 +91,11 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
             Toast.makeText(getApplicationContext(), "Service name cannot be empty.", Toast.LENGTH_LONG).show();
             validInputs = false;
         }
+        if (name.contains("[") || name.contains("]")){
+            field.getText().clear();
+            Toast.makeText(getApplicationContext(), "Service name cannot contain [ or ].", Toast.LENGTH_LONG).show();
+            validInputs = false;
+        }
 
         field = findViewById(R.id.rate);
         Double rate = null;
