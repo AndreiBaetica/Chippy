@@ -47,6 +47,13 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
 
+        if (bundle != null) {
+            Service service = (Service) bundle.get("Service");
+            EditText field = findViewById(R.id.name);
+            field.setText(service.getName());
+            field = findViewById(R.id.rate);
+            field.setText(Double.toString(service.getHourlyRate()));
+        }
         //Create Spinner
         Spinner spinnerCat = findViewById(R.id.category_drop);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.CategoryArr, android.R.layout.simple_spinner_item);
