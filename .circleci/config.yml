@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/SEG2105_J.I.Joe_Repository/Chippy
+    working_directory: ~/SEG2105_J.I.Joe_Repository
     docker:
       - image: circleci/android:api-28-alpha
     environment:
@@ -9,23 +9,23 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "Chippy/build.gradle" }}-{{ checksum  "Chippy/app/build.gradle" }}
       - run:
          name: Chmod permissions  
-         command: sudo chmod +x ./gradlew
+         command: sudo chmod +x ./Chippy/gradlew
       - run:
           name: Download Dependencies
-          command: ./gradlew androidDependencies
+          command: cd Chippy;./gradlew androidDependencies
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "Chippy/build.gradle" }}-{{ checksum  "Chippy/app/build.gradle" }}
       - run:
           name: Run UnitTest
-          command: ./gradlew test
+          command: cd Chippy;./gradlew test
       - store_artifacts:
-          path: app/build/outputs/apk/debug/
+          path: Chippy/app/build/outputs/apk/debug/
           destination: apks/
       - store_test_results:
-          path: app/build/test-results
+          path: Chippy/app/build/test-results
  
