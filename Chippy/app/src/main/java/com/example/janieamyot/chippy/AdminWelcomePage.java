@@ -24,6 +24,7 @@ public class AdminWelcomePage extends AppCompatActivity {
 
     Bundle bundle;
     private DrawerLayout mDrawerLayout;
+    private Service service;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,16 +51,41 @@ public class AdminWelcomePage extends AppCompatActivity {
         final ArrayList<String> listServices = displayServices();
         ArrayAdapter adapter2 = new ArrayAdapter(this,android.R.layout.simple_list_item_1, listServices);
         serviceList.setAdapter(adapter2);
+        final MyDBHandler dbHandler = new MyDBHandler(this);
 
         serviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent editorLaunchInterest = new Intent(getApplicationContext(), AdminServiceEditor.class);
-                editorLaunchInterest.putExtra("position", position);
-                editorLaunchInterest.putExtra("name", listServices.get(position));
-                startActivityForResult(editorLaunchInterest, 0);
+                String serviceString = listServices.get(position);
+
+                String serviceName = serviceString.substring(serviceString.indexOf("[") + 1, serviceString.indexOf("]"));
+                service = dbHandler.findService(serviceName);
+                dbHandler.close();
+
             }
         });
+    }
+
+    public void onClickEdit(View view) {
+        if (service == null) {
+            return;
+        }
+        Intent intent = new Intent(getApplicationContext(), AdminServiceEditor.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Service", service);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    public void onClickDelete(View view) {
+        if (service == null) {
+            return;
+        }
+        MyDBHandler dbHandler = new MyDBHandler(this);
+        dbHandler.deleteService(service.getName());
+
+        finish();
+        startActivity(getIntent());
     }
 
     private ArrayList<String> displayAccounts(){
@@ -88,7 +114,28 @@ public class AdminWelcomePage extends AppCompatActivity {
     }
 
     private ArrayList<String> displayServices(){
+        String services = "";
+
+        Integer counter2 = 1;
+        MyDBHandler dbHandler = new MyDBHandler(this);
+        ArrayList<Service> serviceList = dbHandler.findAllServices();
         ArrayList<String> listServices = new ArrayList<String>();
+
+        if (serviceList==null){
+            return listServices;
+        }
+
+        for(Service service : serviceList) {
+            services = (counter2.toString() + " " + service.toString());
+
+                services=services.concat(" ");
+
+            listServices.add(services);
+            counter2 ++;
+        }
+
+
+        dbHandler.close();
         return listServices;
     }
 
@@ -98,10 +145,14 @@ public class AdminWelcomePage extends AppCompatActivity {
     }
 
     public void OnClickLogOut(View view){
-        Intent intent = new Intent(getApplication(), MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
 
+    public void onClickAddNewService(View view) {
+        Intent intent = new Intent(getApplicationContext(), AdminServiceEditor.class);
+        startActivity(intent);
+    }
     public void setupNavigationMenu(){
         //Setup toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);

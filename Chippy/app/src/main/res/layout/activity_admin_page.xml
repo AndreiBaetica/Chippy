@@ -73,17 +73,49 @@
                     android:layout_weight="1"
                     android:layout_marginTop="15dp"
                     android:paddingLeft="15dp"
-                    android:paddingRight="15dp" />
+                    android:paddingRight="15dp" >
 
-                <Button
-                    android:id="@+id/addServiceButton"
-                    android:layout_width="wrap_content"
+                </ListView>
+
+                <LinearLayout
+                    android:id="@+id/LinearLayout02"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/colorButton"
-                    android:textColor="@android:color/white"
-                    android:text="Add New Service" />
+                    android:layout_width="match_parent"
+                    android:layout_alignParentBottom="true">
+
+                    <Button
+                        android:id="@+id/editServiceButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/colorButton"
+                        android:onClick="onClickEdit"
+                        android:text="Edit Service"
+                        android:textColor="@android:color/white" />
+
+                    <Button
+                        android:id="@+id/addServiceButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/colorButton"
+                        android:onClick="onClickAddNewService"
+                        android:text="Add New Service"
+                        android:textColor="@android:color/white" />
+
+                    <Button
+                        android:id="@+id/deleteServiceButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/colorButton"
+                        android:onClick="onClickDelete"
+                        android:text="Delete Service"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
 
             </LinearLayout>
 
