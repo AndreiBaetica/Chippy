@@ -24,6 +24,7 @@ public class AdminWelcomePage extends AppCompatActivity {
 
     Bundle bundle;
     private DrawerLayout mDrawerLayout;
+    private Service service;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,16 +51,37 @@ public class AdminWelcomePage extends AppCompatActivity {
         final ArrayList<String> listServices = displayServices();
         ArrayAdapter adapter2 = new ArrayAdapter(this,android.R.layout.simple_list_item_1, listServices);
         serviceList.setAdapter(adapter2);
+        final MyDBHandler dbHandler = new MyDBHandler(this);
 
         serviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent editorLaunchInterest = new Intent(getApplicationContext(), AdminServiceEditor.class);
-                editorLaunchInterest.putExtra("position", position);
-                editorLaunchInterest.putExtra("name", listServices.get(position));
-                startActivityForResult(editorLaunchInterest, 0);
+                String serviceString = listServices.get(position);
+
+                String serviceName = serviceString.substring(serviceString.indexOf("[") + 1, serviceString.indexOf("]"));
+                service = dbHandler.findService(serviceName);
+                dbHandler.close();
+
             }
         });
+    }
+
+    private void onClickEdit() {
+        if (service == null) {
+            return;
+        }
+        Intent intent = new Intent(getApplicationContext(), AdminServiceEditor.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Service", service);
+        startActivity(intent);
+    }
+
+    private void onClickDelete() {
+        if (service == null) {
+            return;
+        }
+        MyDBHandler dbHandler = new MyDBHandler(this);
+        dbHandler.deleteService(service.getName());
     }
 
     private ArrayList<String> displayAccounts(){

@@ -1,7 +1,9 @@
 package com.example.janieamyot.chippy;
 
 
-public class Service {
+import java.io.Serializable;
+
+public class Service implements Serializable {
     private double hourlyRate;
     private String name;
     private Category category;
@@ -38,6 +40,6 @@ public class Service {
     }
 
     public String toString() {
-        return "Name: " + name + " " + " Rate ($/h) " + hourlyRate + " " + " Category: " + category.getLabel();
+        return "Name: [" + name + "] " + " Rate ($/h) " + hourlyRate + " " + " Category: " + category.getLabel();
     }
 }

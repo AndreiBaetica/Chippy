@@ -17,6 +17,7 @@ import java.util.Map;
 
 public class AdminServiceEditor extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private Bundle bundle;
     public String categorySel;
 
 
@@ -43,6 +44,9 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
         setContentView(R.layout.activity_admin_service_editor);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
+        Intent intent = this.getIntent();
+        bundle = intent.getExtras();
+
         //Create Spinner
         Spinner spinnerCat = findViewById(R.id.category_drop);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.CategoryArr, android.R.layout.simple_spinner_item);
@@ -50,13 +54,24 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
         spinnerCat.setAdapter(adapter);
         spinnerCat.setOnItemSelectedListener(this);
     }
+    public void onClickSave(View view) {
+        boolean edit;
+        Service service = (Service) bundle.get("Service");
+        if (service == null) {
+            edit = true;
+        } else {
+            edit = false;
+        }
 
-    public void onClickCreate(View view) {
-
+        EditText field;
         MyDBHandler dbHandler = new MyDBHandler(this);
         boolean validInputs = true;
 
-        EditText field = findViewById(R.id.name);
+        if (edit) {
+            dbHandler.deleteService(service.getName());
+        }
+
+        field = findViewById(R.id.name);
         String name = field.getText().toString();
         name = name.trim();
         if (dbHandler.findAccountByUserName(name) != null) {
@@ -79,15 +94,18 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
             Toast.makeText(getApplicationContext(), "Invalid rate.", Toast.LENGTH_LONG).show();
             validInputs = false;
         }
-        dbHandler.close();
+
 
         if (catMap.get(categorySel) == null) {
             Toast.makeText(getApplicationContext(), "Please select a service category.", Toast.LENGTH_LONG).show();
             validInputs = false;
         }
 
+        dbHandler.close();
+
         if (validInputs) {
             createService(name, rate);
+
             Account admin = dbHandler.findAccountByUserName("admin");
             Bundle bundle = new Bundle();
             Intent intent = new Intent(getApplicationContext(), AdminWelcomePage.class);
@@ -110,31 +128,6 @@ public class AdminServiceEditor extends AppCompatActivity implements AdapterView
     public void onClickCancel(){
         Intent intent = new Intent(getApplicationContext(), AdminWelcomePage.class);
         startActivity(intent);
-    }
-
-    public void onClickDelete() {
-        //TODO: Need to find a way to intuitively select a service.
-        //deleteService(service);
-    }
-
-    private void deleteService(Service service) {
-        MyDBHandler dbHandler = new MyDBHandler(this);
-        dbHandler.deleteService(service.getName());
-        dbHandler.close();
-    }
-
-    public void onClickEdit(){
-        //TODO: Get new name, rate, category. EditText defaults should be current values.
-        //TODO: Need to find a way to intuitively select a service.
-        //editService(service);
-    }
-
-    private void editService(Service oldService, String newName, double newRate, Category newCategory) {
-        MyDBHandler dbHandler = new MyDBHandler(this);
-        dbHandler.deleteService(oldService.getName());
-        Service newService = new Service(newRate, newName, categorySel);
-        dbHandler.addService(newService);
-        dbHandler.close();
     }
 
     @Override
