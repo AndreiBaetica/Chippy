@@ -1,9 +1,10 @@
 package com.example.janieamyot.chippy;
 
 import java.util.HashMap;
+import java.io.Serializable;
 import java.util.Map;
 
-public class Category {
+public class Category implements Serializable {
     private String label;
     private Map<String, Service> services;
 

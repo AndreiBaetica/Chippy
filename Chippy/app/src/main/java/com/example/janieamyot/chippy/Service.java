@@ -1,17 +1,19 @@
 package com.example.janieamyot.chippy;
 
 
-public class Service {
+import android.support.annotation.NonNull;
+
+import java.io.Serializable;
+
+public class Service implements Serializable {
     private double hourlyRate;
     private String name;
     private Category category;
 
-    public Service(double hourlyRate, String name, Category category) {
+    public Service(double hourlyRate, String name, String categorySpin) {
         this.hourlyRate = hourlyRate;
         this.name = name;
-        this.category = category;
-
-        category.addService(this);
+        this.category = AdminServiceEditor.catMap.get(categorySpin);
 
     }
 
@@ -37,5 +39,9 @@ public class Service {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String toString() {
+        return "Name: [" + name + "] " + " Rate ($/h) " + hourlyRate + " " + " Category: " + category.getLabel();
     }
 }
