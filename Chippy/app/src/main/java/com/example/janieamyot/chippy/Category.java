@@ -1,5 +1,6 @@
 package com.example.janieamyot.chippy;
 
+import java.util.HashMap;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ public class Category implements Serializable {
 
     public Category(String label){
         this.label = label;
+        this.services = new HashMap<String, Service>();
 
     }
 
