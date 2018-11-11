@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".AdminServiceEditor">
 
     <LinearLayout
@@ -19,6 +20,7 @@
             android:background="@color/colorPrimary"
             android:theme="@style/ActionBarTheme" />
 
+<<<<<<< HEAD
         <EditText
             android:id="@+id/name"
             android:layout_width="match_parent"
