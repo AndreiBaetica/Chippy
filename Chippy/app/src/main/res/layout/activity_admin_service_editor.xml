@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
     tools:context=".AdminServiceEditor">
 
     <LinearLayout
@@ -61,32 +60,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="519dp"
-        android:orientation="horizontal"
-        android:layout_alignParentLeft="true">
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/button"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:background="#443f3f"
-            android:backgroundTint="@color/colorButton"
             android:onClick="onClickSave"
             android:text="Save"
-            android:textColor="@android:color/white" />
+            android:padding="10dp"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:background="#443f3f"
-            android:backgroundTint="@color/colorButton"
             android:onClick="onClickCancel"
             android:text="Cancel"
-            android:textColor="@android:color/white" />
+            android:padding="10dp"
+            android:textSize="24sp"
+            android:textStyle="bold"  />
     </LinearLayout>
 </RelativeLayout>
