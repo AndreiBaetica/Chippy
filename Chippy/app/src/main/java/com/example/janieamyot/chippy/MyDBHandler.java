@@ -12,19 +12,43 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "ChippyDB.db";
+
+    //Accounts table
     public static final String TABLE_ACCOUNT = "accounts";
     public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_LASTNAME = "lastname";
+    public static final String COLUMN_LASTNAME = "lastName";
     public static final String COLUMN_EMAIL = "email";
-    public static final String COLUMN_USERNAME = "username";
+    public static final String COLUMN_USERNAME = "userName";
     public static final String COLUMN_PASSWORD = "password";
     public static final String COLUMN_ACCOUNT_TYPE = "accountType";
 
+    //Services table
     public static final String TABLE_SERVICE = "services";
-    public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_SERVICE_ID = "serviceId";
     public static final String COLUMN_SERVICE_NAME = "name";
     public static final String COLUMN_HOURLY_RATE = "hourlyRate";
     public static final String COLUMN_CATEGORY = "category";
+
+    //Service provider profile table
+    public static final String TABLE_SP_PROFILE = "serviceProviderProfile";
+    public static final String COLUMN_STREET_NUMBER = "streetNumber";
+    public static final String COLUMN_APARTMENT_NUMBER = "apartmentNumber";
+    public static final String COLUMN_STREET_NAME = "streetName";
+    public static final String COLUMN_CITY = "city";
+    public static final String COLUMN_COUNTRY = "country";
+    public static final String COLUMN_COMPANY = "company";
+    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_IS_LICENSED = "isLicensed";
+    public static final String COLUMN_PHONE_NUMBER = "phoneNumber";
+
+    //Service provider services table
+    public static final String TABLE_SP_SERVICES = "serviceProviderServices";
+
+    //Service provider availabilities table
+    public static final String TABLE_SP_AVAILABILITIES = "serviceProviderAvailabilities";
+    public static final String COLUMN_START_TIME = "startTime";
+    public static final String COLUMN_END_TIME = "endTime";
+
 
     public MyDBHandler(Context context){
         super(context, DATABASE_NAME, null,DATABASE_VERSION);
@@ -37,17 +61,35 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.execSQL(CREATE_ACCOUNTS_TABLE);
 
         //Creates the services table
-        String CREATE_SERVICES_TABLE = "CREATE TABLE "+TABLE_SERVICE+"("+COLUMN_ID+" INTEGER PRIMARY KEY,"+COLUMN_SERVICE_NAME+" TEXT,"+COLUMN_HOURLY_RATE+" TEXT,"+COLUMN_CATEGORY+" TEXT"+")";
+        String CREATE_SERVICES_TABLE = "CREATE TABLE "+TABLE_SERVICE+"("+COLUMN_SERVICE_ID+" INTEGER PRIMARY KEY,"+COLUMN_SERVICE_NAME+" TEXT,"+COLUMN_HOURLY_RATE+" TEXT,"+COLUMN_CATEGORY+" TEXT"+")";
         db.execSQL(CREATE_SERVICES_TABLE);
+
+        //Creates the service provider profile table
+        String CREATE_SP_PROFILE_TABLE = "CREATE TABLE "+TABLE_SP_PROFILE+"("+COLUMN_USERNAME+" TEXT PRIMARY KEY,"+COLUMN_STREET_NUMBER+" INTEGER,"+COLUMN_APARTMENT_NUMBER+" INTEGER,"+COLUMN_STREET_NAME+" TEXT,"+COLUMN_CITY+" TEXT,"+COLUMN_COUNTRY+" TEXT,"+COLUMN_DESCRIPTION+" TEXT,"+COLUMN_IS_LICENSED+" TEXT,"+COLUMN_PHONE_NUMBER+" TEXT,"+"FOREIGN KEY("+COLUMN_USERNAME+") REFERENCES "+TABLE_ACCOUNT+"("+COLUMN_USERNAME+")"+")";
+        db.execSQL(CREATE_SP_PROFILE_TABLE);
+
+        //Creates the service provider services table
+        String CREATE_SP_SERVICES_TABLE = "CREATE TABLE "+TABLE_SP_SERVICES+"("+COLUMN_USERNAME+" TEXT,"+COLUMN_SERVICE_ID+" INTEGER,"+"FOREIGN KEY("+COLUMN_USERNAME+") REFERENCES "+TABLE_SP_PROFILE+"("+COLUMN_USERNAME+")"+")";
+        db.execSQL(CREATE_SP_SERVICES_TABLE);
+
+        //Creates the service provider availabilities tables
+        String CREATE_SP_AVAILABILITIES_TABLE = "CREATE TABLE "+TABLE_SP_AVAILABILITIES+"("+COLUMN_USERNAME+" TEXT,"+COLUMN_START_TIME+" TEXT,"+COLUMN_END_TIME+" TEXT,"+"FOREIGN KEY("+COLUMN_USERNAME+") REFERENCES "+TABLE_SP_PROFILE+"("+COLUMN_USERNAME+")"+")";
+        db.execSQL(CREATE_SP_AVAILABILITIES_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACCOUNT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERVICE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SP_PROFILE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SP_SERVICES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SP_AVAILABILITIES);
         onCreate(db);
     }
 
+    //ACCOUNTS TABLE FUNCTIONS
+
+    //To add an account to the database
     public void addAccount(Account account){
         SQLiteDatabase db = this.getWritableDatabase();
         String type = "";
@@ -68,10 +110,10 @@ public class MyDBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_ACCOUNT_TYPE, type);
 
         db.insert(TABLE_ACCOUNT, null, values);
-
         db.close();
     }
 
+    //To find an account by username
     public Account findAccountByUserName(String username){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -79,7 +121,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
         Cursor cursor = db.rawQuery(query, null);
 
         Account account;
-
         if(cursor.moveToFirst()){
             String type = cursor.getString(0);
             if(type.equals("Admin")){
@@ -106,6 +147,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return account;
     }
 
+    //To determine if the admin account already exits
     public boolean adminExists(){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -114,8 +156,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         String query = "Select * FROM "+ TABLE_ACCOUNT +" WHERE "+COLUMN_ACCOUNT_TYPE+" = \""+accountType+"\"";
         Cursor cursor = db.rawQuery(query, null);
-
-        //Account account;
 
         if(cursor.moveToFirst()){
             flag = true;
@@ -127,6 +167,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return flag;
     }
 
+    //To find all the accounts in the database
     public ArrayList<Account> findAllAccounts(){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -166,6 +207,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return accounts;
     }
 
+    //To delete an account in the database based on its user name
     public boolean deleteAccountByUserName(String accountUserName){
         boolean result = false;
 
@@ -185,6 +227,9 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return result;
     }
 
+    //SERVICES TABLE FUNCTIONS
+
+    //To add a new service to the database
     public void addService(Service service){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -198,6 +243,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.close();
     }
 
+    //To delete a service in the database based on its name
     public boolean deleteService(String serviceName){
         boolean result = false;
 
@@ -208,7 +254,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         if(cursor.moveToFirst()){
             String idStr = cursor.getString(0);
-            db.delete(TABLE_SERVICE, COLUMN_ID + " = " + idStr, null);
+            db.delete(TABLE_SERVICE, COLUMN_SERVICE_ID + " = " + idStr, null);
             cursor.close();
             result = true;
         }
@@ -217,6 +263,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return result;
     }
 
+    //To find all services in the database
     public ArrayList<Service> findAllServices(){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -237,6 +284,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return services;
     }
 
+    //To find all services in the database in a given category
     public ArrayList<Service> findServicesByCategory(Category category){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -257,6 +305,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return services;
     }
 
+    //To edit the hourly rate of a service
     public void editServiceHourlyRate(String name, double hourlyRate){
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -269,6 +318,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.close();
     }
 
+    //To find a specific service in the database based on its name
     public Service findService(String serviceName){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -287,4 +337,76 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return service;
     }
 
+    //SERVICE PROVIDER PROFILE FUNCTIONS
+
+    //To add a column in the service provider profile table when the service provider completes his profile
+    public void completeSpProfile(ServiceProvider sp){
+
+    }
+
+    //To edit the street number
+    public void editStreetNumber(String userName, int newStreetNumber){
+
+    }
+
+    //To edit the apartment number
+    public void editApartmentNumber(String userName, int newApartmentNumber){
+
+    }
+
+    //To edit the street name
+    public void editStreetName(String userName, String newStreetName){
+
+    }
+
+    //To edit the city
+    public void editCity(String userName, String newCity){
+
+    }
+
+    //To edit the country
+    public void editCountry(String userName, String newCountry){
+
+    }
+
+    //To edit the description
+    public void editDescription(String userName, String newDescription){
+
+    }
+
+    //To edit isLicensed
+    public void editIsLicensed(String userName, boolean isLiscensed){
+
+    }
+
+    //To edit the phone number
+    public void editPhoneNumber(String userName, String phoneNumber){
+
+    }
+
+    //To find the profile information of a specific service provider using his user name
+    public ServiceProvider findServiceProvider(String userName){
+        return new ServiceProvider();
+    }
+
+    //SERVICE PROVIDER SERVICES FUNCTIONS
+
+    //To add a service associated to a specific service provider
+    public void addSpService(String userName, String serviceName){
+
+    }
+
+    //To delete a service associated to a specific service provider
+    public boolean deleteSpService(String userName, String serviceName){
+        return false;
+    }
+
+    //To find the list of all the services associated to a service provider
+    public ArrayList<Service> findAllSpServices(String userName){
+        return null;
+    }
+
+    //SERVICE PROVIDER AVAILABILITIES FUNCTIONS
+
+    
 }
