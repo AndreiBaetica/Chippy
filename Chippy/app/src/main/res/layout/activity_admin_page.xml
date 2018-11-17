@@ -11,7 +11,6 @@
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackground"
         tools:context=".AdminWelcomePage">
 
         <ViewSwitcher
@@ -69,9 +68,10 @@
                 <ListView
                     android:id="@+id/serviceList"
                     android:layout_width="match_parent"
-                    android:layout_height="455dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_marginTop="15dp"
+                    android:layout_marginBottom="30dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp" >
 
@@ -80,8 +80,7 @@
                 <LinearLayout
                     android:id="@+id/LinearLayout02"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:layout_alignParentBottom="true">
+                    android:layout_width="match_parent">
 
                     <Button
                         android:id="@+id/editServiceButton"
@@ -89,10 +88,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/colorButton"
+                        android:padding="10dp"
                         android:onClick="onClickEdit"
-                        android:text="Edit Service"
-                        android:textColor="@android:color/white" />
+                        android:text="Edit Service" />
 
                     <Button
                         android:id="@+id/addServiceButton"
@@ -100,10 +98,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/colorButton"
+                        android:padding="10dp"
                         android:onClick="onClickAddNewService"
-                        android:text="Add New Service"
-                        android:textColor="@android:color/white" />
+                        android:text="Add New Service" />
 
                     <Button
                         android:id="@+id/deleteServiceButton"
@@ -111,10 +108,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/colorButton"
+                        android:padding="10dp"
                         android:onClick="onClickDelete"
-                        android:text="Delete Service"
-                        android:textColor="@android:color/white" />
+                        android:text="Delete Service" />
                 </LinearLayout>
 
             </LinearLayout>
