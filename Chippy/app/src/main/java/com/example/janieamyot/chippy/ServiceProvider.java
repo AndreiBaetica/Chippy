@@ -4,9 +4,12 @@ public class ServiceProvider extends Account{
     private Integer streetNumber;
     private Integer apartmentNumber;
     private String streetName;
+    private String city;
+    private String country;
     private String company;
     private String description;
-    private boolean isLiscenced;
+    private String phoneNumber;
+    private boolean isLicenced;
     public ServiceProvider(){
         super();
     }
@@ -29,8 +32,17 @@ public class ServiceProvider extends Account{
     public void setDescription(String description){
         this.description=description;
     }
-    public void setLiscenced(boolean isLiscenced){
-        this.isLiscenced=isLiscenced;
+    public void setLicenced(boolean isLiscenced){
+        this.isLicenced =isLiscenced;
+    }
+    public void setPhoneNumber(String phoneNumber){
+        this.phoneNumber = phoneNumber;
+    }
+    public void setCity(String city){
+        this.city=city;
+    }
+    public void setCountry(String country){
+        this.country = country;
     }
     public Integer getStreetNumber(){
         return streetNumber;
@@ -47,7 +59,19 @@ public class ServiceProvider extends Account{
     public String getDescription() {
         return description;
     }
-    public boolean isLiscenced() {
-        return isLiscenced;
+    public boolean isLicenced() {
+        return isLicenced;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }
