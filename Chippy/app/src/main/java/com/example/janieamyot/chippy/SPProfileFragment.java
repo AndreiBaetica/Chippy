@@ -35,26 +35,45 @@ public class SPProfileFragment extends Fragment{
         TextView email = getView().findViewById(R.id.spEmailField);
         email.setText(extractAccount()[3]);
         TextView address = getView().findViewById(R.id.spAddressField);
-        address.setText(extractAccount()[4]);
+        if (!extractAccount()[5].equals("")) {
+            String setText = extractAccount()[4] +" " + extractAccount()[6] + " Apartment " + extractAccount()[5] + " " + extractAccount()[7] + " " + extractAccount()[8];
+            address.setText(setText);
+        }
+        else{
+            String setText = extractAccount()[4] +" " + extractAccount()[6] + " " + extractAccount()[7] + " " + extractAccount()[8];
+            address.setText(setText);
+        }
         TextView phone = getView().findViewById(R.id.spPhoneField);
-        phone.setText(extractAccount()[5]);
+        phone.setText(extractAccount()[9]);
+        TextView company = getView().findViewById(R.id.spCompanyField);
+        company.setText(extractAccount()[10]);
         TextView description = getView().findViewById(R.id.spDescriptionField);
-        description.setText(extractAccount()[6]);
+        description.setText(extractAccount()[11]);
         TextView licensed = getView().findViewById(R.id.spLicensedField);
-        licensed.setText(extractAccount()[7]);
+        licensed.setText(extractAccount()[12]);
     }
 
     private String[] extractAccount(){
         ServiceProvider serviceProvider = (ServiceProvider) bundle.get("Account");
-        String[] str = new String[8];
+        String[] str = new String[13];
         str[0] = serviceProvider.getName();
         str[1] = serviceProvider.getLastName();
         str[2] = serviceProvider.getUserName();
         str[3] = serviceProvider.getEmail();
-        //str[4] = serviceProvider.getAddress();
-        //str[5] = serviceProvider.getPhone();
-        //str[6] = serviceProvider.getDescription();
-        //str[7] = serviceProvider.getLicensed();
+        str[4] = serviceProvider.getStreetNumber();
+        str[5] = serviceProvider.getApartmentNumber();
+        str[6] = serviceProvider.getStreetName();
+        str[7] = serviceProvider.getCity();
+        str[8] = serviceProvider.getCountry();
+        str[9] = serviceProvider.getPhoneNumber();
+        str[10] = serviceProvider.getCompany();
+        str[11] = serviceProvider.getDescription();
+        if(serviceProvider.isLicensed() == true){
+            str[12] = "Yes";
+        }
+        else{
+            str[12] = "No";
+        }
         return str;
     }
 }

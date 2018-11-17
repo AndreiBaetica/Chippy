@@ -148,7 +148,7 @@ public class CreateNewAccount extends AppCompatActivity {
                 case SERVICE:
                     ServiceProvider serviceProvider = new ServiceProvider(firstName, lastName, username, password, email);
                     dbHandler.addAccount(serviceProvider);
-                    intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
+                    intent = new Intent(getApplicationContext(), ServiceProviderProfile.class);
                     bundle.putSerializable("Account", serviceProvider);
                     intent.putExtras(bundle);
                     startActivity(intent);
