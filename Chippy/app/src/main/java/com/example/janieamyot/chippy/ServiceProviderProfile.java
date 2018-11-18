@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -26,6 +27,8 @@ public class ServiceProviderProfile extends AppCompatActivity {
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         serviceProvider = (ServiceProvider) bundle.get("Account");
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
         countriesList();
     }
 
