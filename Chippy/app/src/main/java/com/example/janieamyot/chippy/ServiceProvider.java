@@ -2,7 +2,7 @@ package com.example.janieamyot.chippy;
 
 public class ServiceProvider extends Account{
     private Integer streetNumber;
-    private Integer apartmentNumber;
+    private String apartmentNumber;
     private String streetName;
     private String city;
     private String country;
@@ -20,7 +20,7 @@ public class ServiceProvider extends Account{
     public void setStreetNumber(Integer streetNumber){
         this.streetNumber=streetNumber;
     }
-    public void setApartmentNumber(Integer apartmentNumber){
+    public void setApartmentNumber(String apartmentNumber){
         this.apartmentNumber=apartmentNumber;
     }
     public void setStreetName(String streetName){
@@ -47,7 +47,7 @@ public class ServiceProvider extends Account{
     public Integer getStreetNumber(){
         return streetNumber;
     }
-    public Integer getApartmentNumber(){
+    public String getApartmentNumber(){
         return apartmentNumber;
     }
     public String getStreetName() {

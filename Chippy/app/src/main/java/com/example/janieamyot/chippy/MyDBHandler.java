@@ -65,7 +65,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.execSQL(CREATE_SERVICES_TABLE);
 
         //Creates the service provider profile table
-        String CREATE_SP_PROFILE_TABLE = "CREATE TABLE "+TABLE_SP_PROFILE+"("+COLUMN_USERNAME+" TEXT PRIMARY KEY,"+COLUMN_STREET_NUMBER+" INTEGER,"+COLUMN_APARTMENT_NUMBER+" INTEGER,"+COLUMN_STREET_NAME+" TEXT,"+COLUMN_CITY+" TEXT,"+COLUMN_COUNTRY+" TEXT,"+COLUMN_DESCRIPTION+" TEXT,"+COLUMN_IS_LICENSED+" TEXT,"+COLUMN_PHONE_NUMBER+" TEXT,"+"FOREIGN KEY("+COLUMN_USERNAME+") REFERENCES "+TABLE_ACCOUNT+"("+COLUMN_USERNAME+")"+")";
+        String CREATE_SP_PROFILE_TABLE = "CREATE TABLE "+TABLE_SP_PROFILE+"("+COLUMN_USERNAME+" TEXT PRIMARY KEY,"+COLUMN_STREET_NUMBER+" INTEGER,"+COLUMN_APARTMENT_NUMBER+" TEXT,"+COLUMN_STREET_NAME+" TEXT,"+COLUMN_CITY+" TEXT,"+COLUMN_COUNTRY+" TEXT,"+COLUMN_DESCRIPTION+" TEXT,"+COLUMN_IS_LICENSED+" TEXT,"+COLUMN_PHONE_NUMBER+" TEXT,"+"FOREIGN KEY("+COLUMN_USERNAME+") REFERENCES "+TABLE_ACCOUNT+"("+COLUMN_USERNAME+")"+")";
         db.execSQL(CREATE_SP_PROFILE_TABLE);
 
         //Creates the service provider services table
@@ -239,7 +239,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_CATEGORY, service.getCategory().getLabel());
 
         db.insert(TABLE_SERVICE, null, values);
-
         db.close();
     }
 
@@ -271,7 +270,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
         Cursor cursor = db.rawQuery(query, null);
 
         ArrayList<Service> services = new ArrayList<Service>();
-
         if(cursor.moveToFirst()){
             do{
                 services.add(new Service(Double.parseDouble(cursor.getString(2)), cursor.getString(1), cursor.getString(3)));
@@ -280,6 +278,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         } else{
             services = null;
         }
+
         db.close();
         return services;
     }
@@ -292,7 +291,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
         Cursor cursor = db.rawQuery(query, null);
 
         ArrayList<Service> services = new ArrayList<Service>();
-
         if(cursor.moveToFirst()){
             do{
                 services.add(new Service(Double.parseDouble(cursor.getString(2)), cursor.getString(1), cursor.getString(3)));
@@ -301,20 +299,19 @@ public class MyDBHandler extends SQLiteOpenHelper{
         } else{
             services = null;
         }
+
         db.close();
         return services;
     }
 
     //To edit the hourly rate of a service
     public void editServiceHourlyRate(String name, double hourlyRate){
-
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_HOURLY_RATE, hourlyRate);
 
         db.update(TABLE_SERVICE, values, COLUMN_SERVICE_NAME + "= " + name, null);
-
         db.close();
     }
 
@@ -326,79 +323,240 @@ public class MyDBHandler extends SQLiteOpenHelper{
         Cursor cursor = db.rawQuery(query, null);
 
         Service service;
-
         if(cursor.moveToFirst()){
             service = new Service(Double.parseDouble(cursor.getString(2)), cursor.getString(1), cursor.getString(3));
             cursor.close();
         } else{
             service = null;
         }
+
         db.close();
         return service;
+    }
+
+    //To find the service ID related to a specific service
+    private int findServiceId(String serviceName){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "Select * FROM "+ TABLE_SERVICE +" WHERE "+COLUMN_NAME+" = \""+serviceName+"\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        int serviceID = cursor.getInt(0);
+
+        cursor.close();
+        db.close();
+        return serviceID;
     }
 
     //SERVICE PROVIDER PROFILE FUNCTIONS
 
     //To add a column in the service provider profile table when the service provider completes his profile
     public void completeSpProfile(ServiceProvider sp){
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USERNAME, sp.getUserName());
+        values.put(COLUMN_STREET_NUMBER, sp.getStreetNumber());
+        values.put(COLUMN_APARTMENT_NUMBER, sp.getApartmentNumber());
+        values.put(COLUMN_STREET_NAME, sp.getStreetName());
+        values.put(COLUMN_CITY, sp.getCity());
+        values.put(COLUMN_COUNTRY, sp.getCountry());
+        values.put(COLUMN_COMPANY, sp.getCompany());
+        values.put(COLUMN_DESCRIPTION, sp.getDescription());
+        values.put(COLUMN_IS_LICENSED, Boolean.toString(sp.isLicenced()));
+        values.put(COLUMN_PHONE_NUMBER, sp.getPhoneNumber());
+
+        db.insert(TABLE_SP_PROFILE, null, values);
+        db.close();
+    }
+
+    //To edit service provider profile
+    public void editSpProfile(ServiceProvider sp){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_STREET_NUMBER, sp.getStreetNumber());
+        values.put(COLUMN_APARTMENT_NUMBER, sp.getApartmentNumber());
+        values.put(COLUMN_STREET_NAME, sp.getStreetName());
+        values.put(COLUMN_CITY, sp.getCity());
+        values.put(COLUMN_COUNTRY, sp.getCountry());
+        values.put(COLUMN_COMPANY, sp.getCompany());
+        values.put(COLUMN_DESCRIPTION, sp.getDescription());
+        values.put(COLUMN_IS_LICENSED, Boolean.toString(sp.isLicenced()));
+        values.put(COLUMN_PHONE_NUMBER, sp.getPhoneNumber());
+
+        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + sp.getUserName(), null);
+        db.close();
     }
 
     //To edit the street number
     public void editStreetNumber(String userName, int newStreetNumber){
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_STREET_NUMBER, newStreetNumber);
+
+        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        db.close();
     }
 
     //To edit the apartment number
-    public void editApartmentNumber(String userName, int newApartmentNumber){
+    public void editApartmentNumber(String userName, String newApartmentNumber){
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_APARTMENT_NUMBER, newApartmentNumber);
+
+        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        db.close();
     }
 
     //To edit the street name
     public void editStreetName(String userName, String newStreetName){
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_STREET_NAME, newStreetName);
+
+        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        db.close();
     }
 
     //To edit the city
     public void editCity(String userName, String newCity){
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CITY, newCity);
+
+        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        db.close();
     }
 
     //To edit the country
     public void editCountry(String userName, String newCountry){
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_COUNTRY, newCountry);
+
+        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        db.close();
     }
 
     //To edit the description
     public void editDescription(String userName, String newDescription){
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DESCRIPTION, newDescription);
+
+        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        db.close();
     }
 
     //To edit isLicensed
     public void editIsLicensed(String userName, boolean isLiscensed){
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_IS_LICENSED, Boolean.toString(isLiscensed));
+
+        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        db.close();
     }
 
     //To edit the phone number
     public void editPhoneNumber(String userName, String phoneNumber){
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PHONE_NUMBER, phoneNumber);
+
+        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        db.close();
     }
 
     //To find the profile information of a specific service provider using his user name
     public ServiceProvider findServiceProvider(String userName){
-        return new ServiceProvider();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "Select * FROM "+ TABLE_SP_PROFILE +" WHERE "+COLUMN_NAME+" = \""+userName+"\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        ServiceProvider sp = new ServiceProvider();
+        if(cursor.moveToFirst()){
+            sp.setStreetNumber(cursor.getInt(1));
+            sp.setApartmentNumber(cursor.getString(2));
+            sp.setStreetName(cursor.getString(3));
+            sp.setCity(cursor.getString(4));
+            sp.setCountry(cursor.getString(5));
+            sp.setCompany(cursor.getString(6));
+            sp.setDescription(cursor.getString(7));
+            sp.setLicenced(Boolean.parseBoolean(cursor.getString(8)));
+            sp.setPhoneNumber(cursor.getString(9));
+            cursor.close();
+        } else{
+            sp = null;
+        }
+
+        db.close();
+        return sp;
+    }
+
+    //To find if a specific service provider already has a profile
+    public boolean spProfileExists(String userName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        boolean flag;
+
+        String query = "Select * FROM "+ TABLE_SP_PROFILE +" WHERE "+COLUMN_NAME+" = \""+userName+"\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        ServiceProvider sp = new ServiceProvider();
+        if(cursor.moveToFirst()){
+            flag = true;
+            cursor.close();
+        } else{
+            flag = false;
+        }
+
+        db.close();
+        return flag;
     }
 
     //SERVICE PROVIDER SERVICES FUNCTIONS
 
     //To add a service associated to a specific service provider
     public void addSpService(String userName, String serviceName){
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USERNAME, userName);
+        values.put(COLUMN_SERVICE_ID, this.findServiceId(serviceName));
+
+        db.insert(TABLE_SP_SERVICES, null, values);
+        db.close();
     }
 
     //To delete a service associated to a specific service provider
     public boolean deleteSpService(String userName, String serviceName){
-        return false;
+        boolean result = false;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int serviceID = this.findServiceId(serviceName);
+
+        String query = "Select * FROM " + TABLE_SP_SERVICES + " WHERE " + COLUMN_USERNAME + " = \"" + userName + "\"" + " AND" + COLUMN_SERVICE_ID + " = \"" + serviceID + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            String idStr = cursor.getString(0);
+            db.delete(TABLE_SP_SERVICES, COLUMN_USERNAME + " = " + idStr, null);
+            cursor.close();
+            result = true;
+        }
+
+        db.close();
+        return result;
     }
 
     //To find the list of all the services associated to a service provider
@@ -408,5 +566,5 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     //SERVICE PROVIDER AVAILABILITIES FUNCTIONS
 
-    
+
 }
