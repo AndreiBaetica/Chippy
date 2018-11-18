@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ServiceProviderEditServices">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ActionBarTheme" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:layout_marginBottom="10dp"
-        android:id="@+id/spAvailableTitle"
-        android:text="AVAILABILITIES"
+        android:id="@+id/spServicesEditTitle"
+        android:text="SERVICE LIST"
         android:textSize="36sp"
         android:textStyle="bold"
         android:typeface="serif"
         android:layout_centerHorizontal="true" />
 
+    <Spinner
+        android:id="@+id/spServicesEditCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spServicesEditTitle">
+    </Spinner>
+
+
     <ListView
-        android:id="@+id/spAvailableList"
+        android:id="@+id/spServicesList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/spAvailableTitle"
-        android:layout_above="@+id/spAvailableButtons"
+        android:layout_below="@+id/spServicesEditCategory"
+        android:layout_above="@+id/spServicesEditButtons"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="30dp"
         android:paddingLeft="15dp"
@@ -33,10 +51,10 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:id="@+id/spAvailableButtons">
+        android:id="@+id/spServicesEditButtons">
 
         <Button
-            android:id="@+id/spAvailableAdd"
+            android:id="@+id/spServicesEditAdd"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -47,26 +65,16 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/spAvailableEdit"
+            android:id="@+id/spServicesEditCancel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:text="Edit"
-            android:padding="10dp"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/spAvailableDelete"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:text="Delete"
+            android:text="Cancel"
             android:padding="10dp"
             android:textSize="24sp"
             android:textStyle="bold"  />
     </LinearLayout>
+
 
 </RelativeLayout>
