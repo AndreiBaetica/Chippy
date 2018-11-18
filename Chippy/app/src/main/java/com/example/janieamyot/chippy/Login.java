@@ -45,10 +45,18 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
             if(account instanceof ServiceProvider){
-                Intent intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
-                bundle.putSerializable("Account", account);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                if(dbHandler.spProfileExists(account)) {
+                    Intent intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
+                    bundle.putSerializable("Account", account);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(getApplicationContext(), ServiceProviderProfile.class);
+                    bundle.putSerializable("Account", account);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
             }
 
         }
