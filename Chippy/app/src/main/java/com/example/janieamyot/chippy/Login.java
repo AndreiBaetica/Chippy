@@ -45,7 +45,7 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
             if(account instanceof ServiceProvider){
-                if(dbHandler.spProfileExists(account)) {
+                if(dbHandler.spProfileExists(account.getUserName())) {
                     Intent intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
                     bundle.putSerializable("Account", account);
                     intent.putExtras(bundle);
