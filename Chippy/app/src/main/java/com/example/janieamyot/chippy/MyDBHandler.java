@@ -469,6 +469,17 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.close();
     }
 
+    //To edit the company
+    public void editCompany(String userName, String newCompany){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_COMPANY, newCompany);
+
+        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        db.close();
+    }
+
     //To edit isLicensed
     public void editIsLicensed(String userName, boolean isLiscensed){
         SQLiteDatabase db = this.getWritableDatabase();
