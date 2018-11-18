@@ -1,15 +1,16 @@
 package com.example.janieamyot.chippy;
 
 public class ServiceProvider extends Account{
-    private Integer streetNumber;
-    private Integer apartmentNumber;
+    private int streetNumber;
+    private String apartmentNumber;
     private String streetName;
     private String city;
     private String country;
     private String company;
     private String description;
     private String phoneNumber;
-    private boolean isLicenced;
+    private boolean isLicensed;
+    
     public ServiceProvider(){
         super();
     }
@@ -17,10 +18,24 @@ public class ServiceProvider extends Account{
     public ServiceProvider(String name, String lastName, String userName, String password, String email){
     super(name,lastName,userName, password, email);
   }
+
+    public ServiceProvider(String name, String lastName, String userName, String password, String email, int streetNumber, String apartmentNumber, String streetName, String city, String country, String company, String description, boolean isLicensed, String phoneNumber){
+        super(name,lastName,userName, password, email);
+        this.streetNumber = streetNumber;
+        this.apartmentNumber = apartmentNumber;
+        this.streetName = streetName;
+        this.city = city;
+        this.country = country;
+        this.company = company;
+        this.description = description;
+        this.isLicensed = isLicensed;
+        this.phoneNumber = phoneNumber;
+    }
+
     public void setStreetNumber(Integer streetNumber){
         this.streetNumber=streetNumber;
     }
-    public void setApartmentNumber(Integer apartmentNumber){
+    public void setApartmentNumber(String apartmentNumber){
         this.apartmentNumber=apartmentNumber;
     }
     public void setStreetName(String streetName){
@@ -32,8 +47,8 @@ public class ServiceProvider extends Account{
     public void setDescription(String description){
         this.description=description;
     }
-    public void setLicenced(boolean isLiscenced){
-        this.isLicenced =isLiscenced;
+    public void setLicensed(boolean isLiscenced){
+        this.isLicensed =isLiscenced;
     }
     public void setPhoneNumber(String phoneNumber){
         this.phoneNumber = phoneNumber;
@@ -47,7 +62,7 @@ public class ServiceProvider extends Account{
     public Integer getStreetNumber(){
         return streetNumber;
     }
-    public Integer getApartmentNumber(){
+    public String getApartmentNumber(){
         return apartmentNumber;
     }
     public String getStreetName() {
@@ -59,8 +74,8 @@ public class ServiceProvider extends Account{
     public String getDescription() {
         return description;
     }
-    public boolean isLicenced() {
-        return isLicenced;
+    public boolean isLicensed() {
+        return isLicensed;
     }
 
     public String getCity() {
