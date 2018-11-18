@@ -1,5 +1,8 @@
 package com.example.janieamyot.chippy;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class ServiceProvider extends Account{
     private int streetNumber;
     private String apartmentNumber;
@@ -10,6 +13,8 @@ public class ServiceProvider extends Account{
     private String description;
     private String phoneNumber;
     private boolean isLicensed;
+    private String availabilities;
+    private ArrayList<Service> services;
     
     public ServiceProvider(){
         super();
@@ -19,7 +24,7 @@ public class ServiceProvider extends Account{
     super(name,lastName,userName, password, email);
   }
 
-    public ServiceProvider(String name, String lastName, String userName, String password, String email, int streetNumber, String apartmentNumber, String streetName, String city, String country, String company, String description, boolean isLicensed, String phoneNumber){
+    public ServiceProvider(String name, String lastName, String userName, String password, String email, int streetNumber, String apartmentNumber, String streetName, String city, String country, String company, String description, boolean isLicensed, String phoneNumber, String availabilities, ArrayList<Service> services){
         super(name,lastName,userName, password, email);
         this.streetNumber = streetNumber;
         this.apartmentNumber = apartmentNumber;
@@ -30,6 +35,12 @@ public class ServiceProvider extends Account{
         this.description = description;
         this.isLicensed = isLicensed;
         this.phoneNumber = phoneNumber;
+        this.availabilities = availabilities;
+        this.services = services;
+    }
+
+    public void addService(Service service) {
+        services.add(service);
     }
 
     public void setStreetNumber(Integer streetNumber){
@@ -81,12 +92,12 @@ public class ServiceProvider extends Account{
     public String getCity() {
         return city;
     }
-
     public String getCountry() {
         return country;
     }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
+    public ArrayList<Service> getServices() { return services; }
+    public String getAvailabilities() { return availabilities; }
 }
