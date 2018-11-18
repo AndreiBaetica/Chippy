@@ -348,6 +348,20 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return serviceID;
     }
 
+    //To find a service name from the service ID
+    private String findServiceName(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "Select * FROM "+ TABLE_SERVICE +" WHERE "+COLUMN_SERVICE_ID+" = \""+id+"\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        String serviceName = cursor.getString(1);
+
+        cursor.close();
+        db.close();
+        return serviceName;
+    }
+
     //SERVICE PROVIDER PROFILE FUNCTIONS
 
     //To add a column in the service provider profile table when the service provider completes his profile
@@ -560,8 +574,24 @@ public class MyDBHandler extends SQLiteOpenHelper{
     }
 
     //To find the list of all the services associated to a service provider
-    public ArrayList<Service> findAllSpServices(String userName){
-        return null;
+    public ArrayList<String> findAllSpServices(String userName){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "Select " + COLUMN_SERVICE_ID + " FROM "+ TABLE_SP_SERVICES+" WHERE "+COLUMN_USERNAME+" = \""+userName+"\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        ArrayList<String> services = new ArrayList<String>();
+        if(cursor.moveToFirst()){
+            do{
+                services.add(this.findServiceName(cursor.getInt(0)));
+            }while (cursor.moveToNext());
+            cursor.close();
+        } else{
+            services = null;
+        }
+
+        db.close();
+        return services;
     }
 
     //SERVICE PROVIDER AVAILABILITIES FUNCTIONS
