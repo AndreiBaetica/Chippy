@@ -377,7 +377,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_COUNTRY, sp.getCountry());
         values.put(COLUMN_COMPANY, sp.getCompany());
         values.put(COLUMN_DESCRIPTION, sp.getDescription());
-        values.put(COLUMN_IS_LICENSED, Boolean.toString(sp.isLicenced()));
+        values.put(COLUMN_IS_LICENSED, Boolean.toString(sp.isLicensed()));
         values.put(COLUMN_PHONE_NUMBER, sp.getPhoneNumber());
 
         db.insert(TABLE_SP_PROFILE, null, values);
@@ -396,7 +396,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_COUNTRY, sp.getCountry());
         values.put(COLUMN_COMPANY, sp.getCompany());
         values.put(COLUMN_DESCRIPTION, sp.getDescription());
-        values.put(COLUMN_IS_LICENSED, Boolean.toString(sp.isLicenced()));
+        values.put(COLUMN_IS_LICENSED, Boolean.toString(sp.isLicensed()));
         values.put(COLUMN_PHONE_NUMBER, sp.getPhoneNumber());
 
         db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + sp.getUserName(), null);
@@ -507,7 +507,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
             sp.setCountry(cursor.getString(5));
             sp.setCompany(cursor.getString(6));
             sp.setDescription(cursor.getString(7));
-            sp.setLicenced(Boolean.parseBoolean(cursor.getString(8)));
+            sp.setLicensed(Boolean.parseBoolean(cursor.getString(8)));
             sp.setPhoneNumber(cursor.getString(9));
             cursor.close();
         } else{

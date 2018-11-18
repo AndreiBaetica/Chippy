@@ -77,7 +77,7 @@ public class ServiceProviderProfile extends AppCompatActivity {
             if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
                 dbHandler.editStreetNumber(serviceProvider.getUserName(), Integer.parseInt(streetNumber));
             }else {
-                serviceProvider.setStreetNumber(streetNumber);
+                serviceProvider.setStreetNumber(Integer.parseInt(streetNumber));
             }
         }
         else{
@@ -153,10 +153,10 @@ public class ServiceProviderProfile extends AppCompatActivity {
         field = findViewById(R.id.spEditCompany);
         String company = field.getText().toString();
         if (!company.equals("")){
-            if(dbHandler.spProfileExists(serviceProvider)) {
+            if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
                 dbHandler.editCompany(serviceProvider.getUserName(), company);
             }else {
-                serviceProvider.setCompany(comapny);
+                serviceProvider.setCompany(company);
             }
         }
         else{
@@ -181,14 +181,14 @@ public class ServiceProviderProfile extends AppCompatActivity {
             if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
                 dbHandler.editIsLicensed(serviceProvider.getUserName(), true);
             }else {
-                serviceProvider.setIsLicensed(true);
+                serviceProvider.setLicensed(true);
             }
         }
         if (licensedNo.isChecked()){
             if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
                 dbHandler.editIsLicensed(serviceProvider.getUserName(), false);
             }else {
-                serviceProvider.setIsLicensed(false);
+                serviceProvider.setLicensed(false);
             }
         }
         if(!dbHandler.spProfileExists(serviceProvider.getUserName())){
