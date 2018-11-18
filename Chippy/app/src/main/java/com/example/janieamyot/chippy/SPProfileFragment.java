@@ -60,7 +60,7 @@ public class SPProfileFragment extends Fragment{
         str[1] = serviceProvider.getLastName();
         str[2] = serviceProvider.getUserName();
         str[3] = serviceProvider.getEmail();
-        str[4] = serviceProvider.getStreetNumber();
+        str[4] = serviceProvider.getStreetNumber().toString();
         str[5] = serviceProvider.getApartmentNumber();
         str[6] = serviceProvider.getStreetName();
         str[7] = serviceProvider.getCity();
