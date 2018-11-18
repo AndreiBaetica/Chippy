@@ -159,7 +159,7 @@ public class ServiceProviderProfile extends AppCompatActivity {
             dbHandler.editIsLicensed(serviceProvider.getUserName(), false);
             serviceProvider.setIsLicensed(false);
         }
-
+        dbHandler.close();
         if(flag){
             Intent intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
             bundle.putSerializable("Account", serviceProvider);
