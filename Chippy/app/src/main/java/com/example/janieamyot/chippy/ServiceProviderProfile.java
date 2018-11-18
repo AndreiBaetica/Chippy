@@ -57,8 +57,11 @@ public class ServiceProviderProfile extends AppCompatActivity {
         field = findViewById(R.id.spEditStreetName);
         String streetName = field.getText().toString();
         if (!streetName.equals("")){
-            dbHandler.editStreetName(serviceProvider.getUserName(), streetName);
-            serviceProvider.setStreetName(streetName);
+            if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
+                dbHandler.editStreetName(serviceProvider.getUserName(), streetName);
+            }else {
+                serviceProvider.setStreetName(streetName);
+            }
         }
         else{
             field.getText().clear();
@@ -68,8 +71,11 @@ public class ServiceProviderProfile extends AppCompatActivity {
         field = findViewById(R.id.spEditStreetNumber);
         String streetNumber = field.getText().toString();
         if (TextUtils.isDigitsOnly(streetNumber)){
-            dbHandler.editStreetNumber(serviceProvider.getUserName(), Integer.parseInt(streetNumber));
-            serviceProvider.setStreetNumber(streetNumber);
+            if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
+                dbHandler.editStreetNumber(serviceProvider.getUserName(), Integer.parseInt(streetNumber));
+            }else {
+                serviceProvider.setStreetNumber(streetNumber);
+            }
         }
         else{
             field.getText().clear();
@@ -84,14 +90,19 @@ public class ServiceProviderProfile extends AppCompatActivity {
         //optional apartment number so it can be blank
         field = findViewById(R.id.spEditApartmentNumber);
         String apartmentNumber = field.getText().toString();
-        dbHandler.editApartmentNumber(serviceProvider.getUserName(), apartmentNumber);
-        serviceProvider.setApartmentNumber(apartmentNumber);
-
+        if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
+            dbHandler.editApartmentNumber(serviceProvider.getUserName(), apartmentNumber);
+        }else {
+            serviceProvider.setApartmentNumber(apartmentNumber);
+        }
         field = findViewById(R.id.spEditCity);
         String city = field.getText().toString();
         if (!city.equals("")){
+            if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
             dbHandler.editCity(serviceProvider.getUserName(), city);
-            serviceProvider.setCity(city);
+            }else {
+                serviceProvider.setCity(city);
+            }
         }
         else{
             field.getText().clear();
@@ -101,8 +112,11 @@ public class ServiceProviderProfile extends AppCompatActivity {
         Spinner spinner = findViewById(R.id.spinnerCountries);
         String country = spinner.toString();
         if (!country.equals("")){
-            dbHandler.editCountry(serviceProvider.getUserName(),country);
-            serviceProvider.setCountry(country);
+            if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
+                dbHandler.editCountry(serviceProvider.getUserName(), country);
+            }else {
+                serviceProvider.setCountry(country);
+            }
         }
         else{
             field.getText().clear();
@@ -116,8 +130,11 @@ public class ServiceProviderProfile extends AppCompatActivity {
             String str2 = phoneNumber.substring(4,7);
             String str3 = phoneNumber.substring(8,phoneNumber.length());
             if(TextUtils.isDigitsOnly(str1) && TextUtils.isDigitsOnly(str2) && TextUtils.isDigitsOnly(str3)) {
-                dbHandler.editPhoneNumber(serviceProvider.getUserName(), phoneNumber);
-                serviceProvider.setPhoneNumber(phoneNumber);
+                if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
+                    dbHandler.editPhoneNumber(serviceProvider.getUserName(), phoneNumber);
+                }else {
+                    serviceProvider.setPhoneNumber(phoneNumber);
+                }
             }
             else{
                 field.getText().clear();
@@ -133,8 +150,11 @@ public class ServiceProviderProfile extends AppCompatActivity {
         field = findViewById(R.id.spEditCompany);
         String company = field.getText().toString();
         if (!company.equals("")){
-            dbHandler.editCompany(serviceProvider.getUserName(), company);
-            serviceProvider.setCompany(comapny);
+            if(dbHandler.spProfileExists(serviceProvider)) {
+                dbHandler.editCompany(serviceProvider.getUserName(), company);
+            }else {
+                serviceProvider.setCompany(comapny);
+            }
         }
         else{
             field.getText().clear();
@@ -145,19 +165,31 @@ public class ServiceProviderProfile extends AppCompatActivity {
         //description is optional so it can be blank
         field = findViewById(R.id.spEditDescription);
         String description = field.getText().toString();
-        dbHandler.editDescription(serviceProvider.getUserName(), description);
-        serviceProvider.setDescription(description);
+        if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
+            dbHandler.editDescription(serviceProvider.getUserName(), description);
+        }else {
+            serviceProvider.setDescription(description);
+        }
 
         //license is optional so it can be blank
         RadioButton licensedYes = findViewById(R.id.spLicensedYes);
         RadioButton licensedNo = findViewById(R.id.spLicensedNo);
         if (licensedYes.isChecked()){
-            dbHandler.editIsLicensed(serviceProvider.getUserName(),true);
-            serviceProvider.setIsLicensed(true);
+            if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
+                dbHandler.editIsLicensed(serviceProvider.getUserName(), true);
+            }else {
+                serviceProvider.setIsLicensed(true);
+            }
         }
         if (licensedNo.isChecked()){
-            dbHandler.editIsLicensed(serviceProvider.getUserName(), false);
-            serviceProvider.setIsLicensed(false);
+            if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
+                dbHandler.editIsLicensed(serviceProvider.getUserName(), false);
+            }else {
+                serviceProvider.setIsLicensed(false);
+            }
+        }
+        if(!dbHandler.spProfileExists(serviceProvider.getUserName())){
+            dbHandler.editSpProfile(serviceProvider);
         }
         dbHandler.close();
         if(flag){
