@@ -21,7 +21,10 @@
         <activity android:name=".AdminWelcomePage" />
         <activity android:name=".HomeOwnerWelcomePage" />
         <activity android:name=".ServiceProviderWelcomePage" />
-        <activity android:name=".AdminServiceEditor"></activity>
+        <activity android:name=".AdminServiceEditor" />
+        <activity android:name=".ServiceProviderProfile" />
+        <activity android:name=".ServiceProviderEditServices" />
+        <activity android:name=".ServiceProviderAvailable"></activity>
     </application>
 
 </manifest>

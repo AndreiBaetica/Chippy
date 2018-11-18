@@ -1,18 +1,22 @@
 package com.example.janieamyot.chippy;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ServiceProvider extends Account{
 
-    private Service [] myOfferedServices = new Service[];
+public class ServiceProvider extends Account{
+    private int streetNumber;
+    private String apartmentNumber;
+    private String streetName;
+    private String city;
+    private String country;
+    private String company;
+    private String description;
+    private String phoneNumber;
+    private boolean isLicensed;
+    private String availabilities;
+    private ArrayList<Service> services;
+    
 
     public ServiceProvider(){
         super();
@@ -22,37 +26,7 @@ public class ServiceProvider extends Account{
     super(name,lastName,userName, password, email);
   }
 
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Intent intent = getActivity().getIntent();
-        bundle = intent.getExtras();
 
-        //UI changes here
-        //Use getActivity() when referring to ServiceProviderWelcomePage
-        //ex. instead of this use getActivity()
-
-        ListView serviceList = getActivity().findViewById(R.id.spServicesList);
-        final ArrayList<String> listServices = displayServices();
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, listServices);
-        serviceList.setAdapter(adapter);
-        final MyDBHandler dbHandler = new MyDBHandler(getActivity());
-
-        serviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: ADD LOGIC HERE
-
-            }
-        });
-
-    }
-
-    private ArrayList<String> displayServices(){
-        // TODO: ADD LOGIC HERE
-        ArrayList<String> listServices = new ArrayList<String>();
-
-        return listServices;
-    }
 
   //TODO - show list of services the SP has to chose from - similar to ADMIN displayed services
     /*
@@ -85,19 +59,19 @@ public class ServiceProvider extends Account{
     //-------------------------------END Display -----------------------------------------
 
     //TODO - The SP picks a service from the list and ADDs to his profile in array of services - combine this with DB after Janie finishes
-    public void AddToMyService(Service newMyService){
+   // public void AddToMyService(Service newMyService){
 
-        for (int i = 0; i<myOfferedServices.length; i++){
+       // for (int i = 0; i<myOfferedServices.length; i++){
             //loops through and adds another service into stored
             //use this with DB and then display this list with similar code from
             //ADMIN that diplays accounts and services
 
-            }
-        }
+          //  }
+     //   }
     //-------------------------------END of ADD -----------------------------------------
 
     //TODO - The SP picks a service and DELETS it from his profile array - combine this with DB after Janie finishes
-    public void DeleteMyService(Service newMyService){
+  // public void DeleteMyService(Service newMyService){
 
     /* Code below is an idea - we just modify:
           if (service == null) {
@@ -112,8 +86,86 @@ public class ServiceProvider extends Account{
 
     //-------------------------------END of DELETE -----------------------------------------
 
+  //  }
+
+  //  }
+
+
+    public ServiceProvider(String name, String lastName, String userName, String password, String email, int streetNumber, String apartmentNumber, String streetName, String city, String country, String company, String description, boolean isLicensed, String phoneNumber, String availabilities, ArrayList<Service> services){
+        super(name,lastName,userName, password, email);
+        this.streetNumber = streetNumber;
+        this.apartmentNumber = apartmentNumber;
+        this.streetName = streetName;
+        this.city = city;
+        this.country = country;
+        this.company = company;
+        this.description = description;
+        this.isLicensed = isLicensed;
+        this.phoneNumber = phoneNumber;
+        this.availabilities = availabilities;
+        this.services = services;
     }
 
+    public void addService(Service service) {
+        services.add(service);
     }
+
+    public void setStreetNumber(Integer streetNumber){
+        this.streetNumber=streetNumber;
+    }
+    public void setApartmentNumber(String apartmentNumber){
+        this.apartmentNumber=apartmentNumber;
+    }
+    public void setStreetName(String streetName){
+        this.streetName = streetName;
+    }
+    public void setCompany(String company){
+        this.company=company;
+    }
+    public void setDescription(String description){
+        this.description=description;
+    }
+    public void setLicensed(boolean isLiscenced){
+        this.isLicensed =isLiscenced;
+    }
+    public void setPhoneNumber(String phoneNumber){
+        this.phoneNumber = phoneNumber;
+    }
+    public void setCity(String city){
+        this.city=city;
+    }
+    public void setCountry(String country){
+        this.country = country;
+    }
+    public Integer getStreetNumber(){
+        return streetNumber;
+    }
+    public String getApartmentNumber(){
+        return apartmentNumber;
+    }
+    public String getStreetName() {
+        return streetName;
+    }
+    public String getCompany() {
+        return company;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public boolean isLicensed() {
+        return isLicensed;
+    }
+
+    public String getCity() {
+        return city;
+    }
+    public String getCountry() {
+        return country;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    public ArrayList<Service> getServices() { return services; }
+    public String getAvailabilities() { return availabilities; }
 
 }
