@@ -38,6 +38,19 @@ public class ServiceProviderWelcomePage extends AppCompatActivity {
         ft.commit();
 
         setupNavigationMenu();
+
+        //Add header to navigation drawer
+        NavigationView navigationView = findViewById(R.id.nav_view2);
+        View navHeaderView = navigationView.inflateHeaderView(R.layout.nav_header);
+        TextView headerUsername = (TextView) navHeaderView.findViewById(R.id.headerUsername);
+        headerUsername.setText(extractAccount());
+        TextView headerRole = (TextView) navHeaderView.findViewById(R.id.headerRole);
+        headerRole.setText("Service Provider");
+    }
+
+    private String extractAccount(){
+        ServiceProvider serviceProvider = (ServiceProvider) bundle.get("Account");
+        return serviceProvider.getUserName();
     }
 
     public void OnClickLogOut(View view){
