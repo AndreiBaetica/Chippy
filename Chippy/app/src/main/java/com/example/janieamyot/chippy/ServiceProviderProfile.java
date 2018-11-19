@@ -204,10 +204,27 @@ public class ServiceProviderProfile extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Does not exist", Toast.LENGTH_LONG).show();
             }
         }
+        else{
+            Intent intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
+            bundle.putSerializable("Account", serviceProvider);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
         dbHandler.close();
     }
-    public void onCancelClick(View view){
-        Intent intent = new Intent(getApplicationContext(), Login.class);
-        startActivity(intent);
+    public void onCancelClick(View view) {
+        MyDBHandler dbHandler = new MyDBHandler(this);
+        if (!dbHandler.spProfileExists(serviceProvider.getUserName())) {
+            Intent intent = new Intent(getApplicationContext(), Login.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(), SPProfileFragment.class);
+            bundle.putSerializable("Account", serviceProvider);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+        dbHandler.close();
     }
+
 }

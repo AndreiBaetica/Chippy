@@ -7,11 +7,14 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class SPProfileFragment extends Fragment{
 
     Bundle bundle;
+    private ServiceProvider serviceProvider;
+    private Button editButton;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         return inflater.inflate(R.layout.fragment_sp_profile, container, false);
@@ -21,40 +24,48 @@ public class SPProfileFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
         Intent intent = getActivity().getIntent();
         bundle = intent.getExtras();
+        serviceProvider = (ServiceProvider) bundle.get("Account");
 
         TextView welcome = getView().findViewById(R.id.welcomeMessage);
-        String welcomeMessage = "Welcome " + extractAccount()[2] + ", logged as Service Provider.";
+        String welcomeMessage = "Welcome " + extractAccount(serviceProvider)[2] + ", logged as Service Provider.";
         welcome.setText(welcomeMessage);
 
         TextView name = getView().findViewById(R.id.spNameField);
-        name.setText(extractAccount()[0]);
+        name.setText(extractAccount(serviceProvider)[0]);
         TextView lastName = getView().findViewById(R.id.spLastNameField);
-        lastName.setText(extractAccount()[1]);
+        lastName.setText(extractAccount(serviceProvider)[1]);
         TextView userName = getView().findViewById(R.id.spUserNameField);
-        userName.setText(extractAccount()[2]);
+        userName.setText(extractAccount(serviceProvider)[2]);
         TextView email = getView().findViewById(R.id.spEmailField);
-        email.setText(extractAccount()[3]);
+        email.setText(extractAccount(serviceProvider)[3]);
         TextView address = getView().findViewById(R.id.spAddressField);
-        if (!extractAccount()[5].equals("")) {
-            String setText = extractAccount()[4] +" " + extractAccount()[6] + " Apartment " + extractAccount()[5] + " " + extractAccount()[7] + " " + extractAccount()[8];
+        if (!extractAccount(serviceProvider)[5].equals("")) {
+            String setText = extractAccount(serviceProvider)[4] +" " + extractAccount(serviceProvider)[6] + " Apartment " + extractAccount(serviceProvider)[5] + " " + extractAccount(serviceProvider)[7] + " " + extractAccount(serviceProvider)[8];
             address.setText(setText);
         }
         else{
-            String setText = extractAccount()[4] +" " + extractAccount()[6] + " " + extractAccount()[7] + " " + extractAccount()[8];
+            String setText = extractAccount(serviceProvider)[4] +" " + extractAccount(serviceProvider)[6] + " " + extractAccount(serviceProvider)[7] + " " + extractAccount(serviceProvider)[8];
             address.setText(setText);
         }
         TextView phone = getView().findViewById(R.id.spPhoneField);
-        phone.setText(extractAccount()[9]);
+        phone.setText(extractAccount(serviceProvider)[9]);
         TextView company = getView().findViewById(R.id.spCompanyField);
-        company.setText(extractAccount()[10]);
+        company.setText(extractAccount(serviceProvider)[10]);
         TextView description = getView().findViewById(R.id.spDescriptionField);
-        description.setText(extractAccount()[11]);
+        description.setText(extractAccount(serviceProvider)[11]);
         TextView licensed = getView().findViewById(R.id.spLicensedField);
-        licensed.setText(extractAccount()[12]);
+        licensed.setText(extractAccount(serviceProvider)[12]);
+
+        editButton = getActivity().findViewById(R.id.spEditButton);
+        editButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                onEditClick(v);
+            }
+        });
     }
 
-    private String[] extractAccount(){
-        ServiceProvider serviceProvider = (ServiceProvider) bundle.get("Account");
+    private String[] extractAccount(ServiceProvider serviceProvider){
         String[] str = new String[13];
         str[0] = serviceProvider.getName();
         str[1] = serviceProvider.getLastName();
@@ -76,4 +87,14 @@ public class SPProfileFragment extends Fragment{
         }
         return str;
     }
+
+    public void onEditClick(View view){
+        Intent intent = new Intent(getActivity(), ServiceProviderProfile.class);
+        ServiceProvider serviceProvider = (ServiceProvider) bundle.get("Account");
+        bundle.putSerializable("Account", serviceProvider);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+
 }
