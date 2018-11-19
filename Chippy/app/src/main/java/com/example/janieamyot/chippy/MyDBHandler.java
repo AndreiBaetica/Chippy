@@ -534,7 +534,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getReadableDatabase();
         boolean flag;
 
-        String query = "Select * FROM "+ TABLE_SP_PROFILE +" WHERE "+COLUMN_NAME+" = \""+userName+"\"";
+        String query = "Select * FROM "+ TABLE_SP_PROFILE +" WHERE "+COLUMN_USERNAME+" = \""+userName+"\"";
         Cursor cursor = db.rawQuery(query, null);
 
         ServiceProvider sp = new ServiceProvider();

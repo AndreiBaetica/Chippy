@@ -113,7 +113,7 @@ public class ServiceProviderProfile extends AppCompatActivity {
             flag = false;
         }
         Spinner spinner = findViewById(R.id.spinnerCountries);
-        String country = spinner.toString();
+        String country = spinner.getSelectedItem().toString();
         if (!country.equals("")){
             if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
                 dbHandler.editCountry(serviceProvider.getUserName(), country);
@@ -191,21 +191,21 @@ public class ServiceProviderProfile extends AppCompatActivity {
                 serviceProvider.setLicensed(false);
             }
         }
-        if(!dbHandler.spProfileExists(serviceProvider.getUserName())){
+        if(!dbHandler.spProfileExists(serviceProvider.getUserName()) && flag){
             dbHandler.completeSpProfile(serviceProvider);
+            if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
+                Intent intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
+                bundle.putSerializable("Account", serviceProvider);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }else{
+                Toast.makeText(getApplicationContext(), "Does not exist", Toast.LENGTH_LONG).show();
+            }
         }
         dbHandler.close();
-        if(flag){
-            Intent intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
-            bundle.putSerializable("Account", serviceProvider);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        }
     }
     public void onCancelClick(View view){
         Intent intent = new Intent(getApplicationContext(), Login.class);
-        bundle.putSerializable("Account", serviceProvider);
-        intent.putExtras(bundle);
         startActivity(intent);
     }
 }
