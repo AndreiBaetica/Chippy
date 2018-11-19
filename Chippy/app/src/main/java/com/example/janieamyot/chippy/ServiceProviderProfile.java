@@ -73,23 +73,25 @@ public class ServiceProviderProfile extends AppCompatActivity {
         }
         field = findViewById(R.id.spEditStreetNumber);
         String streetNumber = field.getText().toString();
-        if (TextUtils.isDigitsOnly(streetNumber)){
-            if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
-                dbHandler.editStreetNumber(serviceProvider.getUserName(), Integer.parseInt(streetNumber));
-            }else {
-                serviceProvider.setStreetNumber(Integer.parseInt(streetNumber));
-            }
-        }
-        else{
-            field.getText().clear();
-            Toast.makeText(getApplicationContext(), "Street number cannot be have non-numerical characters", Toast.LENGTH_LONG).show();
-            flag = false;
-        }
         if (streetNumber.equals("")){
             field.getText().clear();
             Toast.makeText(getApplicationContext(), "Street number cannot be empty.", Toast.LENGTH_LONG).show();
             flag = false;
         }
+        else {
+            if (TextUtils.isDigitsOnly(streetNumber)) {
+                if (dbHandler.spProfileExists(serviceProvider.getUserName())) {
+                    dbHandler.editStreetNumber(serviceProvider.getUserName(), Integer.parseInt(streetNumber));
+                } else {
+                    serviceProvider.setStreetNumber(Integer.parseInt(streetNumber));
+                }
+            } else {
+                field.getText().clear();
+                Toast.makeText(getApplicationContext(), "Street number cannot be have non-numerical characters", Toast.LENGTH_LONG).show();
+                flag = false;
+            }
+        }
+
         //optional apartment number so it can be blank
         field = findViewById(R.id.spEditApartmentNumber);
         String apartmentNumber = field.getText().toString();
