@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 
 public class ServiceProvider extends Account{
+
     private int streetNumber;
     private String apartmentNumber;
     private String streetName;
