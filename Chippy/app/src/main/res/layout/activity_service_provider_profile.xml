@@ -211,8 +211,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:text="Save"
+            android:onClick="onSaveClick"
             android:padding="10dp"
+            android:text="Save"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -222,9 +223,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:text="Cancel"
+            android:onClick="onCancelClick"
             android:padding="10dp"
+            android:text="Cancel"
             android:textSize="24sp"
-            android:textStyle="bold"  />
+            android:textStyle="bold" />
     </LinearLayout>
 </RelativeLayout>
