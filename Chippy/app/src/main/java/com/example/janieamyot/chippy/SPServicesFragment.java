@@ -100,14 +100,14 @@ public class SPServicesFragment extends Fragment {
 
         Integer counter2 = 1;
         MyDBHandler dbHandler = new MyDBHandler(getActivity());
-        ArrayList<Service> serviceList = dbHandler.findAllSpServices(account.getUserName());
+        ArrayList<String> serviceList = dbHandler.findAllSpServices(account.getUserName());
         ArrayList<String> listServices = new ArrayList<String>();
 
         if (serviceList == null) {
             return listServices;
         }
 
-        for (Service service : serviceList) {
+        for (String service : serviceList) {
             services = (counter2.toString() + " " + service.toString());
 
             services = services.concat(" ");
