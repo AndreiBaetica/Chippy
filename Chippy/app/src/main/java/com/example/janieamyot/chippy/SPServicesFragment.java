@@ -18,9 +18,9 @@ public class SPServicesFragment extends Fragment {
 
     Bundle bundle;
     public Service serviceSelected;
-    private Button addToSPlist;
-    private Button deleteFromSPlist;
-
+    private ServiceProvider account;
+    private Button addButton;
+    private Button deleteButton;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_sp_services, container, false);
@@ -30,6 +30,7 @@ public class SPServicesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Intent intent = getActivity().getIntent();
         bundle = intent.getExtras();
+        account = (ServiceProvider) bundle.get("Account");
 
         //UI changes here
         //Use getActivity() when referring to ServiceProviderWelcomePage
@@ -54,35 +55,52 @@ public class SPServicesFragment extends Fragment {
             }
         });
 
-        //add button that opens edit services activity with all available activities to add to SPown list
-        addToSPlist = findViewById(R.id.spServicesAdd);
-        addToSPlist.setOnClickListener(new View.OnClickListener() {
+        addButton = getActivity().findViewById(R.id.spServicesAdd);
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                openSPeditServicesActivity();
-
+                onClickAddNewService(v);
             }
-
         });
-        // delete button that deletes ONE OF THE SP OWN SERVICES
-        deleteFromSPlist = findViewById(R.id.spServicesDelete);
-        deleteFromSPlist.setOnClickListener(new View.OnClickListener() {
+
+        deleteButton = getActivity().findViewById(R.id.spServicesDelete);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                deleteServiceFromSPlist();
-
+                onClickDelFromSPlist(v);
             }
         });
+
     }// end onActivityCreated
+
+
+    //add button that opens edit services activity with all available activities to add to SPown list
+    public void onClickAddNewService (View view){
+
+        Intent intent = new Intent(getActivity(), ServiceProviderEditServices.class);
+        startActivity(intent);
+    }
+
+    // delete button that deletes ONE OF THE SP OWN SERVICES
+    public void onClickDelFromSPlist (View view) {
+        if (serviceSelected == null) {
+            return;
+        }
+        MyDBHandler dbHandler = new MyDBHandler(getActivity());
+        dbHandler.deleteSpService(account.getUserName(), serviceSelected.getName()); //TODO update db handler
+        dbHandler.close();
+
+        startActivity(getActivity().getIntent());
+
+    }
+
 
     private ArrayList<String> displayServices() {
         String services = "";
 
         Integer counter2 = 1;
-        MyDBHandler dbHandler = new MyDBHandler(this);
-        ArrayList<Service> serviceList = dbHandler.findAllSpServices();
+        MyDBHandler dbHandler = new MyDBHandler(getActivity());
+        ArrayList<Service> serviceList = dbHandler.findAllSpServices(account.getUserName());
         ArrayList<String> listServices = new ArrayList<String>();
 
         if (serviceList == null) {
@@ -104,19 +122,8 @@ public class SPServicesFragment extends Fragment {
     }
 
 
-    public void openSPeditServicesActivity() {
-        Intent intent = new Intent(this, ServiceProviderEditServices.class);
-        startActivity(intent);
-    }
 
-    public void  deleteServiceFromSPlist{
 
-        MyDBHandler dbHandler = new MyDBHandler(this);
-        dbHandler.deleteSpService( .getUserName , service.getName()); //TODO HELP GET USERNAME
 
-        Intent intent = new Intent(this, SPServicesFragment.class);
-        startActivity(intent);
-
-    }
 
 }//end SPServicesFragment class

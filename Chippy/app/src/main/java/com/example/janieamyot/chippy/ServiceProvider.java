@@ -25,7 +25,7 @@ public class ServiceProvider extends Account{
     public ServiceProvider(String name, String lastName, String userName, String password, String email){
     super(name,lastName,userName, password, email);
   }
-  
+
 
 
     public ServiceProvider(String name, String lastName, String userName, String password, String email, int streetNumber, String apartmentNumber, String streetName, String city, String country, String company, String description, boolean isLicensed, String phoneNumber, String availabilities, ArrayList<Service> services){
