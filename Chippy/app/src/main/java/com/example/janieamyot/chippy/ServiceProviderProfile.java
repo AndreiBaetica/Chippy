@@ -192,7 +192,7 @@ public class ServiceProviderProfile extends AppCompatActivity {
             }
         }
         if(!dbHandler.spProfileExists(serviceProvider.getUserName())){
-            dbHandler.editSpProfile(serviceProvider);
+            dbHandler.completeSpProfile(serviceProvider);
         }
         dbHandler.close();
         if(flag){
