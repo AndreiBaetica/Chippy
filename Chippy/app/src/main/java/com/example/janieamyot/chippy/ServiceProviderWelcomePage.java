@@ -1,29 +1,26 @@
 package com.example.janieamyot.chippy;
 
 
-import android.app.Activity;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.ViewSwitcher;
 
 public class ServiceProviderWelcomePage extends AppCompatActivity {
 
     Bundle bundle;
     private DrawerLayout mDrawerLayout;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +29,7 @@ public class ServiceProviderWelcomePage extends AppCompatActivity {
 
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
+
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame_sp, new SPProfileFragment());
@@ -68,6 +66,8 @@ public class ServiceProviderWelcomePage extends AppCompatActivity {
                         int id = menuItem.getItemId();
                         Fragment fragment = null;
                         Bundle bundle1 = new Bundle();
+
+
 
                         if (id == R.id.nav_sp_profile){
                             fragment = new SPProfileFragment();
