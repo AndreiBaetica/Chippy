@@ -524,6 +524,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
             sp.setDescription(cursor.getString(7));
             sp.setLicensed(Boolean.parseBoolean(cursor.getString(8)));
             sp.setPhoneNumber(cursor.getString(9));
+            sp.setAvailabilities(cursor.getString(10));
             cursor.close();
         } else{
             sp = null;
