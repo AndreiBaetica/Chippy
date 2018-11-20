@@ -46,7 +46,6 @@ public class Login extends AppCompatActivity {
             }
             if(account instanceof ServiceProvider){
                 if(dbHandler.spProfileExists(account.getUserName())) {
-                    Toast.makeText(this, "profile exists", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
                     ServiceProvider sp = dbHandler.findServiceProvider(user);
                     bundle.putSerializable("Account", sp);
