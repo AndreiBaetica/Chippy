@@ -504,13 +504,19 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     //To find the profile information of a specific service provider using his user name
     public ServiceProvider findServiceProvider(String userName){
+        ServiceProvider account = (ServiceProvider)findAccountByUserName(userName);
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "Select * FROM "+ TABLE_SP_PROFILE +" WHERE "+COLUMN_NAME+" = \""+userName+"\"";
+        String query = "Select * FROM "+ TABLE_SP_PROFILE +" WHERE "+COLUMN_USERNAME+" = \""+userName+"\"";
         Cursor cursor = db.rawQuery(query, null);
 
         ServiceProvider sp = new ServiceProvider();
         if(cursor.moveToFirst()){
+            sp.setName(account.getName());
+            sp.setLastName(account.getLastName());
+            sp.setUserName(account.getUserName());
+            sp.setEmail(account.getEmail());
+            sp.setPassword(account.getPassword());
             sp.setStreetNumber(cursor.getInt(1));
             sp.setApartmentNumber(cursor.getString(2));
             sp.setStreetName(cursor.getString(3));
