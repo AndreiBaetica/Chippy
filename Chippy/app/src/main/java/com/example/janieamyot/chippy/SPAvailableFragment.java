@@ -21,8 +21,11 @@ import java.util.List;
 public class SPAvailableFragment extends Fragment {
 
     Bundle bundle;
+    ServiceProvider account;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        bundle = ServiceProviderWelcomePage.bundle;
+        account = (ServiceProvider) bundle.get("Account");
         return inflater.inflate(R.layout.fragment_sp_available, container, false);
     }
 
@@ -48,7 +51,6 @@ public class SPAvailableFragment extends Fragment {
 
         ArrayList<String> listAvailabilities = new ArrayList<String>();
 
-        ServiceProvider account = (ServiceProvider) bundle.get("Account");
         JSONObject week = null;
         try {
             week = new JSONObject(account.getAvailabilities());
@@ -57,7 +59,7 @@ public class SPAvailableFragment extends Fragment {
         String mo = "Monday:\n    ";
         for (Integer[] array : monday) {
             int start = array[0];
-            int end = array[array.length];
+            int end = array[array.length-1]+1;
             mo = mo.concat(start + ":00-" + end + ":00\n    ");
         }
         listAvailabilities.add(mo);
@@ -66,7 +68,7 @@ public class SPAvailableFragment extends Fragment {
             String tu = "Tuesday:\n    ";
             for (Integer[] array : tuesday) {
                 int start = array[0];
-                int end = array[array.length];
+                int end = array[array.length-1]+1;
                 tu = tu.concat(start + ":00-" + end + ":00\n    ");
             }
             listAvailabilities.add(tu);
@@ -75,7 +77,7 @@ public class SPAvailableFragment extends Fragment {
             String we = "Wednesday:\n    ";
             for (Integer[] array : wednesday) {
                 int start = array[0];
-                int end = array[array.length];
+                int end = array[array.length-1]+1;
                 we = we.concat(start + ":00-" + end + ":00\n    ");
             }
             listAvailabilities.add(we);
@@ -84,7 +86,7 @@ public class SPAvailableFragment extends Fragment {
             String th = "Thursday:\n    ";
             for (Integer[] array : thursday) {
                 int start = array[0];
-                int end = array[array.length];
+                int end = array[array.length-1]+1;
                 th = th.concat(start + ":00-" + end + ":00\n    ");
             }
             listAvailabilities.add(th);
@@ -93,7 +95,7 @@ public class SPAvailableFragment extends Fragment {
             String fr = "Friday:\n    ";
             for (Integer[] array : friday) {
                 int start = array[0];
-                int end = array[array.length];
+                int end = array[array.length-1]+1;
                 fr = fr.concat(start + ":00-" + end + ":00\n    ");
             }
             listAvailabilities.add(fr);
@@ -102,7 +104,7 @@ public class SPAvailableFragment extends Fragment {
             String sa = "Saturday:\n    ";
             for (Integer[] array : saturday) {
                 int start = array[0];
-                int end = array[array.length];
+                int end = array[array.length-1]+1;
                 sa = sa.concat(start + ":00-" + end + ":00\n    ");
             }
             listAvailabilities.add(sa);
@@ -111,42 +113,47 @@ public class SPAvailableFragment extends Fragment {
             String su = "Sunday:\n    ";
             for (Integer[] array : sunday) {
                 int start = array[0];
-                int end = array[array.length];
+                int end = array[array.length-1]+1;
                 su = su.concat(start + ":00-" + end + ":00\n    ");
             }
             listAvailabilities.add(su);
 
         } catch (JSONException e) {
-            //TODO
+            return listAvailabilities;
+        } catch (NullPointerException e) {
+            return listAvailabilities;
         }
 
         return listAvailabilities;
     }
 
-    private ArrayList<Integer[]> sequentialSplit(JSONArray jsonArray) throws JSONException {
-        ArrayList<Integer> parsingList = new ArrayList<>();
+    private static ArrayList<Integer[]> sequentialSplit(JSONArray jsonArray) throws JSONException {
+
+        Integer[] dayArray = new Integer[jsonArray.length()];
+
         for (int i = 0; i < jsonArray.length(); i++) {
-            parsingList.add(jsonArray.getInt(i));
+            dayArray[i] = (Integer) jsonArray.getInt(i);
         }
 
-        Integer[] dayArray = (Integer[]) parsingList.toArray();
 
         ArrayList<Integer[]> mainList = new ArrayList<>();
         ArrayList<Integer> temp = new ArrayList<>();
-
-        temp.add(dayArray[0]);
-
+        try {
+            temp.add(dayArray[0]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return mainList;
+        }
         for (int i = 0; i < dayArray.length -1; i++) {
             if (dayArray[i+1] == dayArray[i] + 1) {
                 temp.add(dayArray[i+1]);
             } else {
-                Integer[] tempArray = (Integer[]) temp.toArray();
+                Integer[] tempArray = temp.toArray(new Integer[temp.size()]);
                 mainList.add(tempArray);
                 temp = new ArrayList<>();
                 temp.add(dayArray[i+1]);
             }
         }
-        Integer[] tempArray = (Integer[]) temp.toArray();
+        Integer[] tempArray = temp.toArray(new Integer[temp.size()]);
         mainList.add(tempArray);
         return mainList;
     }

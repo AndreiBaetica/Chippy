@@ -80,6 +80,8 @@ public class ServiceProviderAvailable extends AppCompatActivity {
     }
 
     public void onClickSave(View view) throws JSONException {
+        updateOldDay();
+
         availabilities.put("monday", monday);
         availabilities.put("tuesday", tuesday);
         availabilities.put("wednesday", wednesday);

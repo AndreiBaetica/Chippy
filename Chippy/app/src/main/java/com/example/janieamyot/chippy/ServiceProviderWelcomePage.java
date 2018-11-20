@@ -17,9 +17,9 @@ import android.view.View;
 
 public class ServiceProviderWelcomePage extends AppCompatActivity {
 
-    Bundle bundle;
+    public static Bundle bundle;
     private DrawerLayout mDrawerLayout;
-
+    ServiceProvider account;
 
 
     @Override
@@ -29,7 +29,7 @@ public class ServiceProviderWelcomePage extends AppCompatActivity {
 
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
-
+        account = (ServiceProvider) bundle.get("Account");
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame_sp, new SPProfileFragment());
