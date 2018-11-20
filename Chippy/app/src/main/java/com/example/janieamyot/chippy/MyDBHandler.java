@@ -354,13 +354,15 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     //To find a service name from the service ID
     private String findServiceName(int id){
+        String serviceName = null;
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "Select * FROM "+ TABLE_SERVICE +" WHERE "+COLUMN_SERVICE_ID+" = \""+id+"\"";
         Cursor cursor = db.rawQuery(query, null);
 
-        String serviceName = cursor.getString(1);
-
+        if(cursor.moveToFirst()) {
+            serviceName = cursor.getString(1);
+        }
         cursor.close();
         db.close();
         return serviceName;
