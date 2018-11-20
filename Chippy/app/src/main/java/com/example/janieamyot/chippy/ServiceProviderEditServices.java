@@ -52,7 +52,7 @@ public class ServiceProviderEditServices extends AppCompatActivity {
 
 } //end onCreate
 
-    //button adds from avilable services to SP OWN list
+    //button adds from available services to SP OWN list
     public void onClickAddToSPlist(View view) {
         if (service== null) {
             return;
@@ -61,15 +61,16 @@ public class ServiceProviderEditServices extends AppCompatActivity {
         dbHandler.addSpService( account.getUserName() , service.getName());
         dbHandler.close();
 
-        Intent intent = new Intent(this, SPServicesFragment.class);
+        Intent intent = new Intent(this, ServiceProviderWelcomePage.class);
         intent.putExtras(bundle);
         startActivity(intent);
 
     }
-    // goes back to FragSP
+    // goes back to ServiceProviderWelcomePage
     public void onClickCancelToFragSP(View view) {
 
-        Intent intent = new Intent(this, SPServicesFragment.class);
+        Intent intent = new Intent(this, ServiceProviderWelcomePage.class);
+        intent.putExtras(bundle);
         startActivity(intent);
 
     }

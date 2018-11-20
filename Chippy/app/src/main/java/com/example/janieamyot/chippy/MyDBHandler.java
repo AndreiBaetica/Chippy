@@ -577,16 +577,16 @@ public class MyDBHandler extends SQLiteOpenHelper{
     //To delete a service associated to a specific service provider
     public boolean deleteSpService(String userName, String serviceName){
         boolean result = false;
-        SQLiteDatabase db = this.getWritableDatabase();
 
         int serviceID = this.findServiceId(serviceName);
 
-        String query = "Select * FROM " + TABLE_SP_SERVICES + " WHERE " + COLUMN_USERNAME + " = \"" + userName + "\"" + " AND" + COLUMN_SERVICE_ID + " = \"" + serviceID + "\"";
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "Select * FROM " + TABLE_SP_SERVICES + " WHERE " + COLUMN_USERNAME + " = \"" + userName + "\"" + " AND " + COLUMN_SERVICE_ID + " = \"" + serviceID + "\"";
         Cursor cursor = db.rawQuery(query, null);
 
         if(cursor.moveToFirst()){
             String idStr = cursor.getString(0);
-            db.delete(TABLE_SP_SERVICES, COLUMN_USERNAME + " = " + idStr, null);
+            db.delete(TABLE_SP_SERVICES, COLUMN_USERNAME + "=" + idStr, null);
             cursor.close();
             result = true;
         }

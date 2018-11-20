@@ -36,17 +36,18 @@ public class SPServicesFragment extends Fragment {
         //Use getActivity() when referring to ServiceProviderWelcomePage
         //ex. instead of this use getActivity()
 
-         //this list view displayes the SP own services they provide
+         //this list view displays the SP own services they provide
         ListView serviceListSP = getActivity().findViewById(R.id.spServicesList);
         final ArrayList<String> listServices = displayServices();
         ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, listServices);
         serviceListSP.setAdapter(adapter);
-        final MyDBHandler dbHandler = new MyDBHandler(getActivity());
+        //final MyDBHandler dbHandler = new MyDBHandler(getActivity());
 
        //listener that selects a service from the SP list and then it can delete it
         serviceListSP.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MyDBHandler dbHandler = new MyDBHandler(getActivity());
                 String serviceString = listServices.get(position);
                 String serviceName = serviceString.substring(serviceString.indexOf("[") + 1, serviceString.indexOf("]"));
                 serviceSelected = dbHandler.findService(serviceName);
@@ -109,7 +110,7 @@ public class SPServicesFragment extends Fragment {
         }
 
         for (String service : serviceList) {
-            services = (counter2.toString() + " " + service.toString());
+            services = (counter2.toString() + " [" + service.toString() + "]");
 
             services = services.concat(" ");
 
