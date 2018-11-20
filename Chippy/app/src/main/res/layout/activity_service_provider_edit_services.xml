@@ -59,8 +59,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:text="Add"
+            android:onClick="onClickAddToSPlist"
             android:padding="10dp"
+            android:text="Add"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -70,10 +71,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:text="Cancel"
+            android:onClick="onClickCancelToFragSP"
             android:padding="10dp"
+            android:text="Cancel"
             android:textSize="24sp"
-            android:textStyle="bold"  />
+            android:textStyle="bold" />
     </LinearLayout>
 
 
