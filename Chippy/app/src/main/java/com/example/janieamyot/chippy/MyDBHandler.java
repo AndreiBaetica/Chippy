@@ -336,13 +336,17 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     //To find the service ID related to a specific service
     private int findServiceId(String serviceName){
+        int serviceID = 0;
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "Select * FROM "+ TABLE_SERVICE +" WHERE "+COLUMN_NAME+" = \""+serviceName+"\"";
+        String query = "Select * FROM "+ TABLE_SERVICE +" WHERE "+COLUMN_SERVICE_NAME+" = \""+serviceName+"\"";
         Cursor cursor = db.rawQuery(query, null);
 
-        int serviceID = cursor.getInt(0);
-
+        if(cursor.moveToFirst()) {
+             serviceID = cursor.getInt(0);
+        }else{
+            serviceID = 0;
+        }
         cursor.close();
         db.close();
         return serviceID;
@@ -350,13 +354,15 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     //To find a service name from the service ID
     private String findServiceName(int id){
+        String serviceName = null;
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "Select * FROM "+ TABLE_SERVICE +" WHERE "+COLUMN_SERVICE_ID+" = \""+id+"\"";
         Cursor cursor = db.rawQuery(query, null);
 
-        String serviceName = cursor.getString(1);
-
+        if(cursor.moveToFirst()) {
+            serviceName = cursor.getString(1);
+        }
         cursor.close();
         db.close();
         return serviceName;
@@ -504,13 +510,19 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     //To find the profile information of a specific service provider using his user name
     public ServiceProvider findServiceProvider(String userName){
+        ServiceProvider account = (ServiceProvider)findAccountByUserName(userName);
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "Select * FROM "+ TABLE_SP_PROFILE +" WHERE "+COLUMN_NAME+" = \""+userName+"\"";
+        String query = "Select * FROM "+ TABLE_SP_PROFILE +" WHERE "+COLUMN_USERNAME+" = \""+userName+"\"";
         Cursor cursor = db.rawQuery(query, null);
 
         ServiceProvider sp = new ServiceProvider();
         if(cursor.moveToFirst()){
+            sp.setName(account.getName());
+            sp.setLastName(account.getLastName());
+            sp.setUserName(account.getUserName());
+            sp.setEmail(account.getEmail());
+            sp.setPassword(account.getPassword());
             sp.setStreetNumber(cursor.getInt(1));
             sp.setApartmentNumber(cursor.getString(2));
             sp.setStreetName(cursor.getString(3));
@@ -553,12 +565,11 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     //To add a service associated to a specific service provider
     public void addSpService(String userName, String serviceName){
-        SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(COLUMN_USERNAME, userName);
         values.put(COLUMN_SERVICE_ID, this.findServiceId(serviceName));
 
+        SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_SP_SERVICES, null, values);
         db.close();
     }
@@ -566,16 +577,17 @@ public class MyDBHandler extends SQLiteOpenHelper{
     //To delete a service associated to a specific service provider
     public boolean deleteSpService(String userName, String serviceName){
         boolean result = false;
-        SQLiteDatabase db = this.getWritableDatabase();
 
         int serviceID = this.findServiceId(serviceName);
 
-        String query = "Select * FROM " + TABLE_SP_SERVICES + " WHERE " + COLUMN_USERNAME + " = \"" + userName + "\"" + " AND" + COLUMN_SERVICE_ID + " = \"" + serviceID + "\"";
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "Select * FROM " + TABLE_SP_SERVICES + " WHERE " + COLUMN_USERNAME + " = \"" + userName + "\"" + " AND " + COLUMN_SERVICE_ID + " = \"" + serviceID + "\"";
         Cursor cursor = db.rawQuery(query, null);
 
         if(cursor.moveToFirst()){
             String idStr = cursor.getString(0);
-            db.delete(TABLE_SP_SERVICES, COLUMN_USERNAME + " = " + idStr, null);
+            db.delete(TABLE_SP_SERVICES, COLUMN_USERNAME + "=? and " + COLUMN_SERVICE_ID + "=?", new String[]{idStr, serviceID+""});
             cursor.close();
             result = true;
         }
