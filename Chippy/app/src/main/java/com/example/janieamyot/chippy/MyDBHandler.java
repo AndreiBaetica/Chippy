@@ -563,12 +563,11 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     //To add a service associated to a specific service provider
     public void addSpService(String userName, String serviceName){
-        SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(COLUMN_USERNAME, userName);
         values.put(COLUMN_SERVICE_ID, this.findServiceId(serviceName));
 
+        SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_SP_SERVICES, null, values);
         db.close();
     }
