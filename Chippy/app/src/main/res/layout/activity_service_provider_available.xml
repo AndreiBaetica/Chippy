@@ -402,10 +402,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:text="Cancel"
+            android:onClick="onClickCancel"
             android:padding="10dp"
+            android:text="Cancel"
             android:textSize="24sp"
-            android:textStyle="bold"  />
+            android:textStyle="bold" />
     </LinearLayout>
 
 </RelativeLayout>

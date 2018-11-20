@@ -79,6 +79,14 @@ public class ServiceProviderAvailable extends AppCompatActivity {
         populateDay();
     }
 
+    public void onClickCancel(View view) {
+        Intent intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Account", account);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
     public void onClickSave(View view) throws JSONException {
         updateOldDay();
 
