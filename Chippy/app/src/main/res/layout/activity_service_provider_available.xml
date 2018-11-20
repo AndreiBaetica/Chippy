@@ -25,11 +25,12 @@
             android:id="@+id/monday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_weight="1"
             android:button="@null"
-            android:textColor="@color/textview_selector"
-            android:text="MO" />
+            android:checked="true"
+            android:gravity="center_horizontal"
+            android:text="MO"
+            android:textColor="@color/textview_selector" />
 
         <RadioButton
             android:id="@+id/tuesday"
@@ -105,19 +106,19 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/hour0to1"
+                android:id="@+id/c0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="00:00-01:00" />
 
             <CheckBox
-                android:id="@+id/hour12to13"
+                android:id="@+id/c12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="12:00-13:00" />
 
         </LinearLayout>
@@ -128,19 +129,19 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/hour1to2"
+                android:id="@+id/c1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="01:00-02:00" />
 
             <CheckBox
-                android:id="@+id/hour13to14"
+                android:id="@+id/c13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="13:00-14:00" />
 
         </LinearLayout>
@@ -151,19 +152,19 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/hour2to3"
+                android:id="@+id/c2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="02:00-03:00" />
 
             <CheckBox
-                android:id="@+id/hour14to15"
+                android:id="@+id/c14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="14:00-15:00" />
         </LinearLayout>
 
@@ -173,19 +174,19 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/hour3to4"
+                android:id="@+id/c3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="03:00-04:00" />
 
             <CheckBox
-                android:id="@+id/hour15to16"
+                android:id="@+id/c15"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="15:00-16:00" />
         </LinearLayout>
 
@@ -195,19 +196,19 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/hour4to5"
+                android:id="@+id/c4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="04:00-05:00" />
 
             <CheckBox
-                android:id="@+id/hour16to17"
+                android:id="@+id/c16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="16:00-17:00" />
         </LinearLayout>
 
@@ -217,19 +218,19 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/hour5to6"
+                android:id="@+id/c5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="05:00-06:00" />
 
             <CheckBox
-                android:id="@+id/hour17to18"
+                android:id="@+id/c17"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="17:00-18:00" />
         </LinearLayout>
 
@@ -239,19 +240,19 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/hour6to7"
+                android:id="@+id/c6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="06:00-07:00" />
 
             <CheckBox
-                android:id="@+id/hour18to19"
+                android:id="@+id/c18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="18:00-19:00" />
         </LinearLayout>
 
@@ -261,19 +262,19 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/hour7to8"
+                android:id="@+id/c7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="07:00-08:00" />
 
             <CheckBox
-                android:id="@+id/hour19to20"
+                android:id="@+id/c19"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="19:00-20:00" />
         </LinearLayout>
 
@@ -283,19 +284,19 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/hour8to9"
+                android:id="@+id/c8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="08:00-09:00" />
 
             <CheckBox
-                android:id="@+id/hour20to21"
+                android:id="@+id/c20"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="20:00-21:00" />
         </LinearLayout>
 
@@ -305,19 +306,19 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/hour9to10"
+                android:id="@+id/c9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="09:00-10:00" />
 
             <CheckBox
-                android:id="@+id/hour21to22"
+                android:id="@+id/c21"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="21:00-22:00" />
         </LinearLayout>
 
@@ -327,19 +328,19 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/hour10to11"
+                android:id="@+id/c10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="10:00-11:00" />
 
             <CheckBox
-                android:id="@+id/hour22to23"
+                android:id="@+id/c22"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="22:00-23:00" />
         </LinearLayout>
 
@@ -349,19 +350,19 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/hour11to12"
+                android:id="@+id/c11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="11:00-12:00" />
 
             <CheckBox
-                android:id="@+id/hour23to00"
+                android:id="@+id/c23"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="23:00-00:00" />
         </LinearLayout>
 
