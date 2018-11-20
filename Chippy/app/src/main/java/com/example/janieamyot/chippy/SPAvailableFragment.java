@@ -46,6 +46,8 @@ public class SPAvailableFragment extends Fragment {
         });
     }
 
+
+
     private ArrayList<String> displayAvailabilities(){
         // TODO: ADD LOGIC HERE
         ArrayList<String> listAvailabilities = new ArrayList<String>();

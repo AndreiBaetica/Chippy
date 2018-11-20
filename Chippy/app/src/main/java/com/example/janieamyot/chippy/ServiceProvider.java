@@ -71,6 +71,7 @@ public class ServiceProvider extends Account{
     public void setCountry(String country){
         this.country = country;
     }
+    public void setAvailabilities(String availabilities) { this.availabilities = availabilities; }
     public Integer getStreetNumber(){
         return streetNumber;
     }

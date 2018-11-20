@@ -30,6 +30,7 @@
             android:checked="true"
             android:gravity="center_horizontal"
             android:text="MO"
+            android:onClick="setMonday"
             android:textColor="@color/textview_selector" />
 
         <RadioButton
@@ -40,6 +41,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:textColor="@color/textview_selector"
+            android:onClick="setTuesday"
             android:text="TU" />
 
         <RadioButton
@@ -50,6 +52,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:textColor="@color/textview_selector"
+            android:onClick="setWednesday"
             android:text="WE" />
 
         <RadioButton
@@ -60,6 +63,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:textColor="@color/textview_selector"
+            android:onClick="setThursday"
             android:text="TH" />
 
         <RadioButton
@@ -70,6 +74,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:textColor="@color/textview_selector"
+            android:onClick="setFriday"
             android:text="FR" />
 
         <RadioButton
@@ -80,6 +85,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:textColor="@color/textview_selector"
+            android:onClick="setSaturday"
             android:text="SA" />
 
         <RadioButton
@@ -90,6 +96,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:textColor="@color/textview_selector"
+            android:onClick="setSunday"
             android:text="SU" />
     </RadioGroup>
 
@@ -383,8 +390,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:text="Save"
+            android:onClick="onClickSave"
             android:padding="10dp"
+            android:text="Save"
             android:textSize="24sp"
             android:textStyle="bold" />
 

@@ -101,5 +101,11 @@ public class ServiceProviderWelcomePage extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void onClickEditAvailability(View view) {
+        Intent intent = new Intent(getApplicationContext(), ServiceProviderAvailable.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
 }
 
