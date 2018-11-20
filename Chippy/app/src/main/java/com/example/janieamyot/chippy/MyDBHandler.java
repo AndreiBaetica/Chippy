@@ -581,12 +581,13 @@ public class MyDBHandler extends SQLiteOpenHelper{
         int serviceID = this.findServiceId(serviceName);
 
         SQLiteDatabase db = this.getWritableDatabase();
+
         String query = "Select * FROM " + TABLE_SP_SERVICES + " WHERE " + COLUMN_USERNAME + " = \"" + userName + "\"" + " AND " + COLUMN_SERVICE_ID + " = \"" + serviceID + "\"";
         Cursor cursor = db.rawQuery(query, null);
 
         if(cursor.moveToFirst()){
             String idStr = cursor.getString(0);
-            db.delete(TABLE_SP_SERVICES, COLUMN_USERNAME + "=" + idStr, null);
+            db.delete(TABLE_SP_SERVICES, COLUMN_USERNAME + "=? and " + COLUMN_SERVICE_ID + "=?", new String[]{idStr, serviceID+""});
             cursor.close();
             result = true;
         }
