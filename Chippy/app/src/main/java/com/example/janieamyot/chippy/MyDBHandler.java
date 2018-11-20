@@ -336,13 +336,17 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     //To find the service ID related to a specific service
     private int findServiceId(String serviceName){
+        int serviceID = 0;
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "Select * FROM "+ TABLE_SERVICE +" WHERE "+COLUMN_NAME+" = \""+serviceName+"\"";
+        String query = "Select * FROM "+ TABLE_SERVICE +" WHERE "+COLUMN_SERVICE_NAME+" = \""+serviceName+"\"";
         Cursor cursor = db.rawQuery(query, null);
 
-        int serviceID = cursor.getInt(0);
-
+        if(cursor.moveToFirst()) {
+             serviceID = cursor.getInt(0);
+        }else{
+            serviceID = 0;
+        }
         cursor.close();
         db.close();
         return serviceID;

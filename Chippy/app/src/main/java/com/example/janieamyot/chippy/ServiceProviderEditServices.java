@@ -62,6 +62,7 @@ public class ServiceProviderEditServices extends AppCompatActivity {
         dbHandler.close();
 
         Intent intent = new Intent(this, SPServicesFragment.class);
+        intent.putExtras(bundle);
         startActivity(intent);
 
     }
