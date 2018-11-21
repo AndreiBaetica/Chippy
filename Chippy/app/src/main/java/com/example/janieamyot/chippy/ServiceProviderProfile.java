@@ -83,9 +83,8 @@ public class ServiceProviderProfile extends AppCompatActivity {
         if (!streetName.equals("")){
             if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
                 dbHandler.editStreetName(serviceProvider.getUserName(), streetName);
-            }else {
-                serviceProvider.setStreetName(streetName);
             }
+                serviceProvider.setStreetName(streetName);
         }
         else{
             field.getText().clear();
@@ -103,9 +102,9 @@ public class ServiceProviderProfile extends AppCompatActivity {
             if (TextUtils.isDigitsOnly(streetNumber)) {
                 if (dbHandler.spProfileExists(serviceProvider.getUserName())) {
                     dbHandler.editStreetNumber(serviceProvider.getUserName(), Integer.parseInt(streetNumber));
-                } else {
-                    serviceProvider.setStreetNumber(Integer.parseInt(streetNumber));
                 }
+                serviceProvider.setStreetNumber(Integer.parseInt(streetNumber));
+
             } else {
                 field.getText().clear();
                 Toast.makeText(getApplicationContext(), "Street number cannot be have non-numerical characters", Toast.LENGTH_LONG).show();
@@ -118,17 +117,16 @@ public class ServiceProviderProfile extends AppCompatActivity {
         String apartmentNumber = field.getText().toString();
         if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
             dbHandler.editApartmentNumber(serviceProvider.getUserName(), apartmentNumber);
-        }else {
-            serviceProvider.setApartmentNumber(apartmentNumber);
         }
+        serviceProvider.setApartmentNumber(apartmentNumber);
+
         field = findViewById(R.id.spEditCity);
         String city = field.getText().toString();
         if (!city.equals("")){
             if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
             dbHandler.editCity(serviceProvider.getUserName(), city);
-            }else {
-                serviceProvider.setCity(city);
             }
+            serviceProvider.setCity(city);
         }
         else{
             field.getText().clear();
@@ -140,9 +138,8 @@ public class ServiceProviderProfile extends AppCompatActivity {
         if (!country.equals("")){
             if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
                 dbHandler.editCountry(serviceProvider.getUserName(), country);
-            }else {
-                serviceProvider.setCountry(country);
             }
+            serviceProvider.setCountry(country);
         }
         else{
             field.getText().clear();
@@ -156,9 +153,8 @@ public class ServiceProviderProfile extends AppCompatActivity {
             if(TextUtils.isDigitsOnly(str1) ) {
                 if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
                     dbHandler.editPhoneNumber(serviceProvider.getUserName(), phoneNumber);
-                }else {
-                    serviceProvider.setPhoneNumber(phoneNumber);
                 }
+                serviceProvider.setPhoneNumber(phoneNumber);
             }
             else{
                 field.getText().clear();
@@ -176,9 +172,8 @@ public class ServiceProviderProfile extends AppCompatActivity {
         if (!company.equals("")){
             if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
                 dbHandler.editCompany(serviceProvider.getUserName(), company);
-            }else {
-                serviceProvider.setCompany(company);
             }
+            serviceProvider.setCompany(company);
         }
         else{
             field.getText().clear();
@@ -191,9 +186,8 @@ public class ServiceProviderProfile extends AppCompatActivity {
         String description = field.getText().toString();
         if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
             dbHandler.editDescription(serviceProvider.getUserName(), description);
-        }else {
-            serviceProvider.setDescription(description);
         }
+        serviceProvider.setDescription(description);
 
         //license is optional so it can be blank
         RadioButton licensedYes = findViewById(R.id.spLicensedYes);
@@ -201,16 +195,14 @@ public class ServiceProviderProfile extends AppCompatActivity {
         if (licensedYes.isChecked()){
             if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
                 dbHandler.editIsLicensed(serviceProvider.getUserName(), true);
-            }else {
-                serviceProvider.setLicensed(true);
             }
+            serviceProvider.setLicensed(true);
         }
         if (licensedNo.isChecked()){
             if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
                 dbHandler.editIsLicensed(serviceProvider.getUserName(), false);
-            }else {
-                serviceProvider.setLicensed(false);
             }
+            serviceProvider.setLicensed(false);
         }
         if(!dbHandler.spProfileExists(serviceProvider.getUserName()) && flag){
             dbHandler.completeSpProfile(serviceProvider);
