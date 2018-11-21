@@ -27,29 +27,30 @@
                 android:id="@+id/admin_accounts_view">
 
                 <TextView
-                    android:id="@+id/welcomeMessage"
+                    android:id="@+id/accountsPageTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="60dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
-                    android:text="Welcome Admin"
-                    android:textSize="18sp" />
+                    android:text="ACCOUNTS"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    android:layout_gravity="center_horizontal" />
 
                 <ListView
                     android:id="@+id/accountList"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginBottom="30dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp" />
 
             </LinearLayout>
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -62,58 +63,71 @@
                     android:layout_marginTop="60dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
-                    android:text="Services"
-                    android:textSize="18sp" />
+                    android:text="SERVICES"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal" />
 
                 <ListView
                     android:id="@+id/serviceList"
+                    android:layout_below="@id/servicePageTitle"
+                    android:layout_above="@+id/adminServicesButtonList"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="30dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp" >
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:choiceMode="singleChoice"
+                    android:listSelector="@android:color/darker_gray">
 
                 </ListView>
 
                 <LinearLayout
-                    android:id="@+id/LinearLayout02"
+                    android:id="@+id/adminServicesButtonList"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent">
+                    android:layout_alignParentBottom="true">
 
-                    <Button
-                        android:id="@+id/editServiceButton"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/LinearLayout02"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:padding="10dp"
-                        android:onClick="onClickEdit"
-                        android:text="Edit Service" />
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/addServiceButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:padding="10dp"
-                        android:onClick="onClickAddNewService"
-                        android:text="Add New Service" />
+                        <Button
+                            android:id="@+id/editServiceButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:padding="10dp"
+                            android:onClick="onClickEdit"
+                            android:text="Edit Service" />
 
-                    <Button
-                        android:id="@+id/deleteServiceButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:padding="10dp"
-                        android:onClick="onClickDelete"
-                        android:text="Delete Service" />
+                        <Button
+                            android:id="@+id/addServiceButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:padding="10dp"
+                            android:onClick="onClickAddNewService"
+                            android:text="Add New Service" />
+
+                        <Button
+                            android:id="@+id/deleteServiceButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:padding="10dp"
+                            android:onClick="onClickDelete"
+                            android:text="Delete Service" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </ViewSwitcher>
 

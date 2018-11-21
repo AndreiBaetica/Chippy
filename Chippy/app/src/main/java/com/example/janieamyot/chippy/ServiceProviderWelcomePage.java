@@ -14,12 +14,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 public class ServiceProviderWelcomePage extends AppCompatActivity {
 
-    Bundle bundle;
+    public static Bundle bundle;
     private DrawerLayout mDrawerLayout;
-
+    ServiceProvider account;
 
 
     @Override
@@ -29,13 +30,25 @@ public class ServiceProviderWelcomePage extends AppCompatActivity {
 
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
-
+        account = (ServiceProvider) bundle.get("Account");
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame_sp, new SPProfileFragment());
         ft.commit();
 
         setupNavigationMenu();
+        //Add header to navigation drawer
+        NavigationView navigationView = findViewById(R.id.nav_view2);
+        View navHeaderView = navigationView.inflateHeaderView(R.layout.nav_header);
+        TextView headerUsername = (TextView) navHeaderView.findViewById(R.id.headerUsername);
+        headerUsername.setText(extractAccount());
+        TextView headerRole = (TextView) navHeaderView.findViewById(R.id.headerRole);
+        headerRole.setText("Service Provider");
+    }
+
+    private String extractAccount(){
+        ServiceProvider serviceProvider = (ServiceProvider) bundle.get("Account");
+        return serviceProvider.getUserName();
     }
 
     public void OnClickLogOut(View view){
@@ -100,6 +113,12 @@ public class ServiceProviderWelcomePage extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onClickEditAvailability(View view) {
+        Intent intent = new Intent(getApplicationContext(), ServiceProviderAvailable.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }
 

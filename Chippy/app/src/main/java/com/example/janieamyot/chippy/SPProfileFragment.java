@@ -25,7 +25,7 @@ public class SPProfileFragment extends Fragment{
         Intent intent = getActivity().getIntent();
         bundle = intent.getExtras();
         serviceProvider = (ServiceProvider) bundle.get("Account");
-
+        
         TextView welcome = getView().findViewById(R.id.welcomeMessage);
         String welcomeMessage = "Welcome " + extractAccount(serviceProvider)[2] + ", logged as Service Provider.";
         welcome.setText(welcomeMessage);

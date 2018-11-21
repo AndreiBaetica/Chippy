@@ -14,9 +14,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ViewSwitcher;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -36,11 +39,15 @@ public class AdminWelcomePage extends AppCompatActivity {
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
 
-        //Account List Screen
-        TextView welcome = findViewById(R.id.welcomeMessage);
-        String welcomeMessage = "Welcome " + extractAccount() + ", logged as Admin";
-        welcome.setText(welcomeMessage);
+        //Add header to navigation drawer
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View navHeaderView = navigationView.inflateHeaderView(R.layout.nav_header);
+        TextView headerUsername = (TextView) navHeaderView.findViewById(R.id.headerUsername);
+        headerUsername.setText(extractAccount());
+        TextView headerRole = (TextView) navHeaderView.findViewById(R.id.headerRole);
+        headerRole.setText("Admin");
 
+        //Accounts List Screen
         ListView accountList = findViewById(R.id.accountList);
         final ArrayList<String> listAccounts = displayAccounts();
         ArrayAdapter adapter1 = new ArrayAdapter(this,android.R.layout.simple_list_item_1, listAccounts);
@@ -164,6 +171,7 @@ public class AdminWelcomePage extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -173,7 +181,7 @@ public class AdminWelcomePage extends AppCompatActivity {
 
                         ViewSwitcher viewSwitcher = findViewById(R.id.viewSwitcher);
                         LinearLayout accountsView = findViewById(R.id.admin_accounts_view);
-                        LinearLayout servicesView = findViewById(R.id.admin_services_view);
+                        RelativeLayout servicesView = findViewById(R.id.admin_services_view);
 
                         if (menuItem.getItemId() == R.id.nav_accounts && viewSwitcher.getCurrentView() != accountsView){
                             viewSwitcher.showNext();

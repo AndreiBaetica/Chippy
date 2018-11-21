@@ -40,14 +40,10 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_IS_LICENSED = "isLicensed";
     public static final String COLUMN_PHONE_NUMBER = "phoneNumber";
+    public static final String COLUMN_AVAILABILITIES = "availabilities";
 
     //Service provider services table
     public static final String TABLE_SP_SERVICES = "serviceProviderServices";
-
-    //Service provider availabilities table
-    public static final String TABLE_SP_AVAILABILITIES = "serviceProviderAvailabilities";
-    public static final String COLUMN_START_TIME = "startTime";
-    public static final String COLUMN_END_TIME = "endTime";
 
 
     public MyDBHandler(Context context){
@@ -65,16 +61,13 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.execSQL(CREATE_SERVICES_TABLE);
 
         //Creates the service provider profile table
-        String CREATE_SP_PROFILE_TABLE = "CREATE TABLE "+TABLE_SP_PROFILE+"("+COLUMN_USERNAME+" TEXT PRIMARY KEY,"+COLUMN_STREET_NUMBER+" INTEGER,"+COLUMN_APARTMENT_NUMBER+" TEXT,"+COLUMN_STREET_NAME+" TEXT,"+COLUMN_CITY+" TEXT,"+COLUMN_COUNTRY+" TEXT,"+COLUMN_COMPANY+" TEXT,"+COLUMN_DESCRIPTION+" TEXT,"+COLUMN_IS_LICENSED+" TEXT,"+COLUMN_PHONE_NUMBER+" TEXT,"+"FOREIGN KEY("+COLUMN_USERNAME+") REFERENCES "+TABLE_ACCOUNT+"("+COLUMN_USERNAME+")"+")";
+        String CREATE_SP_PROFILE_TABLE = "CREATE TABLE "+TABLE_SP_PROFILE+"("+COLUMN_USERNAME+" TEXT PRIMARY KEY,"+COLUMN_STREET_NUMBER+" INTEGER,"+COLUMN_APARTMENT_NUMBER+" TEXT,"+COLUMN_STREET_NAME+" TEXT,"+COLUMN_CITY+" TEXT,"+COLUMN_COUNTRY+" TEXT,"+COLUMN_COMPANY+" TEXT,"+COLUMN_DESCRIPTION+" TEXT,"+COLUMN_IS_LICENSED+" TEXT,"+COLUMN_PHONE_NUMBER+" TEXT,"+COLUMN_AVAILABILITIES+" TEXT,"+"FOREIGN KEY("+COLUMN_USERNAME+") REFERENCES "+TABLE_ACCOUNT+"("+COLUMN_USERNAME+")"+")";
         db.execSQL(CREATE_SP_PROFILE_TABLE);
 
         //Creates the service provider services table
         String CREATE_SP_SERVICES_TABLE = "CREATE TABLE "+TABLE_SP_SERVICES+"("+COLUMN_USERNAME+" TEXT,"+COLUMN_SERVICE_ID+" INTEGER,"+"FOREIGN KEY("+COLUMN_USERNAME+") REFERENCES "+TABLE_SP_PROFILE+"("+COLUMN_USERNAME+")"+")";
         db.execSQL(CREATE_SP_SERVICES_TABLE);
 
-        //Creates the service provider availabilities tables
-        String CREATE_SP_AVAILABILITIES_TABLE = "CREATE TABLE "+TABLE_SP_AVAILABILITIES+"("+COLUMN_USERNAME+" TEXT,"+COLUMN_START_TIME+" TEXT,"+COLUMN_END_TIME+" TEXT,"+"FOREIGN KEY("+COLUMN_USERNAME+") REFERENCES "+TABLE_SP_PROFILE+"("+COLUMN_USERNAME+")"+")";
-        db.execSQL(CREATE_SP_AVAILABILITIES_TABLE);
     }
 
     @Override
@@ -83,7 +76,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERVICE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SP_PROFILE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SP_SERVICES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SP_AVAILABILITIES);
         onCreate(db);
     }
 
@@ -505,6 +497,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
             sp.setDescription(cursor.getString(7));
             sp.setLicensed(Boolean.parseBoolean(cursor.getString(8)));
             sp.setPhoneNumber(cursor.getString(9));
+            sp.setAvailabilities(cursor.getString(10));
             cursor.close();
         } else{
             sp = null;
@@ -532,6 +525,12 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         db.close();
         return flag;
+    }
+
+    public void editAvailabilities(String userName, String availabilities){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_SP_PROFILE + " SET " + COLUMN_AVAILABILITIES + " = ? WHERE " + COLUMN_USERNAME + " = ?";
+        db.execSQL(query, new String[]{availabilities, userName});
     }
 
     //SERVICE PROVIDER SERVICES FUNCTIONS
@@ -589,8 +588,5 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.close();
         return services;
     }
-
-    //SERVICE PROVIDER AVAILABILITIES FUNCTIONS
-
 
 }
