@@ -25,19 +25,12 @@
         android:typeface="serif"
         android:layout_centerHorizontal="true" />
 
-    <Spinner
-        android:id="@+id/spServicesEditCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/spServicesEditTitle">
-    </Spinner>
-
 
     <ListView
         android:id="@+id/spServicesList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/spServicesEditCategory"
+        android:layout_below="@+id/spServicesEditTitle"
         android:layout_above="@+id/spServicesEditButtons"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="30dp"

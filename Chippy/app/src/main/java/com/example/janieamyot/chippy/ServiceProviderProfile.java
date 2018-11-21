@@ -32,7 +32,7 @@ public class ServiceProviderProfile extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         countriesList(serviceProvider);
-        if ((bundle != null) || (dbHandler.spProfileExists(serviceProvider.getUserName()))) {
+        if ((bundle != null) && (dbHandler.spProfileExists(serviceProvider.getUserName()))) {
             ServiceProvider sP = (ServiceProvider) bundle.get("Account");
             EditText field = findViewById(R.id.spEditStreetNumber);
             field.setText(Integer.toString(sP.getStreetNumber()));
