@@ -1,20 +1,20 @@
 package com.example.janieamyot.chippy;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
-import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Locale;
 
 
 public class ServiceProviderProfile extends AppCompatActivity {
@@ -130,11 +130,9 @@ public class ServiceProviderProfile extends AppCompatActivity {
         }
         field = findViewById(R.id.spEditPhone);
         String phoneNumber = field.getText().toString();
-        if (!phoneNumber.equals("") && phoneNumber.length() == 12 && phoneNumber.charAt(3) == '-' && phoneNumber.charAt(7) == '-'){
-            String str1 = phoneNumber.substring(0,3);
-            String str2 = phoneNumber.substring(4,7);
-            String str3 = phoneNumber.substring(8,phoneNumber.length());
-            if(TextUtils.isDigitsOnly(str1) && TextUtils.isDigitsOnly(str2) && TextUtils.isDigitsOnly(str3)) {
+        if (!phoneNumber.equals("") ){
+            String str1 = phoneNumber.substring(0,phoneNumber.length());
+            if(TextUtils.isDigitsOnly(str1) ) {
                 if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
                     dbHandler.editPhoneNumber(serviceProvider.getUserName(), phoneNumber);
                 }else {
@@ -149,7 +147,7 @@ public class ServiceProviderProfile extends AppCompatActivity {
         }
         else{
             field.getText().clear();
-            Toast.makeText(getApplicationContext(), "Phone number should be in the form XXX-XXX-XXXX.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Phone number should be entered.", Toast.LENGTH_LONG).show();
             flag = false;
         }
         field = findViewById(R.id.spEditCompany);
