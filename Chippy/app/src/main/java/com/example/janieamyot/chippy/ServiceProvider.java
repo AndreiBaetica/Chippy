@@ -1,7 +1,8 @@
 package com.example.janieamyot.chippy;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
+
 
 public class ServiceProvider extends Account{
 
@@ -17,6 +18,7 @@ public class ServiceProvider extends Account{
     private String availabilities;
     private ArrayList<Service> services;
     
+
     public ServiceProvider(){
         super();
     }
@@ -24,6 +26,8 @@ public class ServiceProvider extends Account{
     public ServiceProvider(String name, String lastName, String userName, String password, String email){
     super(name,lastName,userName, password, email);
   }
+
+
 
     public ServiceProvider(String name, String lastName, String userName, String password, String email, int streetNumber, String apartmentNumber, String streetName, String city, String country, String company, String description, boolean isLicensed, String phoneNumber, String availabilities, ArrayList<Service> services){
         super(name,lastName,userName, password, email);
@@ -101,4 +105,5 @@ public class ServiceProvider extends Account{
     }
     public ArrayList<Service> getServices() { return services; }
     public String getAvailabilities() { return availabilities; }
+
 }
