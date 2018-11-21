@@ -245,6 +245,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         if(cursor.moveToFirst()){
             String idStr = cursor.getString(0);
+            db.delete(TABLE_SP_SERVICES,COLUMN_SERVICE_ID + "=?", new String[]{idStr});
             db.delete(TABLE_SERVICE, COLUMN_SERVICE_ID + " = " + idStr, null);
             cursor.close();
             result = true;
