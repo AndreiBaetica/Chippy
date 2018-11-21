@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 public class ServiceProviderWelcomePage extends AppCompatActivity {
 
@@ -36,7 +37,6 @@ public class ServiceProviderWelcomePage extends AppCompatActivity {
         ft.commit();
 
         setupNavigationMenu();
-
         //Add header to navigation drawer
         NavigationView navigationView = findViewById(R.id.nav_view2);
         View navHeaderView = navigationView.inflateHeaderView(R.layout.nav_header);
