@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -47,6 +48,12 @@ public class ServiceProviderProfile extends AppCompatActivity {
             field.setText(sP.getCompany());
             field = findViewById(R.id.spEditDescription);
             field.setText(sP.getDescription());
+            RadioGroup licensed = findViewById(R.id.licensedGroup);
+            if(sP.isLicensed()){
+                licensed.check(R.id.spLicensedYes);
+            } else {
+                licensed.check(R.id.spLicensedNo);
+            }
         }
     }
 
@@ -230,7 +237,7 @@ public class ServiceProviderProfile extends AppCompatActivity {
             startActivity(intent);
         }
         else{
-            Intent intent = new Intent(getApplicationContext(), SPProfileFragment.class);
+            Intent intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
             bundle.putSerializable("Account", serviceProvider);
             intent.putExtras(bundle);
             startActivity(intent);
