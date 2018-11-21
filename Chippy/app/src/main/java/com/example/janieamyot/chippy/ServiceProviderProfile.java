@@ -204,22 +204,23 @@ public class ServiceProviderProfile extends AppCompatActivity {
             }
             serviceProvider.setLicensed(false);
         }
-        if(!dbHandler.spProfileExists(serviceProvider.getUserName()) && flag){
-            dbHandler.completeSpProfile(serviceProvider);
-            if(dbHandler.spProfileExists(serviceProvider.getUserName())) {
+        if(flag) {
+            if (!dbHandler.spProfileExists(serviceProvider.getUserName())) {
+                dbHandler.completeSpProfile(serviceProvider);
+                if (dbHandler.spProfileExists(serviceProvider.getUserName())) {
+                    Intent intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
+                    bundle.putSerializable("Account", serviceProvider);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Does not exist", Toast.LENGTH_LONG).show();
+                }
+            } else {
                 Intent intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
                 bundle.putSerializable("Account", serviceProvider);
                 intent.putExtras(bundle);
                 startActivity(intent);
-            }else{
-                Toast.makeText(getApplicationContext(), "Does not exist", Toast.LENGTH_LONG).show();
             }
-        }
-        else{
-            Intent intent = new Intent(getApplicationContext(), ServiceProviderWelcomePage.class);
-            bundle.putSerializable("Account", serviceProvider);
-            intent.putExtras(bundle);
-            startActivity(intent);
         }
         dbHandler.close();
     }
