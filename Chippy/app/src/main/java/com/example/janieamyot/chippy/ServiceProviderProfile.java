@@ -27,12 +27,30 @@ public class ServiceProviderProfile extends AppCompatActivity {
         Intent intent = this.getIntent();
         bundle = intent.getExtras();
         serviceProvider = (ServiceProvider) bundle.get("Account");
+        MyDBHandler dbHandler = new MyDBHandler(this);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-        countriesList();
+        countriesList(serviceProvider);
+        if ((bundle != null) || (dbHandler.spProfileExists(serviceProvider.getUserName()))) {
+            ServiceProvider sP = (ServiceProvider) bundle.get("Account");
+            EditText field = findViewById(R.id.spEditStreetNumber);
+            field.setText(Integer.toString(sP.getStreetNumber()));
+            field = findViewById(R.id.spEditApartmentNumber);
+            field.setText(sP.getApartmentNumber());
+            field = findViewById(R.id.spEditStreetName);
+            field.setText(sP.getStreetName());
+            field = findViewById(R.id.spEditCity);
+            field.setText(sP.getCity());
+            field = findViewById(R.id.spEditPhone);
+            field.setText(sP.getPhoneNumber());
+            field = findViewById(R.id.spEditCompany);
+            field.setText(sP.getCompany());
+            field = findViewById(R.id.spEditDescription);
+            field.setText(sP.getDescription());
+        }
     }
 
-    public void countriesList(){
+    public void countriesList(ServiceProvider serviceProvider){
         Locale[] locales = Locale.getAvailableLocales();
         ArrayList<String> countries = new ArrayList<String>();
         for (Locale locale : locales) {
@@ -52,6 +70,9 @@ public class ServiceProviderProfile extends AppCompatActivity {
         ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, countries);
         countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(countryAdapter);
+
+        int spinnerPosition = countryAdapter.getPosition(serviceProvider.getCountry());
+        spinner.setSelection(spinnerPosition);
     }
     public void onSaveClick(View view){
         EditText field;

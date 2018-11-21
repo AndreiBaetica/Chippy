@@ -413,10 +413,12 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public void editStreetNumber(String userName, int newStreetNumber){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_STREET_NUMBER, newStreetNumber);
+        //ContentValues values = new ContentValues();
+        //values.put(COLUMN_STREET_NUMBER, newStreetNumber);
 
-        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        //db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        String query = "UPDATE " + TABLE_SP_PROFILE + " SET " + COLUMN_STREET_NUMBER + " = ? WHERE " + COLUMN_USERNAME + " = ?";
+        db.execSQL(query, new Object[]{newStreetNumber, userName});
         db.close();
     }
 
@@ -424,10 +426,12 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public void editApartmentNumber(String userName, String newApartmentNumber){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_APARTMENT_NUMBER, newApartmentNumber);
+        //ContentValues values = new ContentValues();
+        //values.put(COLUMN_APARTMENT_NUMBER, newApartmentNumber);
 
-        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        //db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        String query = "UPDATE " + TABLE_SP_PROFILE + " SET " + COLUMN_APARTMENT_NUMBER + " = ? WHERE " + COLUMN_USERNAME + " = ?";
+        db.execSQL(query, new String[]{newApartmentNumber, userName});
         db.close();
     }
 
@@ -435,10 +439,11 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public void editStreetName(String userName, String newStreetName){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_STREET_NAME, newStreetName);
-
-        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        //ContentValues values = new ContentValues();
+        //values.put(COLUMN_STREET_NAME, newStreetName);
+        //db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        String query = "UPDATE " + TABLE_SP_PROFILE + " SET " + COLUMN_STREET_NAME + " = ? WHERE " + COLUMN_USERNAME + " = ?";
+        db.execSQL(query, new String[]{newStreetName, userName});
         db.close();
     }
 
@@ -446,10 +451,12 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public void editCity(String userName, String newCity){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_CITY, newCity);
+        //ContentValues values = new ContentValues();
+        //values.put(COLUMN_CITY, newCity);
 
-        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        //db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        String query = "UPDATE " + TABLE_SP_PROFILE + " SET " + COLUMN_CITY + " = ? WHERE " + COLUMN_USERNAME + " = ?";
+        db.execSQL(query, new String[]{newCity, userName});
         db.close();
     }
 
@@ -457,10 +464,12 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public void editCountry(String userName, String newCountry){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_COUNTRY, newCountry);
+        //ContentValues values = new ContentValues();
+        //values.put(COLUMN_COUNTRY, newCountry);
 
-        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        //db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        String query = "UPDATE " + TABLE_SP_PROFILE + " SET " + COLUMN_COUNTRY + " = ? WHERE " + COLUMN_USERNAME + " = ?";
+        db.execSQL(query, new String[]{newCountry, userName});
         db.close();
     }
 
@@ -468,10 +477,12 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public void editDescription(String userName, String newDescription){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_DESCRIPTION, newDescription);
+        //ContentValues values = new ContentValues();
+        //values.put(COLUMN_DESCRIPTION, newDescription);
 
-        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        //db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        String query = "UPDATE " + TABLE_SP_PROFILE + " SET " + COLUMN_DESCRIPTION + " = ? WHERE " + COLUMN_USERNAME + " = ?";
+        db.execSQL(query, new String[]{newDescription, userName});
         db.close();
     }
 
@@ -479,10 +490,12 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public void editCompany(String userName, String newCompany){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_COMPANY, newCompany);
+        //ContentValues values = new ContentValues();
+        //values.put(COLUMN_COMPANY, newCompany);
 
-        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        //db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        String query = "UPDATE " + TABLE_SP_PROFILE + " SET " + COLUMN_COMPANY + " = ? WHERE " + COLUMN_USERNAME + " = ?";
+        db.execSQL(query, new String[]{newCompany, userName});
         db.close();
     }
 
@@ -490,10 +503,12 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public void editIsLicensed(String userName, boolean isLiscensed){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_IS_LICENSED, Boolean.toString(isLiscensed));
+        //ContentValues values = new ContentValues();
+        //values.put(COLUMN_IS_LICENSED, Boolean.toString(isLiscensed));
 
-        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        //db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        String query = "UPDATE " + TABLE_SP_PROFILE + " SET " + COLUMN_IS_LICENSED + " = ? WHERE " + COLUMN_USERNAME + " = ?";
+        db.execSQL(query, new String[]{Boolean.toString(isLiscensed), userName});
         db.close();
     }
 
@@ -501,10 +516,12 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public void editPhoneNumber(String userName, String phoneNumber){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_PHONE_NUMBER, phoneNumber);
+        //ContentValues values = new ContentValues();
+        //values.put(COLUMN_PHONE_NUMBER, phoneNumber);
 
-        db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        //db.update(TABLE_SP_PROFILE, values, COLUMN_USERNAME + "= " + userName, null);
+        String query = "UPDATE " + TABLE_SP_PROFILE + " SET " + COLUMN_PHONE_NUMBER + " = ? WHERE " + COLUMN_USERNAME + " = ?";
+        db.execSQL(query, new String[]{phoneNumber, userName});
         db.close();
     }
 

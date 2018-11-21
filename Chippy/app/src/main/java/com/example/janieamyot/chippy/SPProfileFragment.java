@@ -90,8 +90,7 @@ public class SPProfileFragment extends Fragment{
 
     public void onEditClick(View view){
         Intent intent = new Intent(getActivity(), ServiceProviderProfile.class);
-        ServiceProvider serviceProvider = (ServiceProvider) bundle.get("Account");
-        bundle.putSerializable("Account", serviceProvider);
+        bundle.putSerializable("Account", this.serviceProvider);
         intent.putExtras(bundle);
         startActivity(intent);
     }
