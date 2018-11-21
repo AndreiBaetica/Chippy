@@ -225,13 +225,14 @@
     </ScrollView>
 
     <Button
+        android:id="@+id/spEditButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spEditButton"
-        android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:text="Edit Profile"
+        android:gravity="center"
+        android:onClick="onEditClick"
         android:padding="10dp"
+        android:text="Edit Profile"
         android:textSize="24sp"
         android:textStyle="bold" />
 
