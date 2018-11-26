@@ -55,6 +55,7 @@ public class ServiceProviderWelcomePage extends AppCompatActivity {
 
         Intent intent = new Intent(getApplication(), MainActivity.class);
         startActivity(intent);
+        finish();
 
     }
 
@@ -97,6 +98,7 @@ public class ServiceProviderWelcomePage extends AppCompatActivity {
                             FragmentTransaction ft = getFragmentManager().beginTransaction();
                             ft.replace(R.id.content_frame_sp, fragment);
                             ft.commit();
+
                         }
                         return true;
                     }

@@ -9,6 +9,9 @@ import android.widget.Toast;
 import android.widget.EditText;
 
 
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
+
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
@@ -129,6 +132,10 @@ public class CreateNewAccount extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Username already in use.", Toast.LENGTH_LONG).show();
             validInputs = false;
         }
+
+
+        //Password encryption using SHA512 with Guava
+        password = Hashing.sha512().hashString(password, Charsets.UTF_8).toString();
 
         //account creation
         if (validInputs) {
