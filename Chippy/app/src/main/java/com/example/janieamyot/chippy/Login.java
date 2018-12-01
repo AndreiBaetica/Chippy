@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
+
 public class Login extends AppCompatActivity {
 
     @Override
@@ -23,6 +26,9 @@ public class Login extends AppCompatActivity {
         EditText password = findViewById(R.id.passwordField);
         String user = userName.getText().toString();
         String pass = password.getText().toString();
+        //Password encryption using SHA512 with Guava
+        pass = Hashing.sha512().hashString(pass, Charsets.UTF_8).toString();
+
         MyDBHandler dbHandler = new MyDBHandler(this);
         Account account = dbHandler.findAccountByUserName(user);
         if (account == null){
@@ -37,12 +43,14 @@ public class Login extends AppCompatActivity {
                 bundle.putSerializable("Account", account);
                 intent.putExtras(bundle);
                 startActivity(intent);
+                finish();
             }
             if(account instanceof HomeOwner){
                 Intent intent = new Intent(getApplicationContext(), HomeOwnerWelcomePage.class);
                 bundle.putSerializable("Account", account);
                 intent.putExtras(bundle);
                 startActivity(intent);
+                finish();
             }
             if(account instanceof ServiceProvider){
                 if(dbHandler.spProfileExists(account.getUserName())) {
@@ -51,12 +59,14 @@ public class Login extends AppCompatActivity {
                     bundle.putSerializable("Account", sp);
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    finish();
                 }
                 else{
                     Intent intent = new Intent(getApplicationContext(), ServiceProviderProfile.class);
                     bundle.putSerializable("Account", account);
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    finish();
                 }
             }
 

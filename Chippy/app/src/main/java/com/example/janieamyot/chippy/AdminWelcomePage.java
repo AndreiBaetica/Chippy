@@ -154,6 +154,7 @@ public class AdminWelcomePage extends AppCompatActivity {
     public void OnClickLogOut(View view){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void onClickAddNewService(View view) {
