@@ -24,110 +24,139 @@
         android:layout_below="@+id/hoSearchTitle"
         android:layout_above="@+id/hoSearchButton">
 
-        <LinearLayout
-            android:id="@+id/hoSearchByService"
+        <RadioGroup
+            android:id='@+id/hoSearchBy'
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
+            <RadioButton
+                android:id="@+id/hoSearchByService"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:textSize="18sp"
-                android:text="Service Type"/>
-
-            <Spinner
-                android:id="@+id/hoServiceSearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/hoSearchByDateTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Date"/>
+                android:text="Service Type" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/dateSelected"
-                    android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="18sp"
-                    android:layout_weight="1" />
+                android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/dateButton"
-                    android:layout_width="fill_parent"
+                <Spinner
+                    android:id="@+id/hoServiceSearch"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:src="@mipmap/ic_calendar"
-                    android:background="@color/colorBackground"/>
+                    android:textSize="18sp" />
+
             </LinearLayout>
 
-            <TextView
+            <RadioButton
+                android:id="@+id/hoSearchByDateTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:textSize="18sp"
-                android:text="Start and End Times"/>
+                android:text="Date" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <Spinner
-                    android:id="@+id/hoStartTimeSearch"
-                    android:layout_width="fill_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:entries="@array/timeArray"
-                    android:layout_weight="1"
-                    android:textSize="18sp"/>
-                <Spinner
-                    android:id="@+id/hoEndTimeSearch"
-                    android:layout_width="fill_parent"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/dateSelected"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:layout_weight="1" />
+
+                    <ImageButton
+                        android:id="@+id/dateButton"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:src="@mipmap/ic_calendar"
+                        android:background="@color/colorBackground"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:entries="@array/timeArray"
-                    android:layout_weight="1"
-                    android:outlineAmbientShadowColor="@color/colorPrimary"
-                    android:textSize="18sp"/>
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:textColor="@android:color/black"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        android:text="Start Time"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:textColor="@android:color/black"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        android:text="End Time"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <Spinner
+                        android:id="@+id/hoStartTimeSearch"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:entries="@array/timeArray"
+                        android:layout_weight="1"
+                        android:textSize="18sp"/>
+                    <Spinner
+                        android:id="@+id/hoEndTimeSearch"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:entries="@array/timeArray"
+                        android:layout_weight="1"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/hoSearchByRating"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
+            <RadioButton
+                android:id="@+id/hoSearchByRating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:textSize="18sp"
-                android:text="Service Provider Rating"/>
+                android:text="Service Provider Rating" />
 
-            <Spinner
-                android:id="@+id/hoRatingSearch"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/ratingArray"
-                android:textSize="18sp">
-            </Spinner>
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <Spinner
+                    android:id="@+id/hoRatingSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/ratingArray"
+                    android:textSize="18sp">
+                </Spinner>
+
+            </LinearLayout>
+
+        </RadioGroup>
 
     </LinearLayout>
 
