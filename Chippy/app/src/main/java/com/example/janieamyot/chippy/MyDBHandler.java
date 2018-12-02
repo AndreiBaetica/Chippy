@@ -532,6 +532,39 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return sp;
     }
 
+    public ArrayList<ServiceProvider> findAllServiceProviders(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "Select * FROM "+ TABLE_SP_PROFILE;
+        Cursor cursor = db.rawQuery(query, null);
+
+        ArrayList<ServiceProvider> serviceProviders = new ArrayList<ServiceProvider>();
+        ServiceProvider sp;
+        String userName;
+        if(cursor.moveToFirst()){
+            do{
+                userName = cursor.getString(0);
+                sp = (ServiceProvider)findAccountByUserName(userName);
+                sp.setStreetNumber(cursor.getInt(1));
+                sp.setApartmentNumber(cursor.getString(2));
+                sp.setStreetName(cursor.getString(3));
+                sp.setCity(cursor.getString(4));
+                sp.setCountry(cursor.getString(5));
+                sp.setCompany(cursor.getString(6));
+                sp.setDescription(cursor.getString(7));
+                sp.setLicensed(Boolean.parseBoolean(cursor.getString(8)));
+                sp.setPhoneNumber(cursor.getString(9));
+                sp.setAvailabilities(cursor.getString(10));
+                serviceProviders.add(sp);
+            }while (cursor.moveToNext());
+            cursor.close();
+        } else{
+            serviceProviders = null;
+        }
+
+        db.close();
+        return serviceProviders;
+    }
+
     //To find if a specific service provider already has a profile
     public boolean spProfileExists(String userName){
         SQLiteDatabase db = this.getReadableDatabase();
