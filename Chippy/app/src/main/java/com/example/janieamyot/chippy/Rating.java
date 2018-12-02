@@ -3,13 +3,17 @@ package com.example.janieamyot.chippy;
 public class Rating {
     private int rating;
     private String comment;
+    private Booking booking;
+    private int ratingID;
 
-    public Rating (int rating){
+    public Rating (int rating, int ratingID){
         this.rating =rating;
+        this.ratingID = ratingID;
     }
-    public Rating (int rating, String comment){
+    public Rating (int rating, int ratingID, String comment){
         this.rating=rating;
         this.comment=comment;
+        this.ratingID=ratingID;
     }
 
     public void setComment(String comment) {
@@ -25,5 +29,13 @@ public class Rating {
     }
     public String getComment(){
         return comment;
+    }
+
+    public int getRatingID() {
+        return ratingID;
+    }
+
+    public void setRatingID(int ratingID) {
+        this.ratingID = ratingID;
     }
 }

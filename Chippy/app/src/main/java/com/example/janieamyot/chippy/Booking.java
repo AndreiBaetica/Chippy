@@ -6,11 +6,17 @@ public class Booking {
     private Calendar endTime;
     private Rating rating;
     private int bookingId;
+    private Service service;
+    private ServiceProvider serviceProvider;
+    private HomeOwner homeOwner;
 
-    public Booking (Calendar startTime, Calendar endTime, int bookingId){
+    public Booking (Service service, ServiceProvider serviceProvider, HomeOwner homeOwner, Calendar startTime, Calendar endTime, int bookingId){
         this.endTime=endTime;
         this.startTime=startTime;
         this.bookingId = bookingId;
+        this.homeOwner = homeOwner;
+        this.service = service;
+        this.serviceProvider = serviceProvider;
     }
     public void setRating(Rating rating){
         this.rating=rating;
@@ -37,5 +43,37 @@ public class Booking {
     }
     public int getBookingId() {
         return bookingId;
+    }
+
+    public HomeOwner getHomeOwner() {
+        return homeOwner;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public ServiceProvider getServiceProvider() {
+        return serviceProvider;
+    }
+
+    public void setHomeOwner(HomeOwner homeOwner) {
+        this.homeOwner = homeOwner;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
+
+    public void setServiceProvider(ServiceProvider serviceProvider) {
+        this.serviceProvider = serviceProvider;
+    }
+
+    public void setEndTime(Calendar endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setStartTime(Calendar startTime) {
+        this.startTime = startTime;
     }
 }
