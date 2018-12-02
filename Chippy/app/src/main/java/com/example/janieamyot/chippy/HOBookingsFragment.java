@@ -61,7 +61,7 @@ public class HOBookingsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MyDBHandler dbHandler = new MyDBHandler(getActivity());
                 ListItem bookingItem = list.get(position);
-                Booking bookingSelected = dbHandler.findBookingById(bookingItem.getId());
+                Booking bookingSelected = dbHandler.findBookingbyID(bookingItem.getId());
                 dbHandler.close();
 
                 if (bookingSelected.getRating() == null){
@@ -115,10 +115,10 @@ public class HOBookingsFragment extends Fragment {
                 int rating = (int)ratingBar.getRating();
                 booking.getRating().setRating(rating);
                 int sum=0;
-                for(int i : dbHandler.findRatingforSP(booking.getServiceProvider().getUserName())){
+                for(int i : dbHandler.findRatingsforSp(booking.getServiceProvider().getUserName())){
                     sum = i+ sum;
                 }
-                double avgRating = sum/dbHandler.findRatingforSP(booking.getServiceProvider().getUserName()).size();
+                double avgRating = sum/dbHandler.findRatingsforSp(booking.getServiceProvider().getUserName()).size();
                 dbHandler.updateServiceProviderRating(booking.getServiceProvider().getUserName(), avgRating);
                 dbHandler.close();
                 Toast.makeText(getActivity(),"Rated: " + String.valueOf(rating) + " Stars",Toast.LENGTH_LONG).show();
