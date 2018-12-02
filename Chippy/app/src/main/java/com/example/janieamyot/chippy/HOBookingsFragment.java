@@ -115,6 +115,7 @@ public class HOBookingsFragment extends Fragment {
                 int rating = (int)ratingBar.getRating();
                 booking.getRating().setRating(rating);
                 booking.getRating().setComment(reviewField.getText().toString());
+                dbHandler.addRating(booking.getRating());
                 int sum=0;
                 for(int i : dbHandler.findRatingsforSp(booking.getServiceProvider().getUserName())){
                     sum = i+ sum;
