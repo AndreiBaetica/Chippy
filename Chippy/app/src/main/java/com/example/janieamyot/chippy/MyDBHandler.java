@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -63,7 +64,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     private static final String COLUMN_COMMENT = "comment";
 
 
-    private MyDBHandler(Context context){
+    public MyDBHandler(Context context){
         super(context, DATABASE_NAME, null,DATABASE_VERSION);
     }
 
@@ -90,7 +91,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.execSQL(CREATE_BOOKINGS_TABLE);
 
         //Creates the ratings table
-        String CREATE_RATINGS_TABLE = "CREATE TABLE "+TABLE_RATINGS+"("+COLUMN_RATING_ID+" INTEGER PRIMARY KEY,"+COLUMN_RATING+" TEXT,"+COLUMN_COMMENT+" TEXT,"+COLUMN_BOOKING_ID+" TEXT,"+"FOREIGN KEY("+COLUMN_BOOKING_ID+") REFERENCES "+TABLE_BOOKINGS+"("+COLUMN_BOOKING_ID+")"+")";
+        String CREATE_RATINGS_TABLE = "CREATE TABLE "+TABLE_RATINGS+"("+COLUMN_RATING_ID+" INTEGER PRIMARY KEY,"+COLUMN_RATING+" INTEGER,"+COLUMN_COMMENT+" TEXT,"+COLUMN_BOOKING_ID+" INTEGER,"+"FOREIGN KEY("+COLUMN_BOOKING_ID+") REFERENCES "+TABLE_BOOKINGS+"("+COLUMN_BOOKING_ID+")"+")";
         db.execSQL(CREATE_RATINGS_TABLE);
     }
 
@@ -671,7 +672,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return serviceProviders;
     }
 
-    //BOOKINGS FUNCTIONS
     public void addBooking(Booking booking){
         ContentValues values = new ContentValues();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm");
@@ -704,8 +704,19 @@ public class MyDBHandler extends SQLiteOpenHelper{
         if(cursor.moveToFirst()){
             do{
                 bookingId = cursor.getInt(0);
-                startTime.setTime(sdf.parse(cursor.getString(1)));
-                endTime.setTime(sdf.parse(cursor.getString(2)));
+                try {
+                    startTime.setTime(sdf.parse(cursor.getString(1)));
+                    endTime.setTime(sdf.parse(cursor.getString(2)));
+                }
+                catch(ParseException e){
+                    startTime = null;
+                }
+                try{
+                    endTime.setTime(sdf.parse(cursor.getString(2)));
+                }
+                catch(ParseException e){
+                    endTime = null;
+                }
                 service = this.findService(this.findServiceName(cursor.getInt(3)));
                 ho = (HomeOwner)this.findAccountByUserName(cursor.getString(4));
                 sp = this.findServiceProvider(cursor.getString(5));
@@ -728,18 +739,31 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "Select * FROM "+ TABLE_BOOKINGS +" WHERE "+COLUMN_BOOKING_ID+" = \""+bookingId+"\"";
+        String query = "Select * FROM "+ TABLE_BOOKINGS +" WHERE "+COLUMN_BOOKING_ID+" = \""+bookingID+"\"";
         Cursor cursor = db.rawQuery(query, null);
 
+        Booking booking;
         if(cursor.moveToFirst()){
             Calendar startTime = Calendar.getInstance();
-            startTime.setTime(sdf.parse(cursor.getString(1)));
             Calendar endTime = Calendar.getInstance();
-            endTime.setTime(sdf.parse(cursor.getString(2)));
+            try {
+                startTime.setTime(sdf.parse(cursor.getString(1)));
+                endTime.setTime(sdf.parse(cursor.getString(2)));
+            }
+            catch(ParseException e){
+                startTime = null;
+            }
+            try{
+                endTime.setTime(sdf.parse(cursor.getString(2)));
+            }
+            catch(ParseException e){
+                endTime = null;
+            }
+
             Service service = this.findService(this.findServiceName(cursor.getInt(3)));
             HomeOwner ho = (HomeOwner)this.findAccountByUserName(cursor.getString(4));
             ServiceProvider sp = this.findServiceProvider(cursor.getString(5));
-            Booking booking = new Booking(service, sp, ho, startTime, endTime, bookingId);
+            booking = new Booking(service, sp, ho, startTime, endTime, bookingID);
             cursor.close();
         } else{
             booking = null;
@@ -770,7 +794,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "Select "+COLUMN_BOOKING_ID+" FROM "+ TABLE_BOOKINGS +" WHERE "+COLUMN_USERNAME_SP+" = \""+spUserName+"\"";
         Cursor cursor = db.rawQuery(query, null);
-        ArrayList<Integer> bookingIds = new ArrayList<int>;
+        ArrayList<Integer> bookingIds = new ArrayList<Integer>();
         if(cursor.moveToFirst()){
             do{
                 bookingIds.add(cursor.getInt(0));
@@ -799,7 +823,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         Rating rating;
         if(cursor.moveToFirst()){
-            rating = new Rating(cursor.getString(1), ratingId, cursor.getString(2));
+            rating = new Rating(cursor.getInt(1), bookingId, cursor.getString(2));
             cursor.close();
         } else{
             rating = null;

@@ -22,6 +22,12 @@ public class Rating {
         this.ratingID=ratingID;
     }
 
+    public Rating (int rating, int ratingID, String comment){
+        this.rating = rating;
+        this.ratingID = ratingID;
+        this.comment = comment;
+    }
+
     public void setComment(String comment) {
         this.comment = comment;
     }
