@@ -6,11 +6,17 @@ public class Rating {
     private Booking booking;
     private int ratingID;
 
-    public Rating (int rating, int ratingID){
+    public Rating (int rating, Booking booking){
+        this.booking = booking;
+        this.rating = rating;
+    }
+    public Rating (int rating, int ratingID, Booking booking){
+        this.booking = booking;
         this.rating =rating;
         this.ratingID = ratingID;
     }
-    public Rating (int rating, int ratingID, String comment){
+    public Rating (int rating, int ratingID, String comment, Booking booking){
+        this.booking= booking;
         this.rating=rating;
         this.comment=comment;
         this.ratingID=ratingID;
@@ -24,7 +30,11 @@ public class Rating {
         this.rating = rating;
     }
 
-    public double getRating(){
+    public void setBooking(Booking booking) {
+        this.booking = booking;
+    }
+
+    public int getRating(){
         return rating;
     }
     public String getComment(){
@@ -37,5 +47,9 @@ public class Rating {
 
     public void setRatingID(int ratingID) {
         this.ratingID = ratingID;
+    }
+
+    public Booking getBooking() {
+        return booking;
     }
 }

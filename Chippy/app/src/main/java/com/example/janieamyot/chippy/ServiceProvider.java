@@ -17,7 +17,7 @@ public class ServiceProvider extends Account{
     private boolean isLicensed;
     private String availabilities;
     private ArrayList<Service> services;
-    
+    private ArrayList<Booking> bookings;
 
     public ServiceProvider(){
         super();
@@ -106,5 +106,11 @@ public class ServiceProvider extends Account{
     }
     public ArrayList<Service> getServices() { return services; }
     public String getAvailabilities() { return availabilities; }
+    public void addBooking(Booking booking){
+        bookings.add(booking);
+    }
+    public ArrayList<Booking> getAllBookings(){
+        return bookings;
+    }
 
 }

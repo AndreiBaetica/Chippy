@@ -17,6 +17,7 @@ public class Booking {
         this.homeOwner = homeOwner;
         this.service = service;
         this.serviceProvider = serviceProvider;
+        this.rating = new Rating(0,this);
     }
     public void setRating(Rating rating){
         this.rating=rating;

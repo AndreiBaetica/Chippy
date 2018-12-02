@@ -40,7 +40,7 @@ public class HOBookingsFragment extends Fragment {
 
         //this list view displays the bookings
         ListView bookingList = getActivity().findViewById(R.id.hoBookingList);
-        ArrayList<ListItem> list = displayBookings();
+        final ArrayList<ListItem> list = displayBookings();
 
         ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1, list) {
             @Override
@@ -56,64 +56,72 @@ public class HOBookingsFragment extends Fragment {
         };
         bookingList.setAdapter(adapter);
 
-        /*bookingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        bookingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MyDBHandler dbHandler = new MyDBHandler(getActivity());
                 ListItem bookingItem = list.get(position);
-                bookingSelected = dbHandler.findBookingById(bookingItem.getId());
+                Booking bookingSelected = dbHandler.findBookingById(bookingItem.getId());
                 dbHandler.close();
 
                 if (bookingSelected.getRating() == null){
-                    rateServiceProvider();
+                    rateServiceProvider(bookingSelected);
                 }
             }
-        });*/
+        });
     }
 
     private ArrayList<ListItem> displayBookings(){
 
-        String title = "";
-        String subtitle = "";
+        String title;
+        String subtitle;
         int bookingId;
         ArrayList<ListItem> listBookings = new ArrayList<>();
-        /*MyDBHandler dbHandler = new MyDBHandler(getActivity());
-        ArrayList<Booking> bookingList = dbHandler.findAllBookings(homeOwner.getUserName());
+        MyDBHandler dbHandler = new MyDBHandler(getActivity());
+        ArrayList<Booking> bookingList = dbHandler.findAllBookingsbyHO(homeOwner.getUserName());
 
         if (bookingList == null) {
             return listBookings;
         }
         for (Booking booking : bookingList) {
 
-            title = ""; //TODO: Add title to booking (sp?, sp+service?)
-            subtitle = ""; //TODO: Add subtitle (date?)
+            title = booking.getServiceProvider().getName() + " : " + booking.getService().getName();
+            subtitle = booking.getStartTime().toString() + " to " + booking.getEndTime().toString();
             bookingId = booking.getBookingId();
 
             listBookings.add(new ListItem(title, subtitle, bookingId));
         }
 
-        dbHandler.close();*/
+        dbHandler.close();
         return listBookings;
     }
 
-    private void rateServiceProvider(){
+    private void rateServiceProvider(final Booking booking){
         dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_rating);
         TextView header = dialog.findViewById(R.id.rateHeader);
         Button saveRatingButton = dialog.findViewById(R.id.saveRatingButton);
         Button cancelRatingButton = dialog.findViewById(R.id.cancelRatingButton);
-        RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
+        final RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
         final EditText reviewField = dialog.findViewById(R.id.reviewField);
-        header.setText("Rate ");
+        String rate = "Rate ";
+        header.setText(rate);
 
         saveRatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Add logic for when clicked rate
-                double rating = ratingBar.getRating();
-                Toast.makeText(getActivity(),String.valueOf(rating),Toast.LENGTH_LONG).show();
-
+                MyDBHandler dbHandler = new MyDBHandler(getActivity());
+                int rating = (int)ratingBar.getRating();
+                booking.getRating().setRating(rating);
+                int sum=0;
+                for(int i : dbHandler.findRatingforSP(booking.getServiceProvider().getUserName())){
+                    sum = i+ sum;
+                }
+                double avgRating = sum/dbHandler.findRatingforSP(booking.getServiceProvider().getUserName()).size();
+                dbHandler.updateServiceProviderRating(booking.getServiceProvider().getUserName(), avgRating);
+                dbHandler.close();
+                Toast.makeText(getActivity(),"Rated: " + String.valueOf(rating) + " Stars",Toast.LENGTH_LONG).show();
                 dialog.dismiss();
             }
         });
