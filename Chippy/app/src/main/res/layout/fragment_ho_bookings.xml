@@ -15,26 +15,14 @@
         android:typeface="serif"
         android:layout_centerHorizontal="true" />
 
-    <LinearLayout
+    <ListView
+        android:id="@+id/hoBookingList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:orientation="vertical"
-        android:id="@+id/hoSearchLayout"
         android:layout_below="@+id/hoBookingsTitle"
-        android:layout_above="@+id/hoBookingsButton">
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/hoBookingsButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="SEARCH"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp" />
 
 </RelativeLayout>
