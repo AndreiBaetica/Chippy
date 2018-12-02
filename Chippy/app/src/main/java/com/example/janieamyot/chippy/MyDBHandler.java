@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MyDBHandler extends SQLiteOpenHelper{
 
@@ -14,39 +16,54 @@ public class MyDBHandler extends SQLiteOpenHelper{
     private static final String DATABASE_NAME = "ChippyDB.db";
 
     //Accounts table
-    public static final String TABLE_ACCOUNT = "accounts";
-    public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_LASTNAME = "lastName";
-    public static final String COLUMN_EMAIL = "email";
-    public static final String COLUMN_USERNAME = "userName";
-    public static final String COLUMN_PASSWORD = "password";
-    public static final String COLUMN_ACCOUNT_TYPE = "accountType";
+    private static final String TABLE_ACCOUNT = "accounts";
+    private static final String COLUMN_NAME = "name";
+    private static final String COLUMN_LASTNAME = "lastName";
+    private static final String COLUMN_EMAIL = "email";
+    private static final String COLUMN_USERNAME = "userName";
+    private static final String COLUMN_PASSWORD = "password";
+    private static final String COLUMN_ACCOUNT_TYPE = "accountType";
 
     //Services table
-    public static final String TABLE_SERVICE = "services";
-    public static final String COLUMN_SERVICE_ID = "serviceId";
-    public static final String COLUMN_SERVICE_NAME = "name";
-    public static final String COLUMN_HOURLY_RATE = "hourlyRate";
-    public static final String COLUMN_CATEGORY = "category";
+    private static final String TABLE_SERVICE = "services";
+    private static final String COLUMN_SERVICE_ID = "serviceId";
+    private static final String COLUMN_SERVICE_NAME = "name";
+    private static final String COLUMN_HOURLY_RATE = "hourlyRate";
+    private static final String COLUMN_CATEGORY = "category";
 
     //Service provider profile table
-    public static final String TABLE_SP_PROFILE = "serviceProviderProfile";
-    public static final String COLUMN_STREET_NUMBER = "streetNumber";
-    public static final String COLUMN_APARTMENT_NUMBER = "apartmentNumber";
-    public static final String COLUMN_STREET_NAME = "streetName";
-    public static final String COLUMN_CITY = "city";
-    public static final String COLUMN_COUNTRY = "country";
-    public static final String COLUMN_COMPANY = "company";
-    public static final String COLUMN_DESCRIPTION = "description";
-    public static final String COLUMN_IS_LICENSED = "isLicensed";
-    public static final String COLUMN_PHONE_NUMBER = "phoneNumber";
-    public static final String COLUMN_AVAILABILITIES = "availabilities";
+    private static final String TABLE_SP_PROFILE = "serviceProviderProfile";
+    private static final String COLUMN_STREET_NUMBER = "streetNumber";
+    private static final String COLUMN_APARTMENT_NUMBER = "apartmentNumber";
+    private static final String COLUMN_STREET_NAME = "streetName";
+    private static final String COLUMN_CITY = "city";
+    private static final String COLUMN_COUNTRY = "country";
+    private static final String COLUMN_COMPANY = "company";
+    private static final String COLUMN_DESCRIPTION = "description";
+    private static final String COLUMN_IS_LICENSED = "isLicensed";
+    private static final String COLUMN_PHONE_NUMBER = "phoneNumber";
+    private static final String COLUMN_AVAILABILITIES = "availabilities";
+    private static final String COLUMN_AVERAGE_RATING = "averageRating";
 
     //Service provider services table
-    public static final String TABLE_SP_SERVICES = "serviceProviderServices";
+    private static final String TABLE_SP_SERVICES = "serviceProviderServices";
+
+    //Bookings table
+    private static final String TABLE_BOOKINGS = "bookings";
+    private static final String COLUMN_BOOKING_ID = "bookingId";
+    private static final String COLUMN_START_TIME = "startTime";
+    private static final String COLUMN_END_TIME = "endTime";
+    private static final String COLUMN_USERNAME_HO = "usernameHO";
+    private static final String COLUMN_USERNAME_SP = "usernameSP";
+
+    //Ratings table
+    private static final String TABLE_RATINGS = "ratings";
+    private static final String COLUMN_RATING_ID = "ratingId";
+    private static final String COLUMN_RATING = "rating";
+    private static final String COLUMN_COMMENT = "comment";
 
 
-    public MyDBHandler(Context context){
+    private MyDBHandler(Context context){
         super(context, DATABASE_NAME, null,DATABASE_VERSION);
     }
 
@@ -61,13 +78,20 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.execSQL(CREATE_SERVICES_TABLE);
 
         //Creates the service provider profile table
-        String CREATE_SP_PROFILE_TABLE = "CREATE TABLE "+TABLE_SP_PROFILE+"("+COLUMN_USERNAME+" TEXT PRIMARY KEY,"+COLUMN_STREET_NUMBER+" INTEGER,"+COLUMN_APARTMENT_NUMBER+" TEXT,"+COLUMN_STREET_NAME+" TEXT,"+COLUMN_CITY+" TEXT,"+COLUMN_COUNTRY+" TEXT,"+COLUMN_COMPANY+" TEXT,"+COLUMN_DESCRIPTION+" TEXT,"+COLUMN_IS_LICENSED+" TEXT,"+COLUMN_PHONE_NUMBER+" TEXT,"+COLUMN_AVAILABILITIES+" TEXT,"+"FOREIGN KEY("+COLUMN_USERNAME+") REFERENCES "+TABLE_ACCOUNT+"("+COLUMN_USERNAME+")"+")";
+        String CREATE_SP_PROFILE_TABLE = "CREATE TABLE "+TABLE_SP_PROFILE+"("+COLUMN_USERNAME+" TEXT PRIMARY KEY,"+COLUMN_STREET_NUMBER+" INTEGER,"+COLUMN_APARTMENT_NUMBER+" TEXT,"+COLUMN_STREET_NAME+" TEXT,"+COLUMN_CITY+" TEXT,"+COLUMN_COUNTRY+" TEXT,"+COLUMN_COMPANY+" TEXT,"+COLUMN_DESCRIPTION+" TEXT,"+COLUMN_IS_LICENSED+" TEXT,"+COLUMN_PHONE_NUMBER+" TEXT,"+COLUMN_AVAILABILITIES+" TEXT,"+COLUMN_AVERAGE_RATING+" TEXT,"+"FOREIGN KEY("+COLUMN_USERNAME+") REFERENCES "+TABLE_ACCOUNT+"("+COLUMN_USERNAME+")"+")";
         db.execSQL(CREATE_SP_PROFILE_TABLE);
 
         //Creates the service provider services table
         String CREATE_SP_SERVICES_TABLE = "CREATE TABLE "+TABLE_SP_SERVICES+"("+COLUMN_USERNAME+" TEXT,"+COLUMN_SERVICE_ID+" INTEGER,"+"FOREIGN KEY("+COLUMN_USERNAME+") REFERENCES "+TABLE_SP_PROFILE+"("+COLUMN_USERNAME+")"+")";
         db.execSQL(CREATE_SP_SERVICES_TABLE);
 
+        //Creates the bookings table
+        String CREATE_BOOKINGS_TABLE = "CREATE TABLE "+TABLE_BOOKINGS+"("+COLUMN_BOOKING_ID+" INTEGER PRIMARY KEY,"+COLUMN_START_TIME+" TEXT,"+COLUMN_END_TIME+" TEXT,"+COLUMN_SERVICE_ID+" INTEGER,"+COLUMN_USERNAME_HO+" TEXT,"+COLUMN_USERNAME_SP+" TEXT,"+"FOREIGN KEY("+COLUMN_SERVICE_ID+") REFERENCES "+TABLE_SERVICE+"("+COLUMN_SERVICE_ID+"),"+"FOREIGN KEY("+COLUMN_USERNAME_HO+") REFERENCES "+TABLE_ACCOUNT+"("+COLUMN_USERNAME+"),"+"FOREIGN KEY("+COLUMN_USERNAME_SP+") REFERENCES "+TABLE_SP_PROFILE+"("+COLUMN_USERNAME+")"+")";
+        db.execSQL(CREATE_BOOKINGS_TABLE);
+
+        //Creates the ratings table
+        String CREATE_RATINGS_TABLE = "CREATE TABLE "+TABLE_RATINGS+"("+COLUMN_RATING_ID+" INTEGER PRIMARY KEY,"+COLUMN_RATING+" TEXT,"+COLUMN_COMMENT+" TEXT,"+COLUMN_BOOKING_ID+" TEXT,"+"FOREIGN KEY("+COLUMN_BOOKING_ID+") REFERENCES "+TABLE_BOOKINGS+"("+COLUMN_BOOKING_ID+")"+")";
+        db.execSQL(CREATE_RATINGS_TABLE);
     }
 
     @Override
@@ -76,6 +100,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERVICE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SP_PROFILE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SP_SERVICES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOOKINGS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RATINGS);
         onCreate(db);
     }
 
@@ -235,8 +261,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     }
 
     //To delete a service in the database based on its name
-    public boolean deleteService(String serviceName){
-        boolean result = false;
+    public void deleteService(String serviceName){
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -248,11 +273,9 @@ public class MyDBHandler extends SQLiteOpenHelper{
             db.delete(TABLE_SP_SERVICES,COLUMN_SERVICE_ID + "=?", new String[]{idStr});
             db.delete(TABLE_SERVICE, COLUMN_SERVICE_ID + " = " + idStr, null);
             cursor.close();
-            result = true;
         }
 
         db.close();
-        return result;
     }
 
     //To find all services in the database
@@ -327,7 +350,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return service;
     }
 
-    //To find the service ID related to a specific service
+    //To find the service ID related to a specific service name
     private int findServiceId(String serviceName){
         int serviceID = 0;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -548,8 +571,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     }
 
     //To delete a service associated to a specific service provider
-    public boolean deleteSpService(String userName, String serviceName){
-        boolean result = false;
+    public void deleteSpService(String userName, String serviceName){
 
         int serviceID = this.findServiceId(serviceName);
 
@@ -562,11 +584,9 @@ public class MyDBHandler extends SQLiteOpenHelper{
             String idStr = cursor.getString(0);
             db.delete(TABLE_SP_SERVICES, COLUMN_USERNAME + "=? and " + COLUMN_SERVICE_ID + "=?", new String[]{idStr, serviceID+""});
             cursor.close();
-            result = true;
         }
 
         db.close();
-        return result;
     }
 
     //To find the list of all the services associated to a service provider
@@ -589,5 +609,207 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.close();
         return services;
     }
+
+    //NEW METHODS FOR DELIVERABLE 4
+
+    //To find all service providers that offer a specific service
+    public ArrayList<ServiceProvider> findSPbyService(String serviceName){
+        int serviceID = this.findServiceId(serviceName);
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "Select " + COLUMN_USERNAME + " FROM " + TABLE_SP_SERVICES + " WHERE " + COLUMN_SERVICE_ID + " = \"" + serviceID + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+        ArrayList<ServiceProvider> serviceProviders = new ArrayList<ServiceProvider>();
+        if(cursor.moveToFirst()){
+            do{
+                serviceProviders.add(this.findServiceProvider(cursor.getString(0)));
+            }while (cursor.moveToNext());
+            cursor.close();
+        } else{
+            serviceProviders = null;
+        }
+        db.close();
+        return serviceProviders;
+    }
+
+    public double findSPAverageRating(String spUserName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "Select " + COLUMN_AVERAGE_RATING + " FROM " + TABLE_SP_PROFILE + " WHERE " + COLUMN_USERNAME + " = \"" + spUserName + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+        double averageRating;
+        if(cursor.moveToFirst()){
+            averageRating = Double.parseDouble(cursor.getString(0));
+            cursor.close();
+        } else{
+            averageRating = -1;
+        }
+        db.close();
+        return averageRating;
+    }
+
+    //To find all service providers that are available for a specific period
+    public ArrayList<ServiceProvider> findSPbyAvailability(Calendar startTime, Calendar endTime){
+        //TO DO: FIND SP THAT ARE AVAILABLE
+        ArrayList<ServiceProvider> serviceProviders = new ArrayList<ServiceProvider>();
+        return serviceProviders;
+    }
+
+    //To find all service providers having a rating greater or equal to rating entered
+    public ArrayList<ServiceProvider> findSPbyRating(int rating){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "Select " + COLUMN_USERNAME + " FROM " + TABLE_SP_PROFILE + " WHERE " + COLUMN_AVERAGE_RATING + " >= \"" + rating + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+        ArrayList<ServiceProvider> serviceProviders = new ArrayList<ServiceProvider>();
+        if(cursor.moveToFirst()){
+            do{
+                serviceProviders.add(this.findServiceProvider(cursor.getString(0)));
+            }while (cursor.moveToNext());
+            cursor.close();
+        } else{
+            serviceProviders = null;
+        }
+        db.close();
+        return serviceProviders;
+    }
+
+    //BOOKINGS FUNCTIONS
+    public void addBooking(Booking booking){
+        ContentValues values = new ContentValues();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm");
+        values.put(COLUMN_START_TIME, sdf.format(booking.getStartTime().getTime()));
+        values.put(COLUMN_END_TIME, sdf.format(booking.getEndTime().getTime()));
+        values.put(COLUMN_SERVICE_ID, this.findServiceId(booking.getService().getName()));
+        values.put(COLUMN_USERNAME_HO, booking.getHomeOwner().getUserName());
+        values.put(COLUMN_USERNAME_SP, booking.getServiceProvider().getUserName());
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_BOOKINGS, null, values);
+        db.close();
+    }
+
+    public ArrayList<Booking> findAllBookingsbyHO(String homeOwnerUserName){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "Select * FROM "+ TABLE_BOOKINGS+" WHERE "+COLUMN_USERNAME_HO+" = \""+homeOwnerUserName+"\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm");
+        ArrayList<Booking> bookings = new ArrayList<Booking>();
+        int bookingId;
+        Calendar startTime = Calendar.getInstance();
+        Calendar endTime = Calendar.getInstance();
+        Service service;
+        ServiceProvider sp;
+        HomeOwner ho;
+        Rating rating;
+        Booking booking;
+        if(cursor.moveToFirst()){
+            do{
+                bookingId = cursor.getInt(0);
+                startTime.setTime(sdf.parse(cursor.getString(1)));
+                endTime.setTime(sdf.parse(cursor.getString(2)));
+                service = this.findService(this.findServiceName(cursor.getInt(3)));
+                ho = (HomeOwner)this.findAccountByUserName(cursor.getString(4));
+                sp = this.findServiceProvider(cursor.getString(5));
+                booking = new Booking(service, sp, ho, startTime, endTime, bookingId);
+                rating = findRatingbyBookingId(bookingId);
+                booking.setRating(rating);
+                bookings.add(booking);
+            }while (cursor.moveToNext());
+            cursor.close();
+        } else{
+            bookings = null;
+        }
+
+        db.close();
+        return bookings;
+    }
+
+    public Booking findBookingbyID(int bookingID){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm");
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "Select * FROM "+ TABLE_BOOKINGS +" WHERE "+COLUMN_BOOKING_ID+" = \""+bookingId+"\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            Calendar startTime = Calendar.getInstance();
+            startTime.setTime(sdf.parse(cursor.getString(1)));
+            Calendar endTime = Calendar.getInstance();
+            endTime.setTime(sdf.parse(cursor.getString(2)));
+            Service service = this.findService(this.findServiceName(cursor.getInt(3)));
+            HomeOwner ho = (HomeOwner)this.findAccountByUserName(cursor.getString(4));
+            ServiceProvider sp = this.findServiceProvider(cursor.getString(5));
+            Booking booking = new Booking(service, sp, ho, startTime, endTime, bookingId);
+            cursor.close();
+        } else{
+            booking = null;
+        }
+
+        db.close();
+        return booking;
+    }
+
+    public void addRating(Rating rating){
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_RATING, rating.getRating());
+        values.put(COLUMN_COMMENT, rating.getComment());
+        values.put(COLUMN_BOOKING_ID, rating.getBooking().getBookingId());
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_RATINGS, null, values);
+        db.close();
+    }
+
+    public void updateServiceProviderRating(String spUserName, double averageRating){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_SP_PROFILE + " SET " + COLUMN_AVERAGE_RATING + " = ? WHERE " + COLUMN_USERNAME + " = ?";
+        db.execSQL(query, new String[]{Double.toString(averageRating), spUserName});
+        db.close();
+    }
+
+    public ArrayList<Integer> findRatingsforSp(String spUserName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "Select "+COLUMN_BOOKING_ID+" FROM "+ TABLE_BOOKINGS +" WHERE "+COLUMN_USERNAME_SP+" = \""+spUserName+"\"";
+        Cursor cursor = db.rawQuery(query, null);
+        ArrayList<Integer> bookingIds = new ArrayList<int>;
+        if(cursor.moveToFirst()){
+            do{
+                bookingIds.add(cursor.getInt(0));
+            }while (cursor.moveToNext());
+            cursor.close();
+        } else{
+            bookingIds = null;
+        }
+        db.close();
+
+        ArrayList<Integer> ratings = new ArrayList<>();
+        //Find all ratings
+        for(int i = 0; i < bookingIds.size(); i++){
+            int bookingId = bookingIds.get(i);
+            ratings.add(this.findRatingbyBookingId(bookingId).getRating());
+        }
+        return ratings;
+    }
+
+
+    public Rating findRatingbyBookingId(int bookingId){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "Select * FROM "+ TABLE_RATINGS +" WHERE "+COLUMN_BOOKING_ID+" = \""+bookingId+"\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        Rating rating;
+        if(cursor.moveToFirst()){
+            rating = new Rating(cursor.getString(1), ratingId, cursor.getString(2));
+            cursor.close();
+        } else{
+            rating = null;
+        }
+
+        db.close();
+        return rating;
+    }
+
+
+
 
 }
