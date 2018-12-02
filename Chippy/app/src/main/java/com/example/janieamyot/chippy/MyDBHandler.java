@@ -5,6 +5,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.util.JsonReader;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -679,14 +686,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.close();
         return averageRating;
     }
-
-    //To find all service providers that are available for a specific period
-    public ArrayList<ServiceProvider> findSPbyAvailability(Calendar startTime, Calendar endTime){
-        //TO DO: FIND SP THAT ARE AVAILABLE
-        ArrayList<ServiceProvider> serviceProviders = new ArrayList<ServiceProvider>();
-        return serviceProviders;
-    }
-
+    
     //To find all service providers having a rating greater or equal to rating entered
     public ArrayList<ServiceProvider> findSPbyRating(int rating){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -864,6 +864,40 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         db.close();
         return rating;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public ArrayList<ServiceProvider> findSPbyAvailability(String day, ArrayList<Integer> time) throws JSONException {
+        ArrayList<ServiceProvider> allSPs = findAllServiceProviders();
+        ArrayList<ServiceProvider> searchRes = new ArrayList<>();
+
+        JSONObject availability;
+        JSONArray dayAvailability;
+        ArrayList<Integer> spTimes = new ArrayList<>();
+
+        boolean matches;
+        for (ServiceProvider sp : allSPs) {
+            matches = true;
+            availability = new JSONObject(sp.getAvailabilities());
+            dayAvailability = new JSONArray(availability.getJSONArray(day));
+
+            for (int i = 0; i < dayAvailability.length(); i++) {
+                spTimes.add(dayAvailability.optInt(i));
+            }
+
+            for (Integer t : time) {
+                if (!spTimes.contains(t)) {
+                    matches = false;
+                }
+            }
+
+            if (matches) {
+                searchRes.add(sp);
+            }
+
+        }
+
+        return searchRes;
     }
 
 
