@@ -203,7 +203,7 @@ public class HOSearchFragment extends Fragment{
             foundSPsByAvailability = dbHandler.findSPbyAvailability(day, range);
         }
         catch(JSONException e){
-
+            System.exit(0);
         }
 
         Intent intent = new Intent(getActivity(), HOSearchResults.class);

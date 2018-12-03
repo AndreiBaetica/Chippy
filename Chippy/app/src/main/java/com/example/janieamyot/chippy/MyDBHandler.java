@@ -1,13 +1,12 @@
 package com.example.janieamyot.chippy;
 
-import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteDatabase;
-import android.content.Context;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.util.JsonReader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -678,7 +677,11 @@ public class MyDBHandler extends SQLiteOpenHelper{
         Cursor cursor = db.rawQuery(query, null);
         double averageRating;
         if(cursor.moveToFirst()){
-            averageRating = Double.parseDouble(cursor.getString(0));
+            try {
+                averageRating = Double.parseDouble(cursor.getString(0));
+            }catch(Exception e){
+                averageRating =5;
+            }
             cursor.close();
         } else{
             averageRating = -1;
@@ -877,17 +880,17 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         boolean matches;
         for (ServiceProvider sp : allSPs) {
-            matches = true;
+            matches = false;
             availability = new JSONObject(sp.getAvailabilities());
-            dayAvailability = new JSONArray(availability.getJSONArray(day));
+            dayAvailability = availability.getJSONArray(day);
 
             for (int i = 0; i < dayAvailability.length(); i++) {
                 spTimes.add(dayAvailability.optInt(i));
             }
 
-            for (Integer t : time) {
-                if (!spTimes.contains(t)) {
-                    matches = false;
+            for (Integer t : spTimes) {
+                if (time.contains(t)) {
+                    matches = true;
                 }
             }
 

@@ -77,4 +77,8 @@ public class Booking {
     public void setStartTime(Calendar startTime) {
         this.startTime = startTime;
     }
+
+    public String toString(){
+        
+    }
 }

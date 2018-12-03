@@ -11,6 +11,11 @@ public class ListItem {
         this.id = id;
     }
 
+    public ListItem(String title, String subTitle) {
+        this.title = title;
+        this.subTitle = subTitle;
+
+    }
     public int getId() {
         return this.id;
     }
