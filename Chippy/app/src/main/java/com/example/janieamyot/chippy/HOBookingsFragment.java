@@ -64,7 +64,7 @@ public class HOBookingsFragment extends Fragment {
                 Booking bookingSelected = dbHandler.findBookingbyID(bookingItem.getId());
                 dbHandler.close();
 
-                if (bookingSelected.getRating() == null){
+                if (bookingSelected.getRating().getRating() == 0){
                     rateServiceProvider(bookingSelected);
                 }
             }
@@ -86,7 +86,7 @@ public class HOBookingsFragment extends Fragment {
         for (Booking booking : bookingList) {
 
             title = booking.getServiceProvider().getName() + " : " + booking.getService().getName();
-            subtitle = booking.getStartTime().toString() + " to " + booking.getEndTime().toString();
+            subtitle = booking.toString();
             bookingId = booking.getBookingId();
 
             listBookings.add(new ListItem(title, subtitle, bookingId));
@@ -117,14 +117,23 @@ public class HOBookingsFragment extends Fragment {
                 booking.getRating().setComment(reviewField.getText().toString());
                 dbHandler.addRating(booking.getRating());
                 int sum=0;
-                for(int i : dbHandler.findRatingsforSp(booking.getServiceProvider().getUserName())){
-                    sum = i+ sum;
+                double avgRating;
+                ArrayList<Integer> variables = dbHandler.findRatingsforSp(booking.getServiceProvider().getUserName());
+
+                 if ( variables != null) {
+                    for (int i : variables) {
+                        sum = i + sum;
+                    }
+                    avgRating = sum/variables.size();
+                }else{
+                    avgRating=rating;
                 }
-                double avgRating = sum/dbHandler.findRatingsforSp(booking.getServiceProvider().getUserName()).size();
+
                 dbHandler.updateServiceProviderRating(booking.getServiceProvider().getUserName(), avgRating);
                 dbHandler.close();
                 Toast.makeText(getActivity(),"Rated: " + String.valueOf(rating) + " Stars",Toast.LENGTH_LONG).show();
                 dialog.dismiss();
+
             }
         });
 

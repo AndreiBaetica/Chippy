@@ -1,5 +1,9 @@
 package com.example.janieamyot.chippy;
-import java.util.*;
+
+import android.text.format.DateFormat;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class Booking {
     private Calendar startTime;
@@ -79,6 +83,11 @@ public class Booking {
     }
 
     public String toString(){
-        
+        String dayOfWeek = DateFormat.format("EEEE", new Date(startTime.get(Calendar.YEAR), startTime.get(Calendar.MONTH), startTime.get(Calendar.DAY_OF_MONTH)-1)).toString();
+        String date = " " + startTime.get(Calendar.DAY_OF_MONTH)+ "-" + (startTime.get(Calendar.MONTH)+1) + "-" + startTime.get(Calendar.YEAR);
+
+        String time = " " + startTime.get(Calendar.HOUR_OF_DAY)+ "-" + (endTime.get(Calendar.HOUR_OF_DAY));
+        return dayOfWeek + date + time;
+
     }
 }

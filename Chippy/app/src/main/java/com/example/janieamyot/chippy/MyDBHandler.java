@@ -843,7 +843,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         ArrayList<Integer> ratings = new ArrayList<>();
         //Find all ratings
-        for(int i = 0; i < bookingIds.size(); i++){
+        for(int i = 0; i < bookingIds.size()-1; i++){
             int bookingId = bookingIds.get(i);
             ratings.add(this.findRatingbyBookingId(bookingId).getRating());
         }
