@@ -3,9 +3,10 @@ package com.example.janieamyot.chippy;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,20 +15,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class HOSearchFragment extends Fragment{
 
@@ -47,6 +45,8 @@ public class HOSearchFragment extends Fragment{
     public RadioButton searchByService;
     public RadioButton searchByDateTime;
     public RadioButton searchByRating;
+    public String serviceSelect;
+    public int ratingSelect;
 
     public String startTime;
     final Calendar c = Calendar.getInstance();
@@ -87,6 +87,19 @@ public class HOSearchFragment extends Fragment{
 
         checkIfStartTimeSelected();
 
+        serviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                serviceSelect = parentView.getItemAtPosition(position).toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
+
         startTimeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -100,18 +113,36 @@ public class HOSearchFragment extends Fragment{
 
         });
 
+        ratingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                try {
+                    ratingSelect = Integer.parseInt(parentView.getItemAtPosition(position).toString());
+                }catch( Exception e ){
+                    ratingSelect = 0;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
+
+// SEARCH BUTTON LISTENER --------------------------------------------------
         searchButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 switch(searchParam) {
                     case SERVICE:
-                        searchByService();
+                        searchByService(serviceSelect);
                         break;
                     case DATETIME:
-                        searchByDateTime();
+                        searchByDateTime(extractDayOfWeek(),extractTimeRange());
                         break;
                     case RATING:
-                        searchByRating();
+                        searchByRating(ratingSelect);
                         break;
                 }
             }
@@ -141,20 +172,60 @@ public class HOSearchFragment extends Fragment{
 
     }
 
+
+
+
+
+
     //TODO Search methods for diff types of search. Include validation checks
-    private void searchByService(){
-        //TODO Add logic to search service providers by service in db, put in bundle and start new activity
-        Toast.makeText(getActivity(),"SERVICE",Toast.LENGTH_LONG).show();
+    private void searchByService(String serviceSelect){
+
+
+        MyDBHandler dbHandler = new MyDBHandler(getActivity());
+        ArrayList<ServiceProvider> foundSPsByService = dbHandler.findSPbyService(serviceSelect);
+
+        Intent intent = new Intent(getActivity(), HOSearchResults.class);
+        bundle.putSerializable("SearchResult", foundSPsByService);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+        //Toast.makeText(getActivity(),"SERVICE",Toast.LENGTH_LONG).show();
     }
 
-    private void searchByDateTime(){
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void searchByDateTime(String day, ArrayList<Integer> range){
         //TODO Add logic to search service providers by datetime in db, put in bundle and start new activity
-        Toast.makeText(getActivity(),"DATETIME",Toast.LENGTH_LONG).show();
+
+        ArrayList<ServiceProvider> foundSPsByAvailability = null;
+
+        MyDBHandler dbHandler = new MyDBHandler(getActivity());
+        try {
+            foundSPsByAvailability = dbHandler.findSPbyAvailability(day, range);
+        }
+        catch(JSONException e){
+            System.exit(0);
+        }
+
+        Intent intent = new Intent(getActivity(), HOSearchResults.class);
+        bundle.putSerializable("SearchResult", foundSPsByAvailability);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        //Toast.makeText(getActivity(),"DATETIME",Toast.LENGTH_LONG).show();
     }
 
-    private void searchByRating(){
-        //TODO Add logic to search service providers by rating in db, put in bundle and start new activity
-        Toast.makeText(getActivity(),"RATING",Toast.LENGTH_LONG).show();
+
+    private void searchByRating(int ratingSelect){
+
+        MyDBHandler dbHandler = new MyDBHandler(getActivity());
+        ArrayList<ServiceProvider> foundSPsByRating = dbHandler.findSPbyRating(ratingSelect);
+
+
+        Intent intent = new Intent(getActivity(), HOSearchResults.class);
+        bundle.putSerializable("SearchResult", foundSPsByRating);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+        //Toast.makeText(getActivity(),"RATING",Toast.LENGTH_LONG).show();
     }
 
     private ArrayList<String> findAllServices(){

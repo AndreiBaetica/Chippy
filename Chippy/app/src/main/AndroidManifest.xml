@@ -24,6 +24,7 @@
         <activity android:name=".AdminServiceEditor" />
         <activity android:name=".ServiceProviderProfile" />
         <activity android:name=".ServiceProviderEditServices" />
+        <activity android:name=".HOSearchResults" />
         <activity android:name=".ServiceProviderAvailable"></activity>
     </application>
 
