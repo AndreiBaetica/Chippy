@@ -3,9 +3,9 @@ package com.example.janieamyot.chippy;
 public class ListItem {
     private String title;
     private String subTitle;
-    private int id;
+    private long id;
 
-    public ListItem(String title, String subTitle, int id) {
+    public ListItem(String title, String subTitle, long id) {
         this.title = title;
         this.subTitle = subTitle;
         this.id = id;
@@ -16,11 +16,11 @@ public class ListItem {
         this.subTitle = subTitle;
 
     }
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

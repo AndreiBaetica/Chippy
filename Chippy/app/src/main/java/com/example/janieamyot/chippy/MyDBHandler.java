@@ -717,7 +717,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_USERNAME_HO, booking.getHomeOwner().getUserName());
         values.put(COLUMN_USERNAME_SP, booking.getServiceProvider().getUserName());
         SQLiteDatabase db = this.getWritableDatabase();
-        db.insert(TABLE_BOOKINGS, null, values);
+        long id = db.insert(TABLE_BOOKINGS, null, values);
+        booking.setBookingId(id);
         db.close();
     }
 
@@ -770,7 +771,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return bookings;
     }
 
-    public Booking findBookingbyID(int bookingID){
+    public Booking findBookingbyID(long bookingID){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm");
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -843,7 +844,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         ArrayList<Integer> ratings = new ArrayList<>();
         //Find all ratings
-        for(int i = 0; i < bookingIds.size()-1; i++){
+        for(int i = 0; i < bookingIds.size(); i++){
             int bookingId = bookingIds.get(i);
             ratings.add(this.findRatingbyBookingId(bookingId).getRating());
         }

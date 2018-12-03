@@ -139,13 +139,15 @@ public class HOSearchResults extends AppCompatActivity {
                 beginTime.set(Calendar.DAY_OF_MONTH, day1);
                 beginTime.set(Calendar.MONTH, month1);
                 beginTime.set(Calendar.YEAR, year1);
+                beginTime.set(Calendar.MINUTE, 0);
                 Calendar endTime = Calendar.getInstance();
                 endTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startTime)+1);
                 endTime.set(Calendar.DAY_OF_MONTH, day1);
                 endTime.set(Calendar.MONTH, month1);
                 endTime.set(Calendar.YEAR, year1);
+                endTime.set(Calendar.MINUTE, 0);
 
-               Booking booking = new Booking(dbHandler.findService(serviceChosen), serviceProvider, homeOwner, beginTime, endTime, 1 );
+                Booking booking = new Booking(dbHandler.findService(serviceChosen), serviceProvider, homeOwner, beginTime, endTime);
                 dbHandler.addBooking(booking);
                 dbHandler.close();
                 dialog.dismiss();

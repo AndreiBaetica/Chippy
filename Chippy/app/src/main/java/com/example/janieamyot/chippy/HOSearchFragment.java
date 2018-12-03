@@ -148,26 +148,20 @@ public class HOSearchFragment extends Fragment{
             }
         });
 
+        searchParam = SearchBy.SERVICE;
         searchByService.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                searchParam = SearchBy.SERVICE;
-                endTimeSpinner.setSelection(0);
-            }
+            public void onClick(View v) { searchParam = SearchBy.SERVICE; }
         });
 
         searchByDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                searchParam = SearchBy.DATETIME;
-            }
+            public void onClick(View v) { searchParam = SearchBy.DATETIME; }
         });
 
         searchByRating.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                searchParam = SearchBy.RATING;
-            }
+            public void onClick(View v) { searchParam = SearchBy.RATING; }
         });
 
     }

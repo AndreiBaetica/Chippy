@@ -75,7 +75,7 @@ public class HOBookingsFragment extends Fragment {
 
         String title;
         String subtitle;
-        int bookingId;
+        long bookingId;
         ArrayList<ListItem> listBookings = new ArrayList<>();
         MyDBHandler dbHandler = new MyDBHandler(getActivity());
         ArrayList<Booking> bookingList = dbHandler.findAllBookingsbyHO(homeOwner.getUserName());
@@ -112,7 +112,8 @@ public class HOBookingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MyDBHandler dbHandler = new MyDBHandler(getActivity());
-                int rating = (int)ratingBar.getRating();
+                int rating = 5;
+                rating = (int)ratingBar.getRating();
                 booking.getRating().setRating(rating);
                 booking.getRating().setComment(reviewField.getText().toString());
                 dbHandler.addRating(booking.getRating());
