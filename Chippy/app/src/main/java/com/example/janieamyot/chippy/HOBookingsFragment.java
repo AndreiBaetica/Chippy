@@ -105,7 +105,7 @@ public class HOBookingsFragment extends Fragment {
         Button cancelRatingButton = dialog.findViewById(R.id.cancelRatingButton);
         final RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
         final EditText reviewField = dialog.findViewById(R.id.reviewField);
-        String rate = "Rate ";
+        String rate = "Rate " + booking.getServiceProvider().getName();
         header.setText(rate);
 
         saveRatingButton.setOnClickListener(new View.OnClickListener() {

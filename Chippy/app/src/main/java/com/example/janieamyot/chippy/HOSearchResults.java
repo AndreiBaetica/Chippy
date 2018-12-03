@@ -119,11 +119,11 @@ public class HOSearchResults extends AppCompatActivity {
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_make_booking);
-        //TextView header = dialog.findViewById(R.id.rateHeader);
+        TextView header = dialog.findViewById(R.id.bookingHeader);
         Button saveBookingButton = dialog.findViewById(R.id.saveBookingButton);
         Button cancelBookingButton = dialog.findViewById(R.id.cancelBookingButton);
-        String rate = "Rate ";
-        //header.setText(rate);
+        String title = "Book with " + serviceProvider.getUserName();
+        header.setText(title);
         dateSelected = dialog.findViewById(R.id.dateSelected);
         ImageButton dateButton = dialog.findViewById(R.id.dateButton);
         timeSpinner = dialog.findViewById(R.id.bookingTime);
