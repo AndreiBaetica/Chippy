@@ -31,7 +31,7 @@ public class HomeOwnerFunctionalityTest {
         endTime.set(Calendar.MINUTE, 0);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm");
         Booking aBooking = new Booking(aService, aServiceProvider, aHomeOwner, startTime, endTime, 1);
-        assertEquals("Check the start time of the booking object", "2018 déc. 20 08:00", sdf.format(aBooking.getStartTime().getTime()));
+        assertEquals("Check the start time of the booking object", "2018 Dec 20 08:00", sdf.format(aBooking.getStartTime().getTime()));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class HomeOwnerFunctionalityTest {
         endTime.set(Calendar.MINUTE, 0);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm");
         Booking aBooking = new Booking(aService, aServiceProvider, aHomeOwner, startTime, endTime, 1);
-        assertEquals("Check the end time of the booking object", "2018 déc. 20 10:00", sdf.format(aBooking.getEndTime().getTime()));
+        assertEquals("Check the end time of the booking object", "2018 Dec 20 10:00", sdf.format(aBooking.getEndTime().getTime()));
     }
 
     @Test
