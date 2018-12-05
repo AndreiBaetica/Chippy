@@ -232,7 +232,7 @@ public class HOSearchFragment extends Fragment{
         }
         listServices.add("Select a service");
         for(Service service : serviceList) {
-            listServices.add(service.getName());
+            listServices.add(service.getName() + "    Rate: " + service.getHourlyRate() + "$/h");
         }
         dbHandler.close();
         return listServices;
