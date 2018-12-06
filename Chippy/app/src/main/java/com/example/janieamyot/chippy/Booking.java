@@ -96,7 +96,15 @@ public class Booking {
         String date = " " + startTime.get(Calendar.DAY_OF_MONTH)+ "-" + (startTime.get(Calendar.MONTH)+1) + "-" + startTime.get(Calendar.YEAR);
 
         String time = " " + startTime.get(Calendar.HOUR_OF_DAY)+ "-" + (endTime.get(Calendar.HOUR_OF_DAY));
-        return dayOfWeek + date + time;
+
+        if(this.rating != null){
+            String rating = "     Rating: " + this.rating.getRating();
+            return dayOfWeek + date + time + rating;
+        }
+        else{
+            return dayOfWeek + date + time;
+        }
+
 
     }
 }

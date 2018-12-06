@@ -64,9 +64,13 @@ public class HOBookingsFragment extends Fragment {
                 Booking bookingSelected = dbHandler.findBookingbyID(bookingItem.getId());
                 dbHandler.close();
 
-                if (bookingSelected.getRating().getRating() == 0){
+                if(dbHandler.findRatingbyBookingId((int)bookingSelected.getBookingId()) == null){
                     rateServiceProvider(bookingSelected);
                 }
+                else{
+                    Toast.makeText(getActivity(),"This booking has already been rated.",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
     }

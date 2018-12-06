@@ -108,7 +108,7 @@ public class HOSearchResults extends AppCompatActivity {
 
 
             title = sp.getUserName();
-                subtitle = dbHandler.findSPAverageRating(sp.getUserName()) + "";
+            subtitle = dbHandler.findSPAverageRating(sp.getUserName()) + "";
             listProviders.add(new ListItem(title, subtitle));
         }
 

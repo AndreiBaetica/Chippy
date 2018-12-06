@@ -767,8 +767,15 @@ public class MyDBHandler extends SQLiteOpenHelper{
             bookings = null;
         }
 
+        ArrayList<Booking> finalBookings = new ArrayList<>();
+        for(int i = 0; i < bookings.size(); i++){
+            Booking aBooking = bookings.get(i);
+            aBooking.setRating(this.findRatingbyBookingId((int)aBooking.getBookingId()));
+            finalBookings.add(aBooking);
+        }
+
         db.close();
-        return bookings;
+        return finalBookings;
     }
 
     public Booking findBookingbyID(long bookingID){

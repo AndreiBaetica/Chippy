@@ -90,8 +90,10 @@ public class HOSearchFragment extends Fragment{
         serviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                serviceSelect = parentView.getItemAtPosition(position).toString();
-
+                String spinVal = parentView.getItemAtPosition(position).toString();
+                if (position != 0) {
+                    serviceSelect = spinVal.substring(0, spinVal.indexOf("Rate:") - 4);
+                }
             }
 
             @Override
@@ -232,7 +234,7 @@ public class HOSearchFragment extends Fragment{
         }
         listServices.add("Select a service");
         for(Service service : serviceList) {
-            listServices.add(service.getName());
+            listServices.add(service.getName() + "    Rate: " + service.getHourlyRate() + "$/h");
         }
         dbHandler.close();
         return listServices;
